@@ -71,15 +71,17 @@ public class Snake4{
         switch (type) {
             case 1:
                 newLocation = throughWall(parts);
+                move1(newLocation);
             break;
             case 2:
                 // die
             break;
             case 3:
                 newLocation = portal();
+                move1(newLocation);
             break;
             case 4:
-                // grow 1
+                grow1(newLocation);
             break;
             case 5:
             case 0:
@@ -88,13 +90,19 @@ public class Snake4{
                 System.out.println("ERROR - Snake does not know where to move");
             break;
         }
-        if (head == (snake.size() - 1)) {
-            head = 0;
-            snake.add(coordinate);
+
+
+    }
+    public void move1(int newLocation) {
+        if (head == 0) {
+            head = snake.size() - 1;
         } else {
-            head = snake.size();
-            snake.add(
+            head = head - 1;
         }
+        snake.set(head, newLocation);
+
+    }
+    public void grow1() {
 
 
     }
