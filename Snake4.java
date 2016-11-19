@@ -21,17 +21,14 @@ public class Snake4{
     public Snake4(){
         map = new int[60][60];
         snake = new ArrayList<Integer>(3);
-
+        head = 0;
     }
 
     public void move(KeyEvent event) {
 	    int code =  event.getKeyCode();
         int coordinate;
-	    switch (code) {
-	     case 39:
-        int code =  event.getKeyCode();
         switch (code) {
-            case 39:
+        case 39:
             if (direction != 'r') {
                 cordinate = head + 100;
                 moveHere(coordinate);
@@ -65,7 +62,41 @@ public class Snake4{
     }
 
     public void moveHere(int coordinate) {
-        switch (coordinate)
+        int[] parts = convertToMDA(coordinate);
+        int type = map[part[0]][parts[1]];
+        int newLocation = coordinate;
+        switch (type) {
+            case 1:
+                newLocation = throughWall(parts);
+            break;
+            case 2:
+                // die
+            break;
+            case 3:
+                newLocation = portal();
+            break;
+            case 4:
+                // grow 1
+            break;
+            case 5:
+            case 0:
+            break;
+            default:
+                System.out.println("ERROR - Snake does not know where to move");
+            break;
+        }
+        if (head == (snake.size() - 1)) {
+            head = 0;
+            snake.add(coordinate);
+        } else {
+            head = snake.size();
+            snake.add(
+        }
+
+
+    }
+    public int throughWall(int[] parts) {
+
     }
 
     public void print(){
