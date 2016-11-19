@@ -27,9 +27,12 @@ public class Snake4{
 
     public void move(KeyEvent event) {
 	    int code =  event.getKeyCode();
+        int cordinate;
 	    switch (code) {
 	     case 39:
             if (direction != 'r') {
+                cordinate = 0;
+                moveHere(coordinate);
                 direction = 'r';
             }
 	     break;
@@ -52,6 +55,10 @@ public class Snake4{
          break;
          default:
          break;
+    }
+
+    public void moveHere(int coordinate) {
+
     }
 
     public void print(){
