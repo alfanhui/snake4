@@ -14,6 +14,8 @@ public class Snake4{
     public int tail[][];
     public int current_position[][];
     public char direction;
+    public int portal_locatio
+    public final char printChars[] = new char[] {' ', '*', '.','@','~'};
 
     /*Constructor
      *
@@ -52,12 +54,44 @@ public class Snake4{
          break;
     }
 
-    public static void main(String args[]){
-        System.out.println("Welcome to Snake4!");
-        //game loop
-        while(True){
-
+    public void print(){
+        for(int row = 0; row <60; row++){
+            for(int col =0; col <60; row++){
+                System.out.print(printChars[map[row][col]]);
+            }
+            System.out.println();
         }
     }
+
+    public void portal(){
+
+    }
+
+    public void food(){
+
+    }
+
+    public static void main(String args[]) throws InterruptedException {
+        System.out.println("Welcome to Snake4!");
+        Snake4 game = new Snake4();
+        //game loop
+        while(true){
+           game.move();
+           Thread.sleep(40);
+        }
+    }
+
+    public int[] covert2MDA(int location){
+        String intString = Integer.toString(location);
+        int mid = intString.length()/2;
+        int[] parts = {Integer.parseInt(intString.substring(0, mid)),Integer.parseInt(intString.substring(mid))};
+        return parts;
+    }
+
+    public int convert2Int(int row, int col){
+         String stringInt = (Integer.toString(row) + Integer.toString(col));
+         return Integer.parseInt(stringInt);
+    }
+
 
 }
