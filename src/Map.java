@@ -196,22 +196,21 @@ public class Map {
 		
 	}
 	
-	/* Get all positions on starting side of board and add to array list */
+	/* Get all positions on ending side of board and add to array list */
 	public void getEndingSidePositions(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
 				if (i <= 39 && i > 0 && j > SOFTWALL_LOCATION && j < COLUMN-1){
-					System.out.println("x");
 					Pair newCoord = new Pair(i,j);
 					endingWallSide.add(newCoord);
 				} else if (i > 39 && i < ROW-1 && j > SOFTWALL_LOCATION-4 && j < COLUMN-1) {
-					System.out.println("x");
 					Pair newCoord = new Pair(i,j);
 					endingWallSide.add(newCoord);
 				}
 			}
 		}		
 	}
+	
 	public boolean noWallWithin2Spaces(int[][] snakeBoard, int i, int j) {
 		
 		/*if (snakeBoard[i-2][j] == SOFTWALL || snakeBoard[i+2][j] == SOFTWALL || 
