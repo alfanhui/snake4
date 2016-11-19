@@ -21,6 +21,13 @@ public class Snake4{
 
     }
 
+<<<<<<< HEAD
+=======
+	public void move() {
+		
+	}
+
+>>>>>>> 40d89d50c75e07756dee2a6da555df03a3d24fac
     public static void main(String args[]){
         System.out.println("Welcome to Snake4!");
         //game loop
