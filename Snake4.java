@@ -13,6 +13,7 @@ public class Snake4{
     public int head[][];
     public int tail[][];
     public int current_position[][];
+    public char direction;
 
     /*Constructor
      *
@@ -22,8 +23,33 @@ public class Snake4{
 
     }
 
-    public void move() {
+    public void move(KeyEvent event) {
+	    int code =  event.getKeyCode();
+	    switch (code) {
+	     case 39:
+            if (direction != 'r') {
+                direction = 'r';
+            }
+	     break;
+	     case 37:
+            if (direction != 'l') {
+                direction = 'l';
+            }
+	     break;
+	     case 40:
+            if (direction != 'd') {
 
+                direction = 'd';
+            }
+	     break;
+	     case 38:
+            if (direction != 'u') {
+
+                direction = 'u';
+            }
+         break;
+         default:
+         break;
     }
 
     public static void main(String args[]){
