@@ -2,8 +2,7 @@
  * Dundee university Quackathon
  *
  **/
-import java.util.*;
-import java.util.EventObject;
+import java.util.*;//random
 
 
 public class Snake4{
@@ -63,7 +62,11 @@ public class Snake4{
 
     public void portal(){
         //WE need to know the direction and which portal it hits, then its the other portal becomes the new head + direction of portal
-        if portal_location !=helllo
+        if (portal_location[0] == head){
+
+        }else{
+
+        }
     }
 
     public void food(){
