@@ -16,13 +16,13 @@ public class Map {
 	public static final int PORTAL = 3;
 	public static final int FOOD = 4;
 	public static final int START = 5;
-	public final int HARDWALL = 6;
+	public static final int HARDWALL = 6;
 	
 	public int[][] initialiseBoard(){
 		int [][] snakeBoard = new int [ROW][COLUMN];
 		
 		snakeBoard = addSoftWalls(snakeBoard);
-		snakeBoard = addSoftCentralWall(snakeBoard);
+		snakeBoard = addSoftCentralWall2(snakeBoard);
 		
 		List<Pair> freeIndexes = generateFreePositions(snakeBoard);
 		
@@ -49,7 +49,7 @@ public class Map {
 		
 	}
 	
-	/* Add hard (hit and you die) walls to the snake board */
+	/* Add soft central wall to the snake board (vertical only) */
 	public int[][] addSoftCentralWall(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
@@ -59,6 +59,32 @@ public class Map {
 		return snakeBoard;
 	}
 	
+	/* Add soft central wall to the snake board (jagged) */
+	public int[][] addSoftCentralWall2(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				if (i < 39) {
+					snakeBoard [i][SOFTWALL_LOCATION] = SOFTWALL;
+				} else if (i == 39 && j <= SOFTWALL_LOCATION && j >= SOFTWALL_LOCATION-4) {
+					snakeBoard [i][j] = SOFTWALL;
+				} else if (i > 39) {
+					snakeBoard [i][SOFTWALL_LOCATION-4] = SOFTWALL;
+				}
+			}
+		}
+		return snakeBoard;
+	}
+	
+	/* Add hard wall to the snake board (incomplete-location of hard wall?) */
+	public int[][] addHardWall(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				
+			}
+		}
+		return snakeBoard;
+	}
+
 	/* Create list of free positions on the snake board */
 	public List<Pair> generateFreePositions(int[][] snakeBoard) {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
