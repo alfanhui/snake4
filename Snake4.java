@@ -13,6 +13,7 @@ public class Snake4{
     public int head[][];
     public int tail[][];
     public int current_position[][];
+    public int portal_locatio
     public final char printChars[] = new char[] {' ', '*', '.','@','~'};
 
     /*Constructor
@@ -36,12 +37,13 @@ public class Snake4{
         }
     }
 
+    public void portal(){
 
+    }
 
     public void food(){
 
     }
-
 
     public static void main(String args[]) throws InterruptedException {
         System.out.println("Welcome to Snake4!");
@@ -52,5 +54,18 @@ public class Snake4{
            Thread.sleep(40);
         }
     }
+
+    public int[] covert2MDA(int location){
+        String intString = Integer.toString(location);
+        int mid = intString.length()/2;
+        int[] parts = {Integer.parseInt(intString.substring(0, mid)),Integer.parseInt(intString.substring(mid))};
+        return parts;
+    }
+
+    public int convert2Int(int row, int col){
+         String stringInt = (Integer.toString(row) + Integer.toString(col));
+         return Integer.parseInt(stringInt);
+    }
+
 
 }
