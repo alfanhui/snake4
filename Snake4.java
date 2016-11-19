@@ -9,9 +9,7 @@ import java.util.EventObject;
 public class Snake4{
     //Global variables
     public int map[][];
-    public int location;
     public int head;
-    public int current_position;
     public char direction;
     public int portal_location;
     public List<Integer> snake;
@@ -27,31 +25,47 @@ public class Snake4{
     }
 
     public void move(KeyEvent event) {
+	    int code =  event.getKeyCode();
+        int coordinate;
+	    switch (code) {
+	     case 39:
         int code =  event.getKeyCode();
         switch (code) {
             case 39:
             if (direction != 'r') {
+                cordinate = head + 100;
+                moveHere(coordinate);
                 direction = 'r';
             }
          break;
          case 37:
             if (direction != 'l') {
+                cordinate = head - 100;
+                moveHere(coordinate);
                 direction = 'l';
             }
          break;
          case 40:
             if (direction != 'd') {
+                cordinate = head + 1;
+                moveHere(coordinate);
                 direction = 'd';
             }
         break;
         case 38:
             if (direction != 'u') {
+                cordinate = head - 1;
+                moveHere(coordinate);
                 direction = 'u';
             }
         break;
         default:
         break;
         }
+    }
+
+    public void moveHere(int coordinate) {
+        switch (coordinate)
     }
 
     public void print(){
