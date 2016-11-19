@@ -16,7 +16,7 @@ public class MapTest {
 					wallCount++;
 				}
 			}
-		}System.out.println("Wall:" + wallCount);
+		}//System.out.println("Wall:" + wallCount);
 		assertTrue("Not sufficent soft wall values", wallCount == 338); //334 with vertical wall
 	}
 	@Test
@@ -63,5 +63,21 @@ public class MapTest {
 			}
 		}
 		assertTrue("Incorrect start count", hardWallCount == 0);
+	}
+	@Test
+	public void testCorrectStartingList() {
+		Map newMap = new Map();
+		int[][] board = newMap.initialiseBoard();
+		
+		System.out.println("Size is " + newMap.startingWallSide.size());
+		assertTrue("Incorrect starting list size", newMap.startingWallSide.size() == 2704);
+	}
+	@Test
+	public void testCorrectEndingList() {
+		Map newMap = new Map();
+		int[][] board = newMap.initialiseBoard();
+		
+		System.out.println("Size is " + newMap.endingWallSide.size());
+		assertTrue("Incorrect ending list size", newMap.endingWallSide.size() == 1758);
 	}
 }

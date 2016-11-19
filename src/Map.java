@@ -18,11 +18,20 @@ public class Map {
 	public static final int START = 5;
 	public static final int HARDWALL = 6;
 	
+	public List<Pair> startingWallSide = new ArrayList<Pair>();
+	public List<Pair> endingWallSide = new ArrayList<Pair>();
+	
 	public int[][] initialiseBoard(){
 		int [][] snakeBoard = new int [ROW][COLUMN];
 		
 		snakeBoard = addSoftWalls(snakeBoard);
+		
+		/* only one of these should be uncommented at a time */
+		//snakeBoard = addSoftCentralWall(snakeBoard);
 		snakeBoard = addSoftCentralWall2(snakeBoard);
+		
+		getStartingSidePositions(snakeBoard);
+		getEndingSidePositions(snakeBoard);
 		
 		List<Pair> freeIndexes = generateFreePositions(snakeBoard);
 		
@@ -92,11 +101,8 @@ public class Map {
 			for (int j = 0; j < COLUMN; ++j){
 				if (snakeBoard[i][j] != SOFTWALL && noWallWithin2Spaces(snakeBoard, i ,j)){
 					// add position to list
-					Pair empty = new Pair();
-					empty.row = i;
-					empty.column = j;
-					freeIndexes.add(empty);
-					
+					Pair empty = new Pair(i, j);
+					freeIndexes.add(empty);				
 				}
 			}
 		}
@@ -105,20 +111,20 @@ public class Map {
 	
 	/* Add two portals to the snake board */
 	public int[][] addPortals(int[][] snakeBoard, List<Pair> freeIndexes) {
-		int randomcoord1, randomcoord2;
+		int starterAreaPortal, endAreaPortal;
 		while (true){
-			randomcoord1 = new Random().nextInt(freeIndexes.size());
-			randomcoord2 = new Random().nextInt(freeIndexes.size());
-			if (randomcoord1 != randomcoord2){
+			starterAreaPortal = new Random().nextInt(startingWallSide.size());
+			endAreaPortal = new Random().nextInt(freeIndexes.size());
+			if (starterAreaPortal != endAreaPortal ){
 				break;
 			}
 		}		
-		Pair portalPos1 = freeIndexes.get(randomcoord1);
-		Pair portalPos2 = freeIndexes.get(randomcoord2);		
+		Pair portalPos1 = freeIndexes.get(starterAreaPortal);
+		Pair portalPos2 = freeIndexes.get(endAreaPortal);		
 		snakeBoard[portalPos1.row][portalPos1.column] = PORTAL;		
 		snakeBoard[portalPos2.row][portalPos2.column] = PORTAL;		
-		freeIndexes.remove(randomcoord1);
-		freeIndexes.remove(randomcoord2);
+		freeIndexes.remove(starterAreaPortal);
+		freeIndexes.remove(endAreaPortal);
 		
 		return snakeBoard;
 	}
@@ -159,9 +165,7 @@ public class Map {
 			for (int j = 0; j < COLUMN; ++i){
 				if (snakeBoard[i][j] == PORTAL){
 					// add portal to list
-					Pair newPortal = new Pair();
-					newPortal.row = i;
-					newPortal.column = j;
+					Pair newPortal = new Pair(i, j);
 					portals.add(newPortal);
 				}
 			}
@@ -176,7 +180,40 @@ public class Map {
 		return null;
 	}
 
+	/* Get all positions on starting side of board and add to array list */
+	public void getStartingSidePositions(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				if (i < 39 && j < SOFTWALL_LOCATION && i > 0 && j > 0){	
+					Pair newCoord = new Pair(i,j);
+					startingWallSide.add(newCoord);
+				} else if (i >= 39 && i < ROW-1 && j > 0 && j < SOFTWALL_LOCATION-4) {
+					Pair newCoord = new Pair(i,j);
+					startingWallSide.add(newCoord);
+				}
+			}System.out.println();
+		}
+		
+	}
+	
+	/* Get all positions on starting side of board and add to array list */
+	public void getEndingSidePositions(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				if (i <= 39 && i > 0 && j > SOFTWALL_LOCATION && j < COLUMN-1){
+					System.out.println("x");
+					Pair newCoord = new Pair(i,j);
+					endingWallSide.add(newCoord);
+				} else if (i > 39 && i < ROW-1 && j > SOFTWALL_LOCATION-4 && j < COLUMN-1) {
+					System.out.println("x");
+					Pair newCoord = new Pair(i,j);
+					endingWallSide.add(newCoord);
+				}
+			}
+		}		
+	}
 	public boolean noWallWithin2Spaces(int[][] snakeBoard, int i, int j) {
+		
 		/*if (snakeBoard[i-2][j] == SOFTWALL || snakeBoard[i+2][j] == SOFTWALL || 
 				snakeBoard[i][j-2] == SOFTWALL || snakeBoard[i][j+2] == SOFTWALL ||
 				snakeBoard[i-2][j-2] == SOFTWALL || snakeBoard[i-2][j+2] == SOFTWALL ||
@@ -187,3 +224,9 @@ public class Map {
 	}
 	
 }
+/*if (snakeBoard[i][j] == SOFTWALL){System.out.print("x");} 
+ * else {System.out.print("0");
+}*/
+
+//System.out.print(" ("+i+","+j+") ");
+//System.out.print("0");
