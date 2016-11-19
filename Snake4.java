@@ -1,15 +1,19 @@
 /**
- * Dundee university Quakathon
+ * Dundee university Quackathon
  *
  **/
+//Global variables
+public int map[][];
+public int snake;
+
 
 public class Snake4{
-    //Global variables
 
     /*Constructor
      *
      */
     public Snake4(){
+        map = new int[][];
 
     }
 
