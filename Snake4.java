@@ -19,7 +19,9 @@ public class Snake4{
      *
      */
     public Snake4(){
-        map = new int[60][60];
+        int height = 60;
+        int width = 80;
+        map = new int[height][width];
         snake = new ArrayList<Integer>(3);
         head = 0;
     }
@@ -31,29 +33,29 @@ public class Snake4{
         case 39:
             if (direction != 'r') {
                 cordinate = head + 100;
-                moveHere(coordinate);
                 direction = 'r';
+                moveHere(coordinate);
             }
          break;
          case 37:
             if (direction != 'l') {
                 cordinate = head - 100;
-                moveHere(coordinate);
                 direction = 'l';
+                moveHere(coordinate);
             }
          break;
          case 40:
             if (direction != 'd') {
                 cordinate = head + 1;
-                moveHere(coordinate);
                 direction = 'd';
+                moveHere(coordinate);
             }
         break;
         case 38:
             if (direction != 'u') {
                 cordinate = head - 1;
-                moveHere(coordinate);
                 direction = 'u';
+                moveHere(coordinate);
             }
         break;
         default:
@@ -71,7 +73,7 @@ public class Snake4{
                 move1(newLocation);
             break;
             case 2:
-                // die
+                dead = true;
             break;
             case 3:
                 newLocation = portal();
@@ -82,13 +84,12 @@ public class Snake4{
             break;
             case 5:
             case 0:
+                move1(newLocation);
             break;
             default:
                 System.out.println("ERROR - Snake does not know where to move");
             break;
         }
-
-
     }
     public void move1(int newLocation) {
         if (head == 0) {
@@ -97,14 +98,45 @@ public class Snake4{
             head = head - 1;
         }
         snake.set(head, newLocation);
-
     }
-    public void grow1() {
-
+    public void grow1(int newLocation) {
+        snake.add(head,newLocation);
 
     }
     public int throughWall(int[] parts) {
-
+        switch(direction) {
+            case 'l':
+                for (int i=parts[0]; i>width; i++) {
+                    if (map[i][parts[1]] == 1) {
+                        return convertToInt(i,parts[1]);
+                    }
+                }
+            break;
+            case 'r':
+                for (int i = parts[0]; i<=0; i--) {
+                    if (map[i][parts[1]] == 1) {
+                        return convertToInt(i,parts[1]);
+                    }
+                }
+            break;
+            case 'u':
+                for (int i = parts[1]; i<=0; i--) {
+                    if (map[parts[0]][i] {
+                        return convertToInt(parts[0],i);
+                    }
+                }
+            break;
+            case 'd':
+                for (int i = parts[1]; i>height; i++) {
+                    if (mapts[parts[0]][i] == 1) {
+                        return convertToInt(parts[0],i);
+                    }
+                }
+            break;
+            default:
+                System.out.println("ERROR - Snake is confused about the Wall");
+            break;
+        }
     }
 
     public void print(){
