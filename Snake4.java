@@ -132,46 +132,43 @@ public class Snake4{
             if(portal_location[i] == head)
                 homePortal = i;
                 continue;
-            loci = convertToInt(portal_location[i]);
-            if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]+1]!=6){
+            loci = convertToMDA(portal_location[i]);
+            if(map[loci[0]][loci[1]+=1] != 2 || map[loci[0]][loci[1]+=1]!=6){ //d
+
                 success = true;
                 break;
-            }else if (map[loci[0]][loci[1]-1] != 2 || map[loci[0]][loci[1]-1]!=6){
+            }else if (map[loci[0]][loci[1]-=1] != 2 || map[loci[0]][loci[1]-=1]!=6){ //u
                 success = true;
                 break;
-            }else if (map[loci[0]+1][loci[1]] != 2 || map[loci[0]+1][loci[1]]!=6){
+            }else if (map[loci[0]+=1][loci[1]] != 2 || map[loci[0]+=1][loci[1]]!=6){ //r
                 success = true;
                 break;
-            }else if (map[loci[0]-1][loci[1]] != 2 || map[loci[0]-1][loci[1]]!=6){
+            }else if (map[loci[0]-=1][loci[1]] != 2 || map[loci[0]-=1][loci[1]]!=6){ //l
                 success = true;
                 break;
             }
         }
         if(!success){
-            index = homePortal
-            loci = convertToInt(portal_location[homePortal]);
-            if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]+1]!=6){
-                break;
-            }else if (map[loci[0]][loci[1]-1] != 2 || map[loci[0]][loci[1]-1]!=6){
-                break;
-            }else if (map[loci[0]+1][loci[1]] != 2 || map[loci[0]+1][loci[1]]!=6){
-                break;
-            }else if (map[loci[0]-1][loci[1]] != 2 || map[loci[0]-1][loci[1]]!=6){
-                break;
-            }else
+            index = homePortal;
+            loci = convertToMDA(portal_location[homePortal]);
+            if(map[loci[0]][loci[1]+=1] != 2 || map[loci[0]][loci[1]+=1]!=6){
+            }else if (map[loci[0]][loci[1]-=1] != 2 || map[loci[0]][loci[1]-=1]!=6){
+            }else if (map[loci[0]+=1][loci[1]] != 2 || map[loci[0]+=1][loci[1]]!=6){
+            }else if (map[loci[0]-=1][loci[1]] != 2 || map[loci[0]-=1][loci[1]]!=6){
+            }
+            else
                 dead = true;
         }
-
-        return portal_location[index];
+        return convertToInt(loci[0],loci[1]);
     }
 
     public void shuffleArray(int[] array){
-        Random rn = Random();
+        Random rn = new Random();
         for (int i = array.length - 1; i > 0; i--){
-            int index = rnd.nextInt(i + 1);
+            int index = rn.nextInt(i + 1);
             // Simple swap
             int a = array[index];
-            array[index] = ar[i];
+            array[index] = array[i];
             array[i] = a;
         }
     }
@@ -191,14 +188,14 @@ public class Snake4{
         }
     }
 
-    public int[] covert2MDA(int location){
+    public int[] convertToMDA(int location){
         String intString = Integer.toString(location);
         int mid = intString.length()/2;
         int[] parts = {Integer.parseInt(intString.substring(0, mid)),Integer.parseInt(intString.substring(mid))};
         return parts;
     }
 
-    public int convert2Int(int row, int col){
+    public int convertToInt(int row, int col){
          String stringInt = (Integer.toString(row) + Integer.toString(col));
          return Integer.parseInt(stringInt);
     }
