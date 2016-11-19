@@ -13,6 +13,7 @@ public class Snake4{
     public char direction;
     public int[] portal_location;
     public List<Integer> snake;
+    public boolean dead;
     public final char printChars[] = new char[] {' ', '*', '.','@','~'};
 
     /*Constructor
@@ -20,37 +21,85 @@ public class Snake4{
      */
     public Snake4(){
         map = new int[80][60];
-        snake = new ArrayList<Integer>(3);
+        snake = new ArrayList<Integer>();
         //Get portal locations
-
+        head = 0;
+        dead = false;
     }
 
     public void move(KeyEvent event) {
-        int code =  event.getKeyCode();
+	    int code =  event.getKeyCode();
+        int coordinate;
         switch (code) {
-            case 39:
+        case 39:
             if (direction != 'r') {
+                cordinate = head + 100;
+                moveHere(coordinate);
                 direction = 'r';
             }
          break;
          case 37:
             if (direction != 'l') {
+                cordinate = head - 100;
+                moveHere(coordinate);
                 direction = 'l';
             }
          break;
          case 40:
             if (direction != 'd') {
+                cordinate = head + 1;
+                moveHere(coordinate);
                 direction = 'd';
             }
         break;
         case 38:
             if (direction != 'u') {
+                cordinate = head - 1;
+                moveHere(coordinate);
                 direction = 'u';
             }
         break;
         default:
         break;
         }
+    }
+
+    public void moveHere(int coordinate) {
+        int[] parts = convertToMDA(coordinate);
+        int type = map[part[0]][parts[1]];
+        int newLocation = coordinate;
+        switch (type) {
+            case 1:
+                newLocation = throughWall(parts);
+            break;
+            case 2:
+                // die
+            break;
+            case 3:
+                newLocation = portal();
+            break;
+            case 4:
+                // grow 1
+            break;
+            case 5:
+            case 0:
+            break;
+            default:
+                System.out.println("ERROR - Snake does not know where to move");
+            break;
+        }
+        if (head == (snake.size() - 1)) {
+            head = 0;
+            snake.add(coordinate);
+        } else {
+            head = snake.size();
+            snake.add(
+        }
+
+
+    }
+    public int throughWall(int[] parts) {
+
     }
 
     public void print(){
@@ -64,15 +113,61 @@ public class Snake4{
 
     public int portal(){
         //WE need to know the direction and which portal it hits, then its the other portal becomes the new head + direction of portal
+        boolean success = false;
+        int homePortal;
+        int loci[];
         Random rn = new Random();
-        int index = rn.nextInt() * portal_location.length;
-        while(portal_location[index] == head){
-            index = rn.nextInt() * portal_location.length;
-
+        shuffleArray(portal_location);
+        int index ; //rn.nextInt() * portal_location.length;
+        for(int i =0; i<portal_location.length;i++){
+            index = i;
+            if(portal_location[i] == head)
+                homePortal = i;
+                continue;
+            loci = convertToInt(portal_location[i]);
+            if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]+1]!=6){
+                success = true;
+                break;
+            }else if (map[loci[0]][loci[1]-1] != 2 || map[loci[0]][loci[1]-1]!=6){
+                success = true;
+                break;
+            }else if (map[loci[0]+1][loci[1]] != 2 || map[loci[0]+1][loci[1]]!=6){
+                success = true;
+                break;
+            }else if (map[loci[0]-1][loci[1]] != 2 || map[loci[0]-1][loci[1]]!=6){
+                success = true;
+                break;
+            }
+        }
+        if(!success){
+            index = homePortal
+            loci = convertToInt(portal_location[homePortal]);
+            if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]+1]!=6){
+                break;
+            }else if (map[loci[0]][loci[1]-1] != 2 || map[loci[0]][loci[1]-1]!=6){
+                break;
+            }else if (map[loci[0]+1][loci[1]] != 2 || map[loci[0]+1][loci[1]]!=6){
+                break;
+            }else if (map[loci[0]-1][loci[1]] != 2 || map[loci[0]-1][loci[1]]!=6){
+                break;
+            }else
+                dead = true;
         }
 
         return portal_location[index];
     }
+
+    public void shuffleArray(int[] array){
+        Random rn = Random();
+        for (int i = array.length - 1; i > 0; i--){
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            int a = array[index];
+            array[index] = ar[i];
+            array[i] = a;
+        }
+    }
+
 
     public int food(){
 
@@ -82,7 +177,7 @@ public class Snake4{
         System.out.println("Welcome to Snake4!");
         Snake4 game = new Snake4();
         //game loop
-        while(true){
+        while(!dead){
            game.move();
            Thread.sleep(40);
         }
