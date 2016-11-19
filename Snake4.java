@@ -68,11 +68,13 @@ public class Snake4{
         int index = rn.nextInt() * portal_location.length;
         while(portal_location[index] == head){
             index = rn.nextInt() * portal_location.length;
+
         }
+
         return portal_location[index];
     }
 
-    public void food(){
+    public int food(){
 
     }
 
