@@ -9,11 +9,9 @@ import java.util.EventObject;
 public class Snake4{
     //Global variables
     public int map[][];
-    public int location;
     public int head;
-    public int current_position;
     public char direction;
-    public int portal_location;
+    public int[] portal_location;
     public List<Integer> snake;
     public final char printChars[] = new char[] {' ', '*', '.','@','~'};
 
@@ -21,7 +19,7 @@ public class Snake4{
      *
      */
     public Snake4(){
-        map = new int[60][60];
+        map = new int[80][60];
         snake = new ArrayList<Integer>(3);
 
     }
@@ -64,7 +62,8 @@ public class Snake4{
     }
 
     public void portal(){
-
+        //WE need to know the direction and which portal it hits, then its the other portal becomes the new head + direction of portal
+        if portal_location !=helllo
     }
 
     public void food(){
