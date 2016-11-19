@@ -2,7 +2,8 @@
  * Dundee university Quackathon
  *
  **/
-import java.util.*;//random
+import java.util.*;
+import java.util.Random;
 
 
 public class Snake4{
@@ -20,6 +21,7 @@ public class Snake4{
     public Snake4(){
         map = new int[80][60];
         snake = new ArrayList<Integer>(3);
+        //Get portal locations
 
     }
 
@@ -60,13 +62,14 @@ public class Snake4{
         }
     }
 
-    public void portal(){
+    public int portal(){
         //WE need to know the direction and which portal it hits, then its the other portal becomes the new head + direction of portal
-        if (portal_location[0] == head){
-
-        }else{
-
+        Random rn = new Random();
+        int index = rn.nextInt() * portal_location.length;
+        while(portal_location[index] == head){
+            index = rn.nextInt() * portal_location.length;
         }
+        return portal_location[index];
     }
 
     public void food(){
