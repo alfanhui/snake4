@@ -2,19 +2,19 @@
  * Dundee university Quackathon
  *
  **/
-
-
+import java.util.*;
+import java.util.EventObject;
 
 
 public class Snake4{
     //Global variables
     public int map[][];
-    public int location[][];
-    public int head[][];
-    public int tail[][];
-    public int current_position[][];
+    public int location;
+    public int head;
+    public int current_position;
     public char direction;
-    public int portal_locatio
+    public int portal_location;
+    public List<Integer> snake;
     public final char printChars[] = new char[] {' ', '*', '.','@','~'};
 
     /*Constructor
@@ -22,36 +22,36 @@ public class Snake4{
      */
     public Snake4(){
         map = new int[60][60];
+        snake = new ArrayList<Integer>(3);
 
     }
 
     public void move(KeyEvent event) {
-	    int code =  event.getKeyCode();
-	    switch (code) {
-	     case 39:
+        int code =  event.getKeyCode();
+        switch (code) {
+            case 39:
             if (direction != 'r') {
                 direction = 'r';
             }
-	     break;
-	     case 37:
+         break;
+         case 37:
             if (direction != 'l') {
                 direction = 'l';
             }
-	     break;
-	     case 40:
+         break;
+         case 40:
             if (direction != 'd') {
-
                 direction = 'd';
             }
-	     break;
-	     case 38:
+        break;
+        case 38:
             if (direction != 'u') {
-
                 direction = 'u';
             }
-         break;
-         default:
-         break;
+        break;
+        default:
+        break;
+        }
     }
 
     public void print(){
