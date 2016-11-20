@@ -43,12 +43,13 @@ public class SnakeGui implements ActionListener, KeyListener {
     private int snakeSize = 2;
     private final int DELAY_IN_MILISEC = 1000;
     private int [][] array; // = new int[GRID_SIZE_X][GRID_SIZE_Y];
-    private TextField textField;
     private Snake4 game;
     public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
 
     public SnakeGui() {
+    	System.out.println("asdasdsad");
         game = new Snake4();
+        System.out.println("asdasdsad");
         array = game.getMap();
         gameSnake = game.getSnake();
     }
@@ -87,11 +88,11 @@ public class SnakeGui implements ActionListener, KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-
         game.move();
         for (int row=0; row<GRID_SIZE_X; row++) {
         	for(int col=0;col<GRID_SIZE_Y;col++) {
-        		labels[row][col] = new JLabel(getImageIcon(array[row][col]));
+        		//labels[row][col] = new JLabel(getImageIcon(array[row][col]));
+        		labels[row][col].setIcon(getImageIcon(array[row][col]));
             }
         }
         gameSnake = game.getSnake();

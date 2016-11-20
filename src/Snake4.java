@@ -25,8 +25,11 @@ public class Snake4{
      *
      */
     public Snake4(){
+    	System.out.println("breakpoint");
     	newMap = new Map();
+    	System.out.println("breakpoint");
         map = newMap.initialiseBoard();//new int[80][60];
+        System.out.println("breakpoint");
         snake = new ArrayList<Integer>();
         //Get portal locations
         height = newMap.COLUMN;
@@ -36,6 +39,7 @@ public class Snake4{
         Pair mapHead = newMap.getDefaultStartPlace(map);
         snake.add(0,convertToInt(mapHead.row, mapHead.column));
         dead = false;
+        System.out.println("End of constructor");
     }
 
     public void move() {
