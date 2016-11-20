@@ -77,28 +77,28 @@ public class Snake4{
     public void changeDirection(int code) {
         int coordinate;
         switch (code) {
-        case 39:
+        case KeyEvent.VK_RIGHT:
             if (direction != 'r') {
                 coordinate = head + 100;
                 direction = 'r';
                 moveHere(coordinate);
             }
          break;
-         case 37:
+         case KeyEvent.VK_LEFT:
             if (direction != 'l') {
                 coordinate = head - 100;
                 direction = 'l';
                 moveHere(coordinate);
             }
          break;
-         case 40:
+         case KeyEvent.VK_DOWN:
             if (direction != 'd') {
                 coordinate = head + 1;
                 direction = 'd';
                 moveHere(coordinate);
             }
         break;
-        case 38:
+        case KeyEvent.VK_UP:
             if (direction != 'u') {
                 coordinate = head - 1;
                 direction = 'u';
