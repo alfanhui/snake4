@@ -32,14 +32,14 @@ public class Snake4{
         System.out.println("breakpoint");
         snake = new ArrayList<Integer>();
         //Get portal locations
-        List<Pair> portals = new ArrayList<Pair>();
-        Pair portalPair = new Pair();
-        portals = newMap.getPortals(map);
-        portal_location = new int[portals.size()];
-        for(int i = 0; i<portals.size();i++){
-            portalPair = portals.get(i);
-            portal_location[i] = convertToInt(portalPair.row,portalPair.column);
-        }
+        //List<Pair> portals = new ArrayList<Pair>();
+        //Pair portalPair = new Pair();
+        //portals = newMap.getPortals(map);
+        //portal_location = new int[portals.size()];
+        //for(int i = 0; i<portals.size();i++){
+        //    portalPair = portals.get(i);
+        //    portal_location[i] = convertToInt(portalPair.row,portalPair.column);
+        //}
         height = newMap.COLUMN;
         width = newMap.ROW;
         snake = new ArrayList<Integer>(1);
