@@ -12,8 +12,8 @@ public class Snake4{
     public int map[][];
     public int head;
     public char direction;
-    public int[] portal_location;
-    public List<Integer> snake;
+    public List<Pair> portal_location;
+    public List<Pair> snake;
     public boolean dead;
     public int height;
     public int width;
@@ -27,48 +27,46 @@ public class Snake4{
     public Snake4(){
     	newMap = new Map();
         map = newMap.initialiseBoard();//new int[80][60];
-        snake = new ArrayList<Integer>();
+        snake = new ArrayList<Pair>();
         //Get portal locations
-        List<Pair> portalList = newMap.getPortals(map);
-        System.out.println("hello");
-        portal_location = new int[portalList.size()];
-        for(int i = 0; i<portalList.size();i++){
-            Pair portal = portalList.get(i);
-            portal_location[i] = convertToInt(portal.row, portal.column);
-            System.out.println("Portal:" +portal.row+":"+portal.column);
-        }
+        portal_location = newMap.getPortals(map);
         foodPair = newMap.getFoodLocation(map);
         height = newMap.COLUMN;
         width = newMap.ROW;
-        snake = new ArrayList<Integer>(1);
+        snake = new ArrayList<Pair>(1);
         head = 0;
         Pair mapHead = newMap.getDefaultStartPlace(map);
-        snake.add(0,convertToInt(mapHead.row, mapHead.column));
-        snake.add(convertToInt(mapHead.row-1,mapHead.column));
+        Pair snakeSeg = new Pair(mapHead.row, mapHead.column);
+        Pair snakeSeg2 = new Pair(mapHead.row-1, mapHead.column);
+
+        snake.add(0,snakeSeg);
+        snake.add(snakeSeg2);
         dead = false;
         System.out.println("End of constructor");
         direction = 'u';
     }
 
     public void move() {
-        int location;
-        System.out.println("Startlocation: "+snake.get(0));
+        Pair location = new Pair();
         switch(direction) {
             case 'd':
-                location =snake.get(head) + 100;
+                location =snake.get(head);
+                location.row++;
                 moveHere(location);
             break;
             case 'u':
-                location = snake.get(head) - 100;
+                location = snake.get(head);
+                location.row--;
                 moveHere(location);
             break;
             case 'r':
-                location = snake.get(head) + 1;
+                location = snake.get(head);
+                location.column++;
                 moveHere(location);
             break;
             case 'l':
-                location = snake.get(head) - 1;
-                System.out.println("Location: "+location);
+                location = snake.get(head);
+                location.column--;
                 moveHere(location);
             break;
             default:
@@ -78,29 +76,33 @@ public class Snake4{
     }
 
     public void changeDirection(int code) {
-        int coordinate;
+        Pair coordinate = new Pair();
         switch (code) {
         case 39:
             if (direction != 'r') {
-                coordinate = snake.get(head) + 1;
+                coordinate = snake.get(head);
+                coordinate.column++;
                 direction = 'r';
             }
          break;
          case 37:
             if (direction != 'l') {
-                coordinate = snake.get(head) - 1;
+                coordinate = snake.get(head);
+                coordinate.column--;
                 direction = 'l';
             }
          break;
          case 40:
             if (direction != 'd') {
-                coordinate = snake.get(head) + 100;
+                coordinate = snake.get(head);
+                coordinate.row++;
                 direction = 'd';
             }
         break;
         case 38:
             if (direction != 'u') {
-                coordinate = snake.get(head) - 100;
+                coordinate = snake.get(head);
+                coordinate.row--;
                 direction = 'u';
             }
         break;
@@ -109,30 +111,28 @@ public class Snake4{
         }
     }
 
-    public void moveHere(int coordinate) {
-        int[] parts = convertToMDA(coordinate);
-        System.out.println("Location in parts. Part 1: "+parts[0]+" Part 2: "+parts[1]);
-        int[] foodLoci = new int[] {foodPair.row,foodPair.column};
+    public void moveHere(Pair coordinate) {
+        //System.out.println("Location in parts. Part 1: "+parts[0]+" Part 2: "+parts[1]);
         System.out.println("food location:" + foodPair.row + " : " + foodPair.column);
-        int type = map[parts[0]][parts[1]];
+        int type = map[coordinate.row][coordinate.column];
         System.out.println("TYPE: "+type);
-        int newLocation = coordinate;
-        if(parts[0] == foodLoci[0] && parts[1] == foodLoci[1]){
+        Pair newLocation = coordinate;
+        if(coordinate.row == foodPair.row && coordinate.column == foodPair.column){
             System.out.println("Were in the food place");
             grow1(newLocation);
             move1(newLocation);
             foodPair = newMap.getFoodLocation(map);
         }else if (validPortal(coordinate)) {
             newLocation = portal();
-            int[] coords = convertToMDA(newLocation);
-            if (map[coords[0]][coords[1]] == 1) {
-                newLocation = throughWall(coords);
+            //Pair coords = convertToMDA(newLocation);
+            if (map[newLocation.row][newLocation.column] == 1) {
+                newLocation = throughWall(newLocation);
             }
             move1(newLocation);
         } else {
             switch (type) {
                 case 1:
-                    newLocation = throughWall(parts);
+                    newLocation = throughWall(coordinate);
                     move1(newLocation);
                 break;
                 case 2:
@@ -149,7 +149,7 @@ public class Snake4{
             }
         }
     }
-    public void move1(int newLocation) {
+    public void move1(Pair newLocation) {
         if (head == 0) {
             head = snake.size() - 1;
         } else {
@@ -158,41 +158,41 @@ public class Snake4{
         snake.set(head, newLocation);
 
     }
-    public void grow1(int newLocation) {
+    public void grow1(Pair newLocation) {
         snake.add(head,newLocation);
 
     }
-    public int throughWall(int[] parts) {
+    public Pair throughWall(Pair parts) {
         switch(direction) {
             case 'l':
-                for (int i=(parts[1]+1); i>width; i++) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[1],i);
+                for (int i=(parts.column+1); i>width; i++) {
+                    if (map[parts.row][i] == 1) {
+                        return new Pair(parts.row,i);
                     }
                 }break;
             case 'r':
-                for (int i = (parts[1]-1); i>=0; i--) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[0],i);
+                for (int i = (parts.column-1); i>=0; i--) {
+                    if (map[parts.row][i] == 1) {
+                        return new Pair(parts.row,i);
                     }
                 }break;
             case 'u':
-                for (int i = parts[1]; i>=0; i--) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[0],i);
+                for (int i = parts.row; i>=0; i--) {
+                    if (map[i][parts.column] == 1) {
+                        return new Pair(i,parts.column);
                     }
                 }break;
             case 'd':
-                for (int i = parts[1]; i>height; i++) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[0],i);
+                for (int i = parts.row; i>height; i++) {
+                    if (map[i][parts.column] == 1) {
+                        return new Pair(i,parts.column);
                     }
                 }break;
             default:
                 System.out.println("ERROR - Snake is confused about the Wall");
-                return -1;
+                return null;
         }
-        return -1;
+        return null;
     }
 
     public void print(){
@@ -204,31 +204,29 @@ public class Snake4{
         }
     }
 
-    public int portal(){
+    public Pair portal(){
         //WE need to know the direction and which portal it hits, then its the other portal becomes the new head + direction of portal
         boolean success = false;
-        int loci[] = new int[2];
-        System.out.println("portal array: " + portal_location[0]);
-        shuffleArray(portal_location);
-        System.out.println("portal array shuffled: " + portal_location[0]);
+        Pair loci = new Pair();
+        //System.out.println("portal array: " + portal_location[0]);
+        //shuffleArray(portal_location);
+        //System.out.println("portal array shuffled: " + portal_location[0]);
         int index=0; //rn.nextInt() * portal_location.length;
-        System.out.println("Portal array size:" + portal_location.length);
-        for(int i =0; i<portal_location.length;i++){
+        //System.out.println("Portal array size:" + portal_location.length);
+        for(int i =0; i<portal_location.size();i++){
             index = i;
-            if(portal_location[i] != head){
-                loci = convertToMDA(portal_location[i]);
-                System.out.println("Should be the same as above: " + Integer.toString(loci[0]) + Integer.toString(loci[1]));
-                System.out.println("map value:" + map[loci[0]][loci[1]++]);
-                if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]++]!=6){ //l
+            if(portal_location.get(i) != snake.get(head)){
+                loci = portal_location.get(i);
+                if(map[loci.row][loci.column+1] != 2 || map[loci.row][loci.column++]!=6){ //l
                     success = true;
                     break;
-                }else if (map[loci[0]][loci[1]--] != 2 || map[loci[0]][loci[1]--]!=6){ //r
+                }else if (map[loci.row][loci.column--] != 2 || map[loci.row][loci.column--]!=6){ //r
                     success = true;
                     break;
-                }else if (map[loci[0]++][loci[1]] != 2 || map[loci[0]++][loci[1]]!=6){ //u
+                }else if (map[loci.row++][loci.column] != 2 || map[loci.row++][loci.column]!=6){ //u
                     success = true;
                     break;
-                }else if (map[loci[0]--][loci[1]] != 2 || map[loci[0]--][loci[1]]!=6){ //d
+                }else if (map[loci.row--][loci.column] != 2 || map[loci.row--][loci.column]!=6){ //d
                     success = true;
                     break;
                 }
@@ -247,7 +245,7 @@ public class Snake4{
 
         }
         */
-        return convertToInt(loci[0],loci[1]);
+        return loci;
     }
 
     public void shuffleArray(int[] array){
@@ -278,7 +276,7 @@ public class Snake4{
         return map;
     }
 
-    public List<Integer> getSnake(){
+    public List<Pair> getSnake(){
          return snake;
     }
 
@@ -290,14 +288,15 @@ public class Snake4{
         this.map = map;
     }
 
-    public int[] getPortals(){
+    public List<Pair> getPortals(){
          return portal_location;
     }
 
-    public boolean validPortal(int location){
-        for(int i = 0; i< portal_location.length;i++){
-            if (portal_location[i] == location)
+    public boolean validPortal(Pair location){
+        for(int i = 0; i< portal_location.size();i++){
+            if((portal_location.get(i).row == location.row) && (portal_location.get(i).column == location.column)){
                 return true;
+            }
         }
         return false;
     }
