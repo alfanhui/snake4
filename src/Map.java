@@ -27,8 +27,10 @@ public class Map {
 		int [][] snakeBoard = new int [ROW][COLUMN];
 
 		snakeBoard = addSoftWalls(snakeBoard);
-
-		for (int i = 0; i < GAME_VERSION; ++i){
+		snakeBoard = addSoftCentralWall1(snakeBoard);
+		getStartingSidePositions1(snakeBoard);
+		getEndingSidePositions1(snakeBoard);
+		/*for (int i = 0; i < GAME_VERSION; ++i){
 			if (i == 0){
 				snakeBoard = addSoftCentralWall1(snakeBoard);
 				getStartingSidePositions1(snakeBoard);
@@ -46,9 +48,9 @@ public class Map {
 				getStartingSidePositions4(snakeBoard);
 				getEndingSidePositions4(snakeBoard);
 			}
-		}
+		}*/
 
-		snakeBoard = addHardEdgeWallBottom(snakeBoard);
+		//snakeBoard = addHardEdgeWallBottom(snakeBoard);
 
 		freeIndexes = generateFreePositions(snakeBoard);
 
@@ -56,8 +58,7 @@ public class Map {
 		snakeBoard = addStart(snakeBoard, freeIndexes);
 
 		// add snake to starting position
-		snakeBoard = addSnake(snakeBoard);
-
+		//snakeBoard = addSnake(snakeBoard);
 		return snakeBoard;
 	}
 	/* Add hard wall to specified row/column of board */
@@ -257,7 +258,7 @@ public class Map {
 	/* Get all positions on starting/ending side of board and add to array list */
 	public void getStartingSidePositions1(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
-			for (int j = 0; j < COLUMN; ++i){
+			for (int j = 0; j < COLUMN; ++j){
 				if (i > 0 && i < ROW-1 && j > 0 && j < SOFTWALL_LOCATION){
 					Pair newCoord = new Pair(i,j);
 					startingWallSide.add(newCoord);
@@ -267,8 +268,8 @@ public class Map {
 	}
 	public void getEndingSidePositions1(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
-			for (int j = 0; j < COLUMN; ++i){
-				if (i > 0 && i < ROW-1 && j > COLUMN-1 && j > SOFTWALL_LOCATION){
+			for (int j = 0; j < COLUMN; ++j){
+				if (i > 0 && i < ROW-1 && j < COLUMN-1 && j > SOFTWALL_LOCATION){
 					Pair newCoord = new Pair(i,j);
 					endingWallSide.add(newCoord);
 				}
@@ -353,31 +354,9 @@ public class Map {
 	public void printBoard(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
-				switch (snakeBoard[i][j]){
-				case SOFTWALL:
-					System.out.print("+");
-					//break;
-				case SNAKE:
-					System.out.print("S");
-					//break;
-				case PORTAL:
-					System.out.print("0");
-					//break;
-				case FOOD:
-					System.out.print("F");
-					//break;
-				case HARDWALL:
-					System.out.print("#");
-					//break;
-				case SPACE:
-					System.out.print(" ");
-					//break;
-				case START:
-					System.out.print("X");
-					//break;
-				}
-			}
-		}System.out.println();
+				System.out.print(snakeBoard[i][j]);
+			}System.out.println();
+		}
 
 	}
 }
