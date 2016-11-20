@@ -29,7 +29,6 @@ public class Snake4{
         //Get portal locations
         height = newMap.COLUMN;
         width = newMap.ROW;
-        map = new int[height][width];
         snake = new ArrayList<Integer>(1);
         head = 0;
         Pair mapHead = newMap.getDefaultStartPlace(map);
@@ -37,8 +36,32 @@ public class Snake4{
         dead = false;
     }
 
-    public void move(KeyEvent event) {
-	    int code =  event.getKeyCode();
+    public void move() {
+        int location;
+        switch(direction) {
+            case 'r':
+                location =snake.get(head) + 100;
+                moveHere(location);
+            break;
+            case 'l':
+                location = snake.get(head) - 100;
+                moveHere(location);
+            break;
+            case 'd':
+                location = snake.get(head) + 1;
+                moveHere(location);
+            break;
+            case 'u':
+                location = snake.get(head) - 1;
+                moveHere(location);
+            break;
+            default:
+                System.out.println("Snake doesn't know how to move");
+            break;
+        }
+    }
+
+    public void changeDirection(int code) {
         int coordinate;
         switch (code) {
         case 39:

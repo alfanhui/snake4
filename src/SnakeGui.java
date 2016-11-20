@@ -44,11 +44,13 @@ public class SnakeGui implements ActionListener, KeyListener {
     private final int DELAY_IN_MILISEC = 1000;
     private int [][] array; // = new int[GRID_SIZE_X][GRID_SIZE_Y];
     private TextField textField;
-    private Snake4 snake;
+    private Snake4 game;
+    private ArrayList<Integer> gameSnake;
 
     public SnakeGui() {
-        snake = new Snake4();
-        array = snake.getMap();
+        game = new Snake4();
+        array = game.getMap();
+        gameSnake = game.getSnake();
     }
 
 
@@ -70,6 +72,13 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     }
 
+    public int[] convertToMDA(int location){
+        String intString = Integer.toString(location);
+        int mid = intString.length()/2;
+        int[] parts = {Integer.parseInt(intString.substring(0, mid)),Integer.parseInt(intString.substring(mid))};
+        return parts;
+    }
+
     /*
      * A timer that makes changes to the game after an set interval of time
      */
@@ -78,6 +87,23 @@ public class SnakeGui implements ActionListener, KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+
+        game.move();
+        for (int row=0; row<GRID_SIZE_X; row++) {
+        	for(int col=0;col<GRID_SIZE_Y;col++) {
+        		labels[row][col] = new JLabel(getImageIcon(array[row][col]));
+        		grid.add(labels[row][col]);
+            }
+        }
+        gameSnake = game.getSnake();
+        int[] parts = new int[2];
+        for (int i=0;i<gameSnake.size();i++) {
+            parts = convertToInt(gameSnake.get(i));
+            labels[parts[0]][parts[1]].setIcon(snake);
+        }
+
+/**
+ *
 			System.out.println("HERE and counter is: " + counter);
 			int row = counter/GRID_SIZE_Y;
 			int col = counter%GRID_SIZE_Y;
@@ -101,6 +127,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 				}
 
 			}
+            */
 		}
 	});
 
@@ -185,7 +212,6 @@ public class SnakeGui implements ActionListener, KeyListener {
         JMenuBar menuBar  = new JMenuBar();;
         JMenu menu = new JMenu("Snake Menu");
         JMenuItem menuItem;
-<<<<<<< HEAD
 //        JPanel jPanel = new JPanel();
 //        KeyListener keyListener = new KeyListener() {
 //
@@ -213,9 +239,6 @@ public class SnakeGui implements ActionListener, KeyListener {
 //		};
 
 
-=======
-
->>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
         menuBar.add(menu);
 
         // A group of JMenuItems. You can create other menu items here if desired
@@ -291,7 +314,6 @@ public class SnakeGui implements ActionListener, KeyListener {
 		default: return null;
 		}
     }
-<<<<<<< HEAD
 
     //private String get
 
@@ -305,10 +327,8 @@ public class SnakeGui implements ActionListener, KeyListener {
 //    }
 
 
-=======
 
 
->>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
     /**
      * This method handles events from the Menu and the board.
      *
@@ -317,7 +337,6 @@ public class SnakeGui implements ActionListener, KeyListener {
     {
         String classname = getClassName(e.getSource());
         JComponent component = (JComponent)(e.getSource());
-<<<<<<< HEAD
 
 //        KeyListener keyListener = new KeyListener() {
 //
@@ -344,9 +363,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 //			}
 //		};
 		//component.addKeyListener(this);
-=======
 
->>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
         if (classname.equals("JMenuItem"))
         {
             JMenuItem menusource = (JMenuItem)(e.getSource());
