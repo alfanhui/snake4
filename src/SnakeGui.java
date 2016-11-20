@@ -27,7 +27,7 @@ public class SnakeGui implements ActionListener, KeyListener {
      */
 
     private final static String DEFAULT_FILENAME = "Snakegui.txt";
-    private final int GRID_SIZE_X = 4, GRID_SIZE_Y = 5;
+    private final int GRID_SIZE_X = 60, GRID_SIZE_Y = 80;
     //private JButton [] buttonArray;
     private ImageIcon brownSquare = convertPicutres("brownSquare.jpg");
     private ImageIcon blueSquare = convertPicutres("blueSquare.jpg");
@@ -42,14 +42,14 @@ public class SnakeGui implements ActionListener, KeyListener {
     private static JFrame frame = new JFrame("SnakeGui");
     private int snakeSize = 2;
     private final int DELAY_IN_MILISEC = 1000;
-    private int [][] array; // = new int[GRID_SIZE_X][GRID_SIZE_Y];
+    private int [][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
     private TextField textField;
     private Snake4 game;
     public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
 
     public SnakeGui() {
         game = new Snake4();
-        array = game.getMap();
+        // array = game.getMap();
         gameSnake = game.getSnake();
     }
 
@@ -139,7 +139,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     {
     	ImageIcon imageTemporary = new ImageIcon(name);
     	Image image2 = imageTemporary.getImage(); // transform it
-        Image newimg = image2.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);// scale it the smooth way
+        Image newimg = image2.getScaledInstance(10, 10,  java.awt.Image.SCALE_SMOOTH);// scale it the smooth way
         return new ImageIcon(newimg);// transform it back
     }
 
@@ -174,7 +174,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     	try
     	{
-    		fileReader = new FileReader("array.txt");
+    		fileReader = new FileReader("board.txt");
     		bufferedReader = new BufferedReader(fileReader);
     		String[] tempStringArray = new String[GRID_SIZE_Y];
     		String nextLine = bufferedReader.readLine();
@@ -265,7 +265,8 @@ public class SnakeGui implements ActionListener, KeyListener {
         JPanel grid = new JPanel(new GridLayout(GRID_SIZE_X, GRID_SIZE_Y,0,0));
         //buttonArray = new JButton[numButtons];
         labels = new JLabel[GRID_SIZE_X][GRID_SIZE_Y];
-        // readArrayFromFile();
+        readArrayFromFile();
+        // array = game.getMap();
         for (int row=0; row<GRID_SIZE_X; row++)
         {
         	for(int col=0;col<GRID_SIZE_Y;col++)
