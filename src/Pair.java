@@ -6,4 +6,8 @@ public class Pair {
 		row = r;
 		column = c;
 	}
+
+	public Pair() {
+		// TODO Auto-generated constructor stub
+	}
 }
