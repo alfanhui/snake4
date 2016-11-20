@@ -46,13 +46,13 @@ public class SnakeGui implements ActionListener, KeyListener {
     private TextField textField;
     private Snake4 game;
     public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
-    public java.util.List<Integer> portalArray = new java.util.ArrayList<Integer>();
+    public int[] portalArray;
 
 
     public SnakeGui() {
         game = new Snake4();
         gameSnake = game.getSnake();
-        portalArray = game.getPortals();
+        portalArray  = game.getPortals();
     }
 
 
@@ -105,10 +105,9 @@ public class SnakeGui implements ActionListener, KeyListener {
         }
 
         portalArray = game.getPortals();
-        int[] parts = new int[2];
-        for (int i=0;i<portalArray.size();i++) {
-            parts = convertToMDA(portalArray.get(i));
-            labels[parts[0]][parts[1]].setIcon(getPortalColour());
+        System.out.println("PORTAL COORDINATES: "+portalArray[0]+" AND "+portalArray[1]);
+        for (int i=0;i<portalArray.length;i++) {
+            labels[portalArray[0]][portalArray[1]].setIcon(portal);
         }
 
 
