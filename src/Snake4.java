@@ -33,10 +33,12 @@ public class Snake4{
         snake = new ArrayList<Integer>();
         //Get portal locations
         List<Pair> portals = new ArrayList<Pair>();
+        Pair portalPair = new Pair();
         portals = newMap.getPortals(map);
         portal_location = new int[portals.size()];
         for(int i = 0; i<portals.size();i++){
-            portal_location[i] = convertToInt(portals.get(i).row,portals.get(i).column);
+            portalPair = portals.get(i);
+            portal_location[i] = convertToInt(portalPair.row,portalPair.column);
         }
         height = newMap.COLUMN;
         width = newMap.ROW;
