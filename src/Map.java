@@ -112,9 +112,10 @@ public class Map {
 	/* Add two portals to the snake board */
 	public int[][] addPortals(int[][] snakeBoard, List<Pair> freeIndexes) {
 		int starterAreaPortal, endAreaPortal;
+		
 		while (true){
 			starterAreaPortal = new Random().nextInt(startingWallSide.size());
-			endAreaPortal = new Random().nextInt(freeIndexes.size());
+			endAreaPortal = new Random().nextInt(endingWallSide.size());
 			if (starterAreaPortal != endAreaPortal ){
 				break;
 			}
@@ -122,7 +123,7 @@ public class Map {
 		Pair portalPos1 = freeIndexes.get(starterAreaPortal);
 		Pair portalPos2 = freeIndexes.get(endAreaPortal);		
 		snakeBoard[portalPos1.row][portalPos1.column] = PORTAL;		
-		snakeBoard[portalPos2.row][portalPos2.column] = PORTAL;		
+		snakeBoard[portalPos2.row][portalPos2.column] = PORTAL;
 		freeIndexes.remove(starterAreaPortal);
 		freeIndexes.remove(endAreaPortal);
 		
@@ -176,7 +177,14 @@ public class Map {
 	
 	/* Add snake to board to start */
 	public int[][] addSnake(int[][] snakeBoard, List<Pair> freeIndexes) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++i){
+				if (snakeBoard[i][j] == START){
+					snakeBoard[i][j] = SNAKE;
+					return snakeBoard;
+				}
+			}
+		}
 		return null;
 	}
 
@@ -210,7 +218,37 @@ public class Map {
 			}
 		}		
 	}
-	
+
+	public void printBoard(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				switch (snakeBoard[i][j]){
+				case SOFTWALL:
+					System.out.print("+");
+					//break;
+				case SNAKE:
+					System.out.print("S");
+					//break;
+				case PORTAL:
+					System.out.print("0");
+					//break;
+				case FOOD:
+					System.out.print("F");
+					//break;
+				case HARDWALL:
+					System.out.print("#");
+					//break;
+				case SPACE:
+					System.out.print(" ");
+					//break;	
+				case START:
+					System.out.print("X");
+					//break;
+				}
+			}
+		}System.out.println();
+		
+	}
 	public boolean noWallWithin2Spaces(int[][] snakeBoard, int i, int j) {
 		
 		/*if (snakeBoard[i-2][j] == SOFTWALL || snakeBoard[i+2][j] == SOFTWALL || 
@@ -221,11 +259,8 @@ public class Map {
 		}*/		
 		return true;
 	}
-	
 }
 /*if (snakeBoard[i][j] == SOFTWALL){System.out.print("x");} 
- * else {System.out.print("0");
-}*/
-
+ * else {System.out.print("0");}*/
 //System.out.print(" ("+i+","+j+") ");
 //System.out.print("0");

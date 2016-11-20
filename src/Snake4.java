@@ -2,6 +2,7 @@
  * Dundee university Quackathon
  *
  **/
+import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.Random;
 
@@ -39,28 +40,28 @@ public class Snake4{
         switch (code) {
         case 39:
             if (direction != 'r') {
-                cordinate = head + 100;
+                coordinate = head + 100;
                 direction = 'r';
                 moveHere(coordinate);
             }
          break;
          case 37:
             if (direction != 'l') {
-                cordinate = head - 100;
+                coordinate = head - 100;
                 direction = 'l';
                 moveHere(coordinate);
             }
          break;
          case 40:
             if (direction != 'd') {
-                cordinate = head + 1;
+                coordinate = head + 1;
                 direction = 'd';
                 moveHere(coordinate);
             }
         break;
         case 38:
             if (direction != 'u') {
-                cordinate = head - 1;
+                coordinate = head - 1;
                 direction = 'u';
                 moveHere(coordinate);
             }
@@ -72,7 +73,7 @@ public class Snake4{
 
     public void moveHere(int coordinate) {
         int[] parts = convertToMDA(coordinate);
-        int type = map[part[0]][parts[1]];
+        int type = map[parts[0]][parts[1]];
         int newLocation = coordinate;
         switch (type) {
             case 1:
@@ -85,7 +86,7 @@ public class Snake4{
             case 3:
                 newLocation = portal();
                 int[] coords = convertToMDA(newLocation);
-                if (map[coords[0]][coords[1]]] == 1) {
+                if (map[coords[0]][coords[1]] == 1) {
                     newLocation = throughWall(coords);
                 }
                 move1(newLocation);
@@ -125,31 +126,27 @@ public class Snake4{
                         return convertToInt(i,parts[1]);
                     }
                 }
-            break;
             case 'r':
                 for (int i = parts[0]; i<=0; i--) {
                     if (map[i][parts[1]] == 1) {
                         return convertToInt(i,parts[1]);
                     }
                 }
-            break;
             case 'u':
                 for (int i = parts[1]; i<=0; i--) {
                     if (map[parts[0]][i] == 1) {
                         return convertToInt(parts[0],i);
                     }
                 }
-            break;
             case 'd':
                 for (int i = parts[1]; i>height; i++) {
                     if (map[parts[0]][i] == 1) {
                         return convertToInt(parts[0],i);
                     }
                 }
-            break;
             default:
                 System.out.println("ERROR - Snake is confused about the Wall");
-            break;
+                return -1;
         }
     }
 
@@ -165,16 +162,17 @@ public class Snake4{
     public int portal(){
         //WE need to know the direction and which portal it hits, then its the other portal becomes the new head + direction of portal
         boolean success = false;
-        int homePortal;
-        int loci[];
+        int homePortal = 0;
+        int loci[] = new int[2];
         Random rn = new Random();
         shuffleArray(portal_location);
         int index ; //rn.nextInt() * portal_location.length;
         for(int i =0; i<portal_location.length;i++){
             index = i;
-            if(portal_location[i] == head)
+            if(portal_location[i] == head){
                 homePortal = i;
                 continue;
+            }
             loci = convertToMDA(portal_location[i]);
             if(map[loci[0]][loci[1]+=1] != 2 || map[loci[0]][loci[1]+=1]!=6){ //d
 
@@ -214,11 +212,6 @@ public class Snake4{
             array[index] = array[i];
             array[i] = a;
         }
-    }
-
-
-    public int food(){
-
     }
 
     public static void main(String args[]) throws InterruptedException {

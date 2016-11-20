@@ -80,4 +80,12 @@ public class MapTest {
 		System.out.println("Size is " + newMap.endingWallSide.size());
 		assertTrue("Incorrect ending list size", newMap.endingWallSide.size() == 1758);
 	}
+	@Test
+	public void testCorrectPrintout() {
+		Map newMap = new Map();
+		int[][] board = newMap.initialiseBoard();
+		
+		newMap.printBoard(board);
+		
+	}
 }
