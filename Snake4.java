@@ -14,6 +14,8 @@ public class Snake4{
     public int[] portal_location;
     public List<Integer> snake;
     public boolean dead;
+    public int height;
+    public int width;
     public final char printChars[] = new char[] {' ', '*', '.','@','~'};
 
     /*Constructor
@@ -23,12 +25,10 @@ public class Snake4{
         map = new int[80][60];
         snake = new ArrayList<Integer>();
         //Get portal locations
-=======
-        int height = 60;
-        int width = 80;
+        height = 60;
+        width = 80;
         map = new int[height][width];
         snake = new ArrayList<Integer>(3);
->>>>>>> f074a174fa2b753191b1aa6ae3bdca237d8462ad
         head = 0;
         dead = false;
     }
@@ -131,14 +131,14 @@ public class Snake4{
             break;
             case 'u':
                 for (int i = parts[1]; i<=0; i--) {
-                    if (map[parts[0]][i] {
+                    if (map[parts[0]][i] == 1) {
                         return convertToInt(parts[0],i);
                     }
                 }
             break;
             case 'd':
                 for (int i = parts[1]; i>height; i++) {
-                    if (mapts[parts[0]][i] == 1) {
+                    if (map[parts[0]][i] == 1) {
                         return convertToInt(parts[0],i);
                     }
                 }
