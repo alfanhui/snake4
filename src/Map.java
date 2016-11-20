@@ -8,6 +8,7 @@ public class Map {
 	public final int COLUMN = 80;
 	public final int ROW = 60;
 	public final int SOFTWALL_LOCATION = 49;
+	public final int GAME_VERSION = 4;
 
 	/* constant fields for defining map contents */
 	public static final int SPACE = 0;
@@ -17,7 +18,7 @@ public class Map {
 	public static final int FOOD = 4;
 	public static final int START = 5;
 	public static final int HARDWALL = 6;
-	
+
 	public List<Pair> freeIndexes = new ArrayList<Pair>();
 	public List<Pair> startingWallSide = new ArrayList<Pair>();
 	public List<Pair> endingWallSide = new ArrayList<Pair>();
@@ -27,22 +28,26 @@ public class Map {
 
 		snakeBoard = addSoftWalls(snakeBoard);
 
-		int gameVersion = new Random().nextInt(3);
-		switch (gameVersion){
-		case 1:
-			snakeBoard = addSoftCentralWall1(snakeBoard);
-			getStartingSidePositions1(snakeBoard);
-			getEndingSidePositions1(snakeBoard);
-		case 2:
-			snakeBoard = addSoftCentralWall2(snakeBoard);
-			getStartingSidePositions2(snakeBoard);
-			getEndingSidePositions2(snakeBoard);
-		case 3:
-			snakeBoard = addSoftCentralWall3(snakeBoard);
-			getStartingSidePositions3(snakeBoard);
-			getEndingSidePositions3(snakeBoard);
+		for (int i = 0; i < GAME_VERSION; ++i){
+			if (i == 0){
+				snakeBoard = addSoftCentralWall1(snakeBoard);
+				getStartingSidePositions1(snakeBoard);
+				getEndingSidePositions1(snakeBoard);
+			} else if (i == 1){
+				snakeBoard = addSoftCentralWall2(snakeBoard);
+				getStartingSidePositions2(snakeBoard);
+				getEndingSidePositions2(snakeBoard);
+			} else if (i == 2){
+				snakeBoard = addSoftCentralWall3(snakeBoard);
+				getStartingSidePositions3(snakeBoard);
+				getEndingSidePositions3(snakeBoard);
+			} else {
+				snakeBoard = addSoftCentralWall4(snakeBoard);
+				getStartingSidePositions4(snakeBoard);
+				getEndingSidePositions4(snakeBoard);
+			}
 		}
-		
+
 		snakeBoard = addHardEdgeWallBottom(snakeBoard);
 
 		freeIndexes = generateFreePositions(snakeBoard);
@@ -52,7 +57,7 @@ public class Map {
 
 		// add snake to starting position
 		snakeBoard = addSnake(snakeBoard);
-		
+
 		return snakeBoard;
 	}
 	/* Add hard wall to specified row/column of board */
@@ -92,7 +97,7 @@ public class Map {
 		}
 		return null;
 	}
-	
+
 	/* Add soft (wrap-around) boundary walls to the snake board */
 	public int [][] addSoftWalls (int [][] snakeBoard){
 		/* add soft walls to edges of board - top/bottom/left/right */
@@ -112,8 +117,8 @@ public class Map {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
 				snakeBoard [i][SOFTWALL_LOCATION] = SOFTWALL;
-				}
 			}
+		}
 		return snakeBoard;
 	}
 	/* Add soft central wall to the snake board (jagged) */
@@ -135,15 +140,27 @@ public class Map {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
 				if (i == 39 && j <= 59){
-					snakeBoard[i][j] = HARDWALL;
+					snakeBoard[i][j] = SOFTWALL;
 				} else if (i < 39 && j == 59){
-					snakeBoard[i][j] = HARDWALL;
+					snakeBoard[i][j] = SOFTWALL;
 				}
 			}
 		}
 		return snakeBoard;
 	}
-	
+	public int[][] addSoftCentralWall4(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				if (i >= 20 && i <= 39 && j == 29){
+					snakeBoard[i][j] = SOFTWALL;
+				} else if (i >= 20 && i <= 39 && j == 59){
+					snakeBoard[i][j] = SOFTWALL;
+				}
+			}
+		}
+		return snakeBoard;
+	}
+
 	/* Create list of free positions on the snake board */
 	public List<Pair> generateFreePositions(int[][] snakeBoard) {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
@@ -184,7 +201,7 @@ public class Map {
 	public int[][] addStart(int[][] snakeBoard, List<Pair> freeIndexes) {
 		int randomStart;
 		Pair startPosition;
-		
+
 		while (true){
 			randomStart = new Random().nextInt(freeIndexes.size());
 			startPosition = freeIndexes.get(randomStart);
@@ -202,7 +219,7 @@ public class Map {
 	public Pair getFoodLocation(int[][] snakeBoard) {
 		int foodIndex = new Random().nextInt(freeIndexes.size());
 		Pair foodPosition = freeIndexes.get(foodIndex);
-		
+
 		freeIndexes.remove(foodPosition);
 		return foodPosition;
 	}
@@ -257,9 +274,9 @@ public class Map {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public void getStartingSidePositions2(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
@@ -286,7 +303,7 @@ public class Map {
 			}
 		}
 	}
-	
+
 	public void getStartingSidePositions3(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
@@ -310,7 +327,28 @@ public class Map {
 			}
 		}		
 	}
-	
+
+	public void getStartingSidePositions4(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				if (snakeBoard[i][j] == SPACE){
+					Pair newCoord = new Pair(i,j);
+					startingWallSide.add(newCoord);
+				}
+			}
+		}		
+	}
+	public void getEndingSidePositions4(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				if (snakeBoard[i][j] == SPACE){
+					Pair newCoord = new Pair(i,j);
+					endingWallSide.add(newCoord);
+				}
+			}
+		}		
+	}
+
 	/* Print game board (ignore) */
 	public void printBoard(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
