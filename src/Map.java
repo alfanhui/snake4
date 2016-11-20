@@ -36,13 +36,25 @@ public class Map {
 		List<Pair> freeIndexes = generateFreePositions(snakeBoard);
 		
 		snakeBoard = addPortals(snakeBoard, freeIndexes);
-		snakeBoard = addStart(snakeBoard, freeIndexes);	
+		snakeBoard = addStart(snakeBoard, freeIndexes);					
 		snakeBoard = addFood(snakeBoard, freeIndexes);
+		
+		//startPosition = getDefaultStartPlace(snakeBoard);
 		
 		// add snake to starting position
 		//snakeBoard = addSnake(snakeBoard, freeIndexes);
 		
 		return snakeBoard;		
+	}
+	public Pair getDefaultStartPlace(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				if (snakeBoard[i][j] == START){
+					return new Pair(i,j);
+				}
+			}
+		}
+		return null;
 	}
 	/* Add soft (wrap-around) boundary walls to the snake board */
 	public int [][] addSoftWalls (int [][] snakeBoard){
