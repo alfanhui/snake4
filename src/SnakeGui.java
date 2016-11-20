@@ -41,7 +41,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     private JLabel [][] labels;
     private static JFrame frame = new JFrame("SnakeGui");
     private int snakeSize = 2;
-    private final int DELAY_IN_MILISEC = 500;
+    private final int DELAY_IN_MILISEC = 200;
     private int [][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
     private TextField textField;
     private Snake4 game;
