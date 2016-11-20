@@ -19,7 +19,7 @@ public class Snake4{
     public int width;
     public final char printChars[] = new char[] {' ', '*', '.','@','~'};
     public Map newMap;
-    public Pair foodLoci;
+    public Pair foodPair;
 
     /*Constructor
      *
@@ -83,34 +83,35 @@ public class Snake4{
         int newLocation = coordinate;
         //If food
         if(parts == foodLoci){
-            grow1();
+            grow1(newLocation);
+            foodPair = newMap.getFoodLocation(map);
+            move1(newLocation);
+        }else{
+            switch (type) {
+                case 1:
+                    newLocation = throughWall(parts);
+                    move1(newLocation);
+                break;
+                case 2:
+                    dead = true;
+                break;
+                case 3:
+                    newLocation = portal();
+                    int[] coords = convertToMDA(newLocation);
+                    if (map[coords[0]][coords[1]] == 1) {
+                        newLocation = throughWall(coords);
+                    }
+                    move1(newLocation);
+                    break;
+                case 5:
+                case 0:
+                    move1(newLocation);
+                break;
+                default:
+                    System.out.println("ERROR - Snake does not know where to move");
+                break;
+            }
         }
-        switch (type) {
-            case 1:
-                newLocation = throughWall(parts);
-                move1(newLocation);
-            break;
-            case 2:
-                dead = true;
-            break;
-            case 3:
-                newLocation = portal();
-                int[] coords = convertToMDA(newLocation);
-                if (map[coords[0]][coords[1]] == 1) {
-                    newLocation = throughWall(coords);
-                }
-                move1(newLocation);
-            break;
-            case 5:
-            case 0:
-                move1(newLocation);
-            break;
-            default:
-                System.out.println("ERROR - Snake does not know where to move");
-            break;
-        }
-
-
     }
     public void move1(int newLocation) {
         if (head == 0) {
@@ -242,5 +243,8 @@ public class Snake4{
          return snake;
     }
 
+    public Pair getFoodLocation(){
+        return foodPair;
+    }
 
 }
