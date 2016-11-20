@@ -45,7 +45,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     private int [][] array; // = new int[GRID_SIZE_X][GRID_SIZE_Y];
     private TextField textField;
     private Snake4 game;
-    private ArrayList<Integer> gameSnake;
+    public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
 
     public SnakeGui() {
         game = new Snake4();
@@ -92,13 +92,12 @@ public class SnakeGui implements ActionListener, KeyListener {
         for (int row=0; row<GRID_SIZE_X; row++) {
         	for(int col=0;col<GRID_SIZE_Y;col++) {
         		labels[row][col] = new JLabel(getImageIcon(array[row][col]));
-        		grid.add(labels[row][col]);
             }
         }
         gameSnake = game.getSnake();
         int[] parts = new int[2];
         for (int i=0;i<gameSnake.size();i++) {
-            parts = convertToInt(gameSnake.get(i));
+            parts = convertToMDA(gameSnake.get(i));
             labels[parts[0]][parts[1]].setIcon(snake);
         }
 
