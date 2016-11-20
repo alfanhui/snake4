@@ -77,6 +77,10 @@ public class Snake4{
             break;
             case 3:
                 newLocation = portal();
+                int[] coords = convertToMDA(newLocation);
+                if (map[coords[0]][coords[1]]] == 1) {
+                    newLocation = throughWall(coords);
+                }
                 move1(newLocation);
             break;
             case 4:
