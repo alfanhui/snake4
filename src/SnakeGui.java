@@ -47,14 +47,14 @@ public class SnakeGui implements ActionListener, KeyListener {
     private Snake4 game;
     public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
     public int[] portalArray;
-    // public Pair foodLoc;
+    public Pair foodLoc;
 
 
     public SnakeGui() {
         game = new Snake4();
         gameSnake = game.getSnake();
         portalArray  = game.getPortals();
-        // foodLoc = game.getFoodLocation();
+        foodLoc = game.getFoodLocation();
     }
 
 
