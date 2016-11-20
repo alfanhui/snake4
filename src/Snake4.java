@@ -23,7 +23,8 @@ public class Snake4{
      *
      */
     public Snake4(){
-        map = new int[80][60];
+    	Map newMap = new Map();
+        map = newMap.initialiseBoard();//new int[80][60];
         snake = new ArrayList<Integer>();
         //Get portal locations
         height = 60;
@@ -32,6 +33,7 @@ public class Snake4{
         snake = new ArrayList<Integer>(3);
         head = 0;
         dead = false;
+        
     }
 
     public void move(KeyEvent event) {
