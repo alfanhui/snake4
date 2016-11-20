@@ -32,9 +32,8 @@ public class Snake4{
         map = new int[height][width];
         snake = new ArrayList<Integer>(1);
         head = 0;
-        int[] value = new int[2];
-        value = newMap.getDefaultStartPlace().getValues();
-        snake.add(0,convertToInt(value[0], value[1]));
+        Pair mapHead = newMap.getDefaultStartPlace();
+        snake.add(0,convertToInt(newHead.row, newHead.column));
         dead = false;
     }
 
