@@ -27,24 +27,23 @@ public class Map {
 		int [][] snakeBoard = new int [ROW][COLUMN];
 
 		snakeBoard = addSoftWalls(snakeBoard);
+		
 		snakeBoard = addSoftCentralWall1(snakeBoard);
 		getStartingSidePositions1(snakeBoard);
 		getEndingSidePositions1(snakeBoard);
-		/*for (int i = 0; i < GAME_VERSION; ++i){
-			if (i == 0){
-				snakeBoard = addSoftCentralWall1(snakeBoard);
-				getStartingSidePositions1(snakeBoard);
-				getEndingSidePositions1(snakeBoard);
-			} else if (i == 1){
-				snakeBoard = addSoftCentralWall2(snakeBoard);
-				getStartingSidePositions2(snakeBoard);
-				getEndingSidePositions2(snakeBoard);
-			} else if (i == 2){
-				snakeBoard = addSoftCentralWall3(snakeBoard);
-				getStartingSidePositions3(snakeBoard);
-				getEndingSidePositions3(snakeBoard);
-			} else {
-				snakeBoard = addSoftCentralWall4(snakeBoard);
+		/*snakeBoard = addSoftCentralWall1(snakeBoard);
+		getStartingSidePositions1(snakeBoard);
+		getEndingSidePositions1(snakeBoard);
+		
+		snakeBoard = addSoftCentralWall2(snakeBoard);
+		getStartingSidePositions2(snakeBoard);
+		getEndingSidePositions2(snakeBoard);
+		
+		snakeBoard = addSoftCentralWall3(snakeBoard);
+		getStartingSidePositions3(snakeBoard);
+		getEndingSidePositions3(snakeBoard);
+		
+		snakeBoard = addSoftCentralWall4(snakeBoard);
 				getStartingSidePositions4(snakeBoard);
 				getEndingSidePositions4(snakeBoard);
 			}
@@ -161,7 +160,7 @@ public class Map {
 		}
 		return snakeBoard;
 	}
-
+	
 	/* Create list of free positions on the snake board */
 	public List<Pair> generateFreePositions(int[][] snakeBoard) {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
@@ -350,11 +349,12 @@ public class Map {
 		}		
 	}
 
+	
 	/* Print game board (ignore) */
 	public void printBoard(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
-				System.out.print(snakeBoard[i][j]);
+				System.out.print(snakeBoard[i][j] + " ");
 			}System.out.println();
 		}
 
