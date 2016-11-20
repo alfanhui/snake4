@@ -29,11 +29,13 @@ public class Snake4{
         map = newMap.initialiseBoard();//new int[80][60];
         snake = new ArrayList<Integer>();
         //Get portal locations
-        List<Pair> portalList = new ArrayList<Pair>();
+        List<Pair> portalList = newMap.getPortals(map);
+        System.out.println("hello");
         portal_location = new int[portalList.size()];
         for(int i = 0; i<portalList.size();i++){
             Pair portal = portalList.get(i);
             portal_location[i] = convertToInt(portal.row, portal.column);
+            System.out.println("Portal:" +portal.row+":"+portal.column);
         }
         height = newMap.COLUMN;
         width = newMap.ROW;
