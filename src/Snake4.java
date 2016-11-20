@@ -230,5 +230,7 @@ public class Snake4{
          return Integer.parseInt(stringInt);
     }
 
-
+    public int[][] getMap(){
+        return map;
+    }
 }
