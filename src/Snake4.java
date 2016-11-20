@@ -115,7 +115,6 @@ public class Snake4{
         int type = map[parts[0]][parts[1]];
         System.out.println("TYPE: "+type);
         int newLocation = coordinate;
-        //If food
         if(parts == foodLoci){
             System.out.println("Were in the food place");
             grow1(newLocation);
@@ -291,7 +290,7 @@ public class Snake4{
 
     public boolean validPortal(int location){
         for(int i = 0; i< portal_location.length;i++){
-            if (portal_location == location)
+            if (portal_location[i] == location)
                 return true;
         }
         return false;
