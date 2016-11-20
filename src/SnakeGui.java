@@ -51,6 +51,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         array = snake.getMap();
     }
 
+
     private String getPortalColour()
     {
     	String name;
@@ -184,6 +185,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         JMenuBar menuBar  = new JMenuBar();;
         JMenu menu = new JMenu("Snake Menu");
         JMenuItem menuItem;
+<<<<<<< HEAD
 //        JPanel jPanel = new JPanel();
 //        KeyListener keyListener = new KeyListener() {
 //
@@ -211,6 +213,9 @@ public class SnakeGui implements ActionListener, KeyListener {
 //		};
 
 
+=======
+
+>>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
         menuBar.add(menu);
 
         // A group of JMenuItems. You can create other menu items here if desired
@@ -244,28 +249,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         	for(int col=0;col<GRID_SIZE_Y;col++)
         	{
         		labels[row][col] = new JLabel(getImageIcon(array[row][col]));
-//        		switch(array[row][col])
-//        		{
-//        		case 0:
-//        			//labels[row][col] = new JLabel(brownSquare);//For now this will be our squares
-//        			labels[row][col] = new JLabel(blankSpace);
-//        			break;
-//        		case 1:
-//        			labels[row][col] = new JLabel(softWall);
-//        			break;
-//        		case 2:
-//        			labels[row][col] = new JLabel(snake);
-//        			break;
-//        		case 3:
-//        			labels[row][col] = new JLabel(portal);
-//        			break;
-//        		case 4:
-//        			labels[row][col] = new JLabel(food);
-//        			break;
-//        		case 5:
-//        			labels[row][col] = new JLabel(defaultStart);
-//        			break;
-//        		}
+
         		grid.add(labels[row][col]);
 
         	}
@@ -307,6 +291,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 		default: return null;
 		}
     }
+<<<<<<< HEAD
 
     //private String get
 
@@ -320,6 +305,10 @@ public class SnakeGui implements ActionListener, KeyListener {
 //    }
 
 
+=======
+
+
+>>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
     /**
      * This method handles events from the Menu and the board.
      *
@@ -328,6 +317,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     {
         String classname = getClassName(e.getSource());
         JComponent component = (JComponent)(e.getSource());
+<<<<<<< HEAD
 
 //        KeyListener keyListener = new KeyListener() {
 //
@@ -354,6 +344,9 @@ public class SnakeGui implements ActionListener, KeyListener {
 //			}
 //		};
 		//component.addKeyListener(this);
+=======
+
+>>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
         if (classname.equals("JMenuItem"))
         {
             JMenuItem menusource = (JMenuItem)(e.getSource());
@@ -376,10 +369,7 @@ public class SnakeGui implements ActionListener, KeyListener {
                 NewGame();
             }
         }
-//        else if(classname.equals("KeyPressed"))
-//        {
-//        	keyPressed(e);
-//        }
+
         // Handle the event from the user clicking on a command button
 //        else if (classname.equals("JButton"))
 //        {
