@@ -18,12 +18,14 @@ public class Snake4{
     public int height;
     public int width;
     public final char printChars[] = new char[] {' ', '*', '.','@','~'};
+    public Map newMap;
+    public Pair foodLoci;
 
     /*Constructor
      *
      */
     public Snake4(){
-    	Map newMap = new Map();
+    	newMap = new Map();
         map = newMap.initialiseBoard();//new int[80][60];
         snake = new ArrayList<Integer>();
         //Get portal locations
@@ -76,8 +78,13 @@ public class Snake4{
 
     public void moveHere(int coordinate) {
         int[] parts = convertToMDA(coordinate);
+        int[] foodLoci = new int[] {foodPair.row,foodPair.column};
         int type = map[parts[0]][parts[1]];
         int newLocation = coordinate;
+        //If food
+        if(parts == foodLoci){
+            grow1();
+        }
         switch (type) {
             case 1:
                 newLocation = throughWall(parts);
@@ -93,9 +100,6 @@ public class Snake4{
                     newLocation = throughWall(coords);
                 }
                 move1(newLocation);
-            break;
-            case 4:
-                grow1(newLocation);
             break;
             case 5:
             case 0:
@@ -233,4 +237,10 @@ public class Snake4{
     public int[][] getMap(){
         return map;
     }
+
+    public List<Integer> getSnake(){
+         return snake;
+    }
+
+
 }
