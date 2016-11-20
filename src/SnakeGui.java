@@ -47,14 +47,14 @@ public class SnakeGui implements ActionListener, KeyListener {
     private Snake4 game;
     public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
     public int[] portalArray;
-    public Pair foodLoc;
+    // public Pair foodLoc;
 
 
     public SnakeGui() {
         game = new Snake4();
         gameSnake = game.getSnake();
         portalArray  = game.getPortals();
-        foodLoc = game.getFoodLocation();
+        // foodLoc = game.getFoodLocation();
     }
 
 
@@ -91,7 +91,6 @@ public class SnakeGui implements ActionListener, KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stuba
-        labels[foodLoc.row][foodLoc.column].setIcon(food);
         game.move();
 
         for (int row=0; row<GRID_SIZE_X; row++) {
@@ -100,6 +99,8 @@ public class SnakeGui implements ActionListener, KeyListener {
         		labels[row][col].setIcon(getImageIcon(array[row][col]));
             }
         }
+        labels[foodLoc.row][foodLoc.column].setIcon(food);
+
         gameSnake = game.getSnake();
         int[] parts = new int[2];
         for (int i=0;i<gameSnake.size();i++) {
@@ -108,7 +109,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         }
 
         portalArray = game.getPortals();
-        System.out.println("PORTAL COORDINATES: "+portalArray[0]+" AND "+portalArray[1]);
+        // System.out.println("PORTAL COORDINATES: "+portalArray[0]+" AND "+portalArray[1]);
         for (int i=0;i<portalArray.length;i++) {
             parts = convertToMDA(portalArray[i]);
             labels[parts[0]][parts[1]].setIcon(portal);
