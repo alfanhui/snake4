@@ -17,7 +17,8 @@ public class Map {
 	public static final int FOOD = 4;
 	public static final int START = 5;
 	public static final int HARDWALL = 6;
-
+	
+	public List<Pair> freeIndexes = new ArrayList<Pair>();
 	public List<Pair> startingWallSide = new ArrayList<Pair>();
 	public List<Pair> endingWallSide = new ArrayList<Pair>();
 
@@ -44,7 +45,7 @@ public class Map {
 		
 		snakeBoard = addHardEdgeWallBottom(snakeBoard);
 
-		List<Pair> freeIndexes = generateFreePositions(snakeBoard);
+		freeIndexes = generateFreePositions(snakeBoard);
 
 		snakeBoard = addPortals(snakeBoard, freeIndexes);
 		snakeBoard = addStart(snakeBoard, freeIndexes);
@@ -198,7 +199,7 @@ public class Map {
 	}
 
 	/* Return free location where food can be placed */
-	public Pair getFoodLocation(int[][] snakeBoard, List<Pair> freeIndexes) {
+	public Pair getFoodLocation(int[][] snakeBoard) {
 		int foodIndex = new Random().nextInt(freeIndexes.size());
 		Pair foodPosition = freeIndexes.get(foodIndex);
 		
