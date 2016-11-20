@@ -107,7 +107,8 @@ public class SnakeGui implements ActionListener, KeyListener {
         portalArray = game.getPortals();
         System.out.println("PORTAL COORDINATES: "+portalArray[0]+" AND "+portalArray[1]);
         for (int i=0;i<portalArray.length;i++) {
-            labels[portalArray[0]][portalArray[1]].setIcon(portal);
+            parts = convertToMDA(portalArray[i]);
+            labels[parts[0]][parts[1]].setIcon(portal);
         }
 
 
