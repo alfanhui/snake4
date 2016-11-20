@@ -29,12 +29,10 @@ public class Snake4{
         map = newMap.initialiseBoard();//new int[80][60];
         snake = new ArrayList<Integer>();
         //Get portal locations
-        List<Pair> portalList = newMap.getPortals(map);
+        List<Pair> portalList = new ArrayList<Pair>();
         portal_location = new int[portalList.size()];
-        System.out.println(portalList.size());
         for(int i = 0; i<portalList.size();i++){
             Pair portal = portalList.get(i);
-            System.out.println(portal.row + ":" + portal.column);
             portal_location[i] = convertToInt(portal.row, portal.column);
         }
         height = newMap.COLUMN;
@@ -43,6 +41,7 @@ public class Snake4{
         head = 0;
         Pair mapHead = newMap.getDefaultStartPlace(map);
         snake.add(0,convertToInt(mapHead.row, mapHead.column));
+        snake.add(convertToInt(mapHead.row-1,mapHead.column));
         dead = false;
         System.out.println("End of constructor");
         direction = 'u';
@@ -80,30 +79,26 @@ public class Snake4{
         switch (code) {
         case 39:
             if (direction != 'r') {
-                coordinate = snake.get(head) + 100;
+                coordinate = snake.get(head) + 1;
                 direction = 'r';
-                moveHere(coordinate);
             }
          break;
          case 37:
             if (direction != 'l') {
-                coordinate = snake.get(head) - 100;
+                coordinate = snake.get(head) - 1;
                 direction = 'l';
-                moveHere(coordinate);
             }
          break;
          case 40:
             if (direction != 'd') {
-                coordinate = snake.get(head) + 1;
+                coordinate = snake.get(head) + 100;
                 direction = 'd';
-                moveHere(coordinate);
             }
         break;
         case 38:
             if (direction != 'u') {
-                coordinate = snake.get(head) - 1;
+                coordinate = snake.get(head) - 100;
                 direction = 'u';
-                moveHere(coordinate);
             }
         break;
         default:
@@ -209,32 +204,27 @@ public class Snake4{
     public int portal(){
         //WE need to know the direction and which portal it hits, then its the other portal becomes the new head + direction of portal
         boolean success = false;
-        int homePortal = 0;
         int loci[] = new int[2];
-        //Random rn = new Random();
         System.out.println("portal array: " + portal_location[0]);
         shuffleArray(portal_location);
         System.out.println("portal array shuffled: " + portal_location[0]);
         int index=0; //rn.nextInt() * portal_location.length;
-        for(int i = 0; i< portal_location.length;i++){
-            System.out.println(portal_location[i]);
-        }
         for(int i =0; i<portal_location.length;i++){
             index = i;
             if(portal_location[i] != head){
                 loci = convertToMDA(portal_location[i]);
                 System.out.println("Should be the same as above: " + Integer.toString(loci[0]) + Integer.toString(loci[1]));
                 System.out.println("map value:" + map[loci[0]][loci[1]++]);
-                if(map[loci[0]][loci[1]++] != 2 || map[loci[0]][loci[1]++]!=6){ //d
+                if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]++]!=6){ //d
                     success = true;
                     break;
-                }else if (map[loci[0]][loci[1]-1] != 2 || map[loci[0]][loci[1]-1]!=6){ //u
+                }else if (map[loci[0]][loci[1]--] != 2 || map[loci[0]][loci[1]--]!=6){ //u
                     success = true;
                     break;
-                }else if (map[loci[0]++][loci[1]] != 2 || map[loci[0]+1][loci[1]]!=6){ //r
+                }else if (map[loci[0]++][loci[1]] != 2 || map[loci[0]++][loci[1]]!=6){ //r
                     success = true;
                     break;
-                }else if (map[loci[0]--][loci[1]] != 2 || map[loci[0]-1][loci[1]]!=6){ //l
+                }else if (map[loci[0]--][loci[1]] != 2 || map[loci[0]--][loci[1]]!=6){ //l
                     success = true;
                     break;
                 }
