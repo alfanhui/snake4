@@ -25,7 +25,7 @@ public class Map {
 
 	public int[][] initialiseBoard(){
 		int [][] snakeBoard = new int [ROW][COLUMN];
-
+        System.out.println(' ');
 		snakeBoard = addSoftWalls(snakeBoard);
 		
 		snakeBoard = addSoftCentralWall1(snakeBoard);

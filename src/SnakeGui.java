@@ -91,7 +91,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         game.move();
         for (int row=0; row<GRID_SIZE_X; row++) {
         	for(int col=0;col<GRID_SIZE_Y;col++) {
-        		labels[row][col] = new JLabel(getImageIcon(array[row][col]));
+        		labels[row][col].setIcon(getImageIcon(array[row][col]));
             }
         }
         gameSnake = game.getSnake();
@@ -265,7 +265,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         JPanel grid = new JPanel(new GridLayout(GRID_SIZE_X, GRID_SIZE_Y,0,0));
         //buttonArray = new JButton[numButtons];
         labels = new JLabel[GRID_SIZE_X][GRID_SIZE_Y];
-        readArrayFromFile();
+        // readArrayFromFile();
         for (int row=0; row<GRID_SIZE_X; row++)
         {
         	for(int col=0;col<GRID_SIZE_Y;col++)
