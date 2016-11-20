@@ -117,7 +117,7 @@ public class Snake4{
         int type = map[parts[0]][parts[1]];
         System.out.println("TYPE: "+type);
         int newLocation = coordinate;
-        if(parts == foodLoci){
+        if(parts[0] == foodLoci[0] && parts[1] == foodLoci[1]){
             System.out.println("Were in the food place");
             grow1(newLocation);
             move1(newLocation);
