@@ -221,16 +221,18 @@ public class Snake4{
                 continue;
             }
             loci = convertToMDA(portal_location[i]);
-            if(map[loci[0]][loci[1]+=1] != 2 || map[loci[0]][loci[1]+=1]!=6){ //d
+            System.out.println("Should be the same as above: " + Integer.toString(loci[0]) + Integer.toString(loci[1]));
+            System.out.println("map value:" + map[loci[0]][loci[1]+1]);
+            if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]+1]!=6){ //d
                 success = true;
                 break;
-            }else if (map[loci[0]][loci[1]-=1] != 2 || map[loci[0]][loci[1]-=1]!=6){ //u
+            }else if (map[loci[0]][loci[1]-1] != 2 || map[loci[0]][loci[1]-1]!=6){ //u
                 success = true;
                 break;
-            }else if (map[loci[0]+=1][loci[1]] != 2 || map[loci[0]+=1][loci[1]]!=6){ //r
+            }else if (map[loci[0]+1][loci[1]] != 2 || map[loci[0]+1][loci[1]]!=6){ //r
                 success = true;
                 break;
-            }else if (map[loci[0]-=1][loci[1]] != 2 || map[loci[0]-=1][loci[1]]!=6){ //l
+            }else if (map[loci[0]-1][loci[1]] != 2 || map[loci[0]-1][loci[1]]!=6){ //l
                 success = true;
                 break;
             }
