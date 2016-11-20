@@ -28,7 +28,7 @@ public class Snake4{
     	System.out.println("breakpoint");
     	newMap = new Map();
     	System.out.println("breakpoint");
-        map = newMap.initialiseBoard();//new int[80][60];
+        //map = newMap.initialiseBoard();//new int[80][60];
         System.out.println("breakpoint");
         snake = new ArrayList<Integer>();
         //Get portal locations
@@ -275,4 +275,7 @@ public class Snake4{
         return foodPair;
     }
 
+    public void setMap(int[][] map){
+        this.map = map;
+    }
 }
