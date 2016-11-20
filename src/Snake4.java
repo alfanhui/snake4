@@ -210,9 +210,9 @@ public class Snake4{
         int homePortal = 0;
         int loci[] = new int[2];
         Random rn = new Random();
-        System.out.println("portal array: " + portal_location);
+        System.out.println("portal array: " + portal_location[0]);
         shuffleArray(portal_location);
-        System.out.println("portal array shuffled: " + portal_location);
+        System.out.println("portal array shuffled: " + portal_location[0]);
         int index=0; //rn.nextInt() * portal_location.length;
         for(int i =0; i<portal_location.length;i++){
             index = i;
