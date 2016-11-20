@@ -263,7 +263,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 //        			break;
 //        		}
         		grid.add(labels[row][col]);
-        		grid.addKeyListener(this);
+        		
         	}
             //buttonArray[i] = new JButton(" ");
             
@@ -273,6 +273,8 @@ public class SnakeGui implements ActionListener, KeyListener {
             //grid.add(buttonArray[i]);
             
         }
+        grid.addKeyListener(this);
+		grid.setFocusable(true);
         return grid;
     }
     
@@ -490,7 +492,6 @@ public class SnakeGui implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Working????!?!!");
 		int key = e.getKeyCode();
 		if(key == KeyEvent.VK_SPACE)
 	    	{
