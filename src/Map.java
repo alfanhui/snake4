@@ -28,26 +28,29 @@ public class Map {
         System.out.println(' ');
 		snakeBoard = addSoftWalls(snakeBoard);
 		
-		snakeBoard = addSoftCentralWall1(snakeBoard);
-		getStartingSidePositions1(snakeBoard);
-		getEndingSidePositions1(snakeBoard);
-		/*snakeBoard = addSoftCentralWall1(snakeBoard);
-		getStartingSidePositions1(snakeBoard);
-		getEndingSidePositions1(snakeBoard);
-		
-		snakeBoard = addSoftCentralWall2(snakeBoard);
-		getStartingSidePositions2(snakeBoard);
-		getEndingSidePositions2(snakeBoard);
-		
-		snakeBoard = addSoftCentralWall3(snakeBoard);
-		getStartingSidePositions3(snakeBoard);
-		getEndingSidePositions3(snakeBoard);
-		
-		snakeBoard = addSoftCentralWall4(snakeBoard);
-				getStartingSidePositions4(snakeBoard);
-				getEndingSidePositions4(snakeBoard);
-			}
-		}*/
+		int chance = new Random().nextInt(GAME_VERSION);
+		switch (chance){
+		case 0:
+			snakeBoard = addSoftCentralWall1(snakeBoard);
+			getStartingSidePositions1(snakeBoard);
+			getEndingSidePositions1(snakeBoard);
+			break;
+		case 1:
+			snakeBoard = addSoftCentralWall2(snakeBoard);
+			getStartingSidePositions2(snakeBoard);
+			getEndingSidePositions2(snakeBoard);
+			break;
+		case 2:
+			snakeBoard = addSoftCentralWall3(snakeBoard);
+			getStartingSidePositions3(snakeBoard);
+			getEndingSidePositions3(snakeBoard);
+			break;
+		case 3:
+			snakeBoard = addSoftCentralWall4(snakeBoard);
+			getStartingSidePositions4(snakeBoard);
+			getEndingSidePositions4(snakeBoard);
+			break;
+		}
 
 		//snakeBoard = addHardEdgeWallBottom(snakeBoard);
 
@@ -347,9 +350,7 @@ public class Map {
 				}
 			}
 		}		
-	}
-
-	
+	}	
 	/* Print game board (ignore) */
 	public void printBoard(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
