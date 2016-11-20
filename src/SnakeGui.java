@@ -84,12 +84,12 @@ public class SnakeGui implements ActionListener {
 				labels[row][col].setIcon(snake);
 				if(col - snakeSize - 1 < 0)
 				{
-					labels[row-1][GRID_SIZE_Y + (col - snakeSize) - 1].setIcon(blankSpace);
+					labels[row-1][GRID_SIZE_Y + (col - snakeSize) - 1].setIcon(getImageIcon(array[row-1][GRID_SIZE_Y + (col - snakeSize) - 1]));
 					counter++;
 				}
 				else
 				{
-					labels[row][col-snakeSize - 1].setIcon(blankSpace);
+					labels[row][col-snakeSize - 1].setIcon(getImageIcon(array[row][col-snakeSize - 1]));
 					counter++;
 				}
 				
@@ -210,28 +210,29 @@ public class SnakeGui implements ActionListener {
         {
         	for(int col=0;col<GRID_SIZE_Y;col++)
         	{
-        		switch(array[row][col])
-        		{
-        		case 0:
-        			//labels[row][col] = new JLabel(brownSquare);//For now this will be our squares
-        			labels[row][col] = new JLabel(blankSpace);
-        			break;
-        		case 1:
-        			labels[row][col] = new JLabel(softWall);
-        			break;
-        		case 2:
-        			labels[row][col] = new JLabel(snake);
-        			break;
-        		case 3:
-        			labels[row][col] = new JLabel(portal);
-        			break;
-        		case 4:
-        			labels[row][col] = new JLabel(food);
-        			break;
-        		case 5:
-        			labels[row][col] = new JLabel(defaultStart);
-        			break;
-        		}
+        		labels[row][col] = new JLabel(getImageIcon(array[row][col]));
+//        		switch(array[row][col])
+//        		{
+//        		case 0:
+//        			//labels[row][col] = new JLabel(brownSquare);//For now this will be our squares
+//        			labels[row][col] = new JLabel(blankSpace);
+//        			break;
+//        		case 1:
+//        			labels[row][col] = new JLabel(softWall);
+//        			break;
+//        		case 2:
+//        			labels[row][col] = new JLabel(snake);
+//        			break;
+//        		case 3:
+//        			labels[row][col] = new JLabel(portal);
+//        			break;
+//        		case 4:
+//        			labels[row][col] = new JLabel(food);
+//        			break;
+//        		case 5:
+//        			labels[row][col] = new JLabel(defaultStart);
+//        			break;
+//        		}
         		grid.add(labels[row][col]);
         	}
             //buttonArray[i] = new JButton(" ");
@@ -243,6 +244,32 @@ public class SnakeGui implements ActionListener {
             
         }
         return grid;
+    }
+    
+    private ImageIcon getImageIcon(int x)
+    {
+    	switch(x)
+		{
+		case 0:
+			//labels[row][col] = new JLabel(brownSquare);//For now this will be our squares
+			return blankSpace;
+			
+		case 1:
+			return softWall;
+			
+		case 2:
+			return snake;
+			
+		case 3:
+			return portal;
+			
+		case 4:
+			return food;
+			
+		case 5:
+			return defaultStart;
+		default: return null;
+		}
     }
     
     //private String get
