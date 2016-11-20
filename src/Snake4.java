@@ -37,6 +37,7 @@ public class Snake4{
             portal_location[i] = convertToInt(portal.row, portal.column);
             System.out.println("Portal:" +portal.row+":"+portal.column);
         }
+        foodPair = newMap.getFoodLocation(map);
         height = newMap.COLUMN;
         width = newMap.ROW;
         snake = new ArrayList<Integer>(1);
@@ -111,15 +112,16 @@ public class Snake4{
     public void moveHere(int coordinate) {
         int[] parts = convertToMDA(coordinate);
         System.out.println("Location in parts. Part 1: "+parts[0]+" Part 2: "+parts[1]);
-        int[] foodLoci = new int[] {10,10};
+        int[] foodLoci = new int[] {foodPair.row,foodPair.column};
+        System.out.println("food location:" + foodPair.row + " : " + foodPair.column);
         int type = map[parts[0]][parts[1]];
         System.out.println("TYPE: "+type);
         int newLocation = coordinate;
         if(parts == foodLoci){
             System.out.println("Were in the food place");
             grow1(newLocation);
-            foodPair = newMap.getFoodLocation(map);
             move1(newLocation);
+            foodPair = newMap.getFoodLocation(map);
         }else if (validPortal(coordinate)) {
             newLocation = portal();
             int[] coords = convertToMDA(newLocation);
@@ -216,21 +218,22 @@ public class Snake4{
                 loci = convertToMDA(portal_location[i]);
                 System.out.println("Should be the same as above: " + Integer.toString(loci[0]) + Integer.toString(loci[1]));
                 System.out.println("map value:" + map[loci[0]][loci[1]++]);
-                if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]++]!=6){ //d
+                if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]++]!=6){ //l
                     success = true;
                     break;
-                }else if (map[loci[0]][loci[1]--] != 2 || map[loci[0]][loci[1]--]!=6){ //u
+                }else if (map[loci[0]][loci[1]--] != 2 || map[loci[0]][loci[1]--]!=6){ //r
                     success = true;
                     break;
-                }else if (map[loci[0]++][loci[1]] != 2 || map[loci[0]++][loci[1]]!=6){ //r
+                }else if (map[loci[0]++][loci[1]] != 2 || map[loci[0]++][loci[1]]!=6){ //u
                     success = true;
                     break;
-                }else if (map[loci[0]--][loci[1]] != 2 || map[loci[0]--][loci[1]]!=6){ //l
+                }else if (map[loci[0]--][loci[1]] != 2 || map[loci[0]--][loci[1]]!=6){ //d
                     success = true;
                     break;
                 }
             }
         }
+        /**
         if(!success){
             loci = convertToMDA(portal_location[index]);
             if(map[loci[0]][loci[1]+=1] != 2 || map[loci[0]][loci[1]+=1]!=6){
@@ -240,6 +243,7 @@ public class Snake4{
             }
             else
                 dead = true;
+        */
         }
         return convertToInt(loci[0],loci[1]);
     }
