@@ -75,28 +75,28 @@ public class Snake4{
         switch (code) {
         case 39:
             if (direction != 'r') {
-                coordinate = head + 100;
+                coordinate = snake.get(head) + 100;
                 direction = 'r';
                 moveHere(coordinate);
             }
          break;
          case 37:
             if (direction != 'l') {
-                coordinate = head - 100;
+                coordinate = snake.get(head) - 100;
                 direction = 'l';
                 moveHere(coordinate);
             }
          break;
          case 40:
             if (direction != 'd') {
-                coordinate = head + 1;
+                coordinate = snake.get(head) + 1;
                 direction = 'd';
                 moveHere(coordinate);
             }
         break;
         case 38:
             if (direction != 'u') {
-                coordinate = head - 1;
+                coordinate = snake.get(head) - 1;
                 direction = 'u';
                 moveHere(coordinate);
             }

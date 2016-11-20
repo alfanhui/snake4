@@ -504,12 +504,8 @@ public class SnakeGui implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		int key = e.getKeyCode();
-		if(key == KeyEvent.VK_SPACE)
-	    	{
-	    		System.out.println("Working?");
-	    	}
+        System.out.println("KEY HAS BEEN PRESSED");
+        game.changeDirection(e.getKeyCode());
 	}
 
 	@Override
