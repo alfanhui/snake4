@@ -27,13 +27,14 @@ public class Snake4{
         map = newMap.initialiseBoard();//new int[80][60];
         snake = new ArrayList<Integer>();
         //Get portal locations
-        height = 60;
-        width = 80;
+        height = newMap.COLUMN;
+        width = newMap.ROW;
         map = new int[height][width];
-        snake = new ArrayList<Integer>(3);
+        snake = new ArrayList<Integer>(1);
         head = 0;
+        Pair mapHead = newMap.getDefaultStartPlace(map);
+        snake.add(0,convertToInt(mapHead.row, mapHead.column));
         dead = false;
-        
     }
 
     public void move(KeyEvent event) {
@@ -216,15 +217,6 @@ public class Snake4{
         }
     }
 
-    public static void main(String args[]) throws InterruptedException {
-        System.out.println("Welcome to Snake4!");
-        Snake4 game = new Snake4();
-        //game loop
-        while(!dead){
-           game.move();
-           Thread.sleep(40);
-        }
-    }
 
     public int[] convertToMDA(int location){
         String intString = Integer.toString(location);
