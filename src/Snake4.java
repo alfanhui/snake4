@@ -25,13 +25,16 @@ public class Snake4{
      *
      */
     public Snake4(){
-    	System.out.println("breakpoint");
     	newMap = new Map();
-    	System.out.println("breakpoint");
         map = newMap.initialiseBoard();//new int[80][60];
-        System.out.println("breakpoint");
         snake = new ArrayList<Integer>();
         //Get portal locations
+        List<Pair> portalList = new ArrayList<Pair>();
+        portal_location = new int[portalList.size()];
+        for(int i = 0; i<portalList.size();i++){
+            Pair portal = new Pair();
+            portal_location[i] = convertToInt(portal.row, portal.column);
+        }
         height = newMap.COLUMN;
         width = newMap.ROW;
         snake = new ArrayList<Integer>(1);
@@ -47,19 +50,19 @@ public class Snake4{
         int location;
         System.out.println("Startlocation: "+snake.get(0));
         switch(direction) {
-            case 'r':
+            case 'd':
                 location =snake.get(head) + 100;
                 moveHere(location);
             break;
-            case 'l':
+            case 'u':
                 location = snake.get(head) - 100;
                 moveHere(location);
             break;
-            case 'd':
+            case 'r':
                 location = snake.get(head) + 1;
                 moveHere(location);
             break;
-            case 'u':
+            case 'l':
                 location = snake.get(head) - 1;
                 System.out.println("Location: "+location);
                 moveHere(location);
