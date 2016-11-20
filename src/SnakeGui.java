@@ -1,17 +1,17 @@
 /**
- * SnakeGui: 
- * 
+ * SnakeGui:
+ *
  * @author Dancho Atanasov
  * @version 1.0
- * 
- * 
+ *
+ *
  * Notes:
  *  Event handlers have been set up for Menu Options
  *  NewGame, Pause game, End game
- *  
+ *
  *  To add functionality to this GUI add you code to these functions
- *  which are at the end of this file. 
- * 
+ *  which are at the end of this file.
+ *
  */
 
 import java.awt.*;
@@ -25,10 +25,10 @@ public class SnakeGui implements ActionListener, KeyListener {
     /**
      * Enumerated type to allow us to refer to RED, YELLOW or BLANK
      */
-    
+
     private final static String DEFAULT_FILENAME = "Snakegui.txt";
     private final int GRID_SIZE_X = 4, GRID_SIZE_Y = 5;
-    //private JButton [] buttonArray; 
+    //private JButton [] buttonArray;
     private ImageIcon brownSquare = convertPicutres("brownSquare.jpg");
     private ImageIcon blueSquare = convertPicutres("blueSquare.jpg");
     private ImageIcon blankSpace = convertPicutres("blankSpace.jpg");
@@ -42,10 +42,16 @@ public class SnakeGui implements ActionListener, KeyListener {
     private static JFrame frame = new JFrame("SnakeGui");
     private int snakeSize = 2;
     private final int DELAY_IN_MILISEC = 1000;
-    private int [][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
-    
-   
-    
+    private int [][] array; // = new int[GRID_SIZE_X][GRID_SIZE_Y];
+    private TextField textField;
+    private Snake4 snake;
+
+    public SnakeGui() {
+        snake = new Snake4();
+        array = snake.getMap();
+    }
+
+
     private String getPortalColour()
     {
     	String name;
@@ -61,14 +67,14 @@ public class SnakeGui implements ActionListener, KeyListener {
     		name = "portalOrange.jpg";
     		return name;
     	}
-      
+
     }
-    
+
     /*
      * A timer that makes changes to the game after an set interval of time
      */
     private Timer timer = new Timer(DELAY_IN_MILISEC, new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
@@ -93,11 +99,11 @@ public class SnakeGui implements ActionListener, KeyListener {
 					labels[row][col-snakeSize - 1].setIcon(getImageIcon(array[row][col-snakeSize - 1]));
 					counter++;
 				}
-				
+
 			}
 		}
 	});
-    
+
     /**
      * a method that resizes the pictures
      * @param name
@@ -106,11 +112,11 @@ public class SnakeGui implements ActionListener, KeyListener {
     private ImageIcon convertPicutres(String name)
     {
     	ImageIcon imageTemporary = new ImageIcon(name);
-    	Image image2 = imageTemporary.getImage(); // transform it 
-        Image newimg = image2.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);// scale it the smooth way  
+    	Image image2 = imageTemporary.getImage(); // transform it
+        Image newimg = image2.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);// scale it the smooth way
         return new ImageIcon(newimg);// transform it back
     }
-    
+
     private void printArrayArg(int [][] arr)
     {
     	for(int i=0;i<GRID_SIZE_X;i++)
@@ -122,7 +128,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     		System.out.println();
     	}
     }
-    
+
     private void printArray()
     {
     	for(int i=0;i<GRID_SIZE_X;i++)
@@ -134,30 +140,30 @@ public class SnakeGui implements ActionListener, KeyListener {
     		System.out.println();
     	}
     }
-    
+
     private void readArrayFromFile()
     {
     	FileReader fileReader = null;
     	BufferedReader bufferedReader = null;
-    	
+
     	try
     	{
     		fileReader = new FileReader("array.txt");
     		bufferedReader = new BufferedReader(fileReader);
     		String[] tempStringArray = new String[GRID_SIZE_Y];
     		String nextLine = bufferedReader.readLine();
-    	
+
     			for(int i=0;i<array.length;i++)
         		{
     				tempStringArray = nextLine.split(" ");
     				for(int j=0;j<tempStringArray.length;j++)
     				{
-    					array[i][j] = Integer.parseInt(tempStringArray[j]); 
+    					array[i][j] = Integer.parseInt(tempStringArray[j]);
     				}
         			nextLine = bufferedReader.readLine();
         		}
     	}
-    		
+
     	catch(IOException e)
     	{
     		System.out.println("Cannot read file!");
@@ -170,16 +176,46 @@ public class SnakeGui implements ActionListener, KeyListener {
     	{
     		System.out.println("Could not close file");
     	}
-    	
-    	
+
+
     }
-    
-    public JMenuBar createMenu() 
+
+    public JMenuBar createMenu()
     {
         JMenuBar menuBar  = new JMenuBar();;
         JMenu menu = new JMenu("Snake Menu");
         JMenuItem menuItem;
-        
+<<<<<<< HEAD
+//        JPanel jPanel = new JPanel();
+//        KeyListener keyListener = new KeyListener() {
+//
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				int key = e.getKeyCode();
+//				if(key == KeyEvent.VK_UP)
+//			    	{
+//			    		System.out.println("Working?");
+//			    	}
+//			}
+//		};
+
+
+=======
+
+>>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
         menuBar.add(menu);
 
         // A group of JMenuItems. You can create other menu items here if desired
@@ -197,11 +233,11 @@ public class SnakeGui implements ActionListener, KeyListener {
 
         //a submenu
         menu.addSeparator();
-        
+
         return menuBar;
     }
 
-    public Container createContentPane() 
+    public Container createContentPane()
     {
         //int numButtons = GRID_SIZE_X * GRID_SIZE_Y;
         JPanel grid = new JPanel(new GridLayout(GRID_SIZE_X, GRID_SIZE_Y,0,0));
@@ -213,23 +249,23 @@ public class SnakeGui implements ActionListener, KeyListener {
         	for(int col=0;col<GRID_SIZE_Y;col++)
         	{
         		labels[row][col] = new JLabel(getImageIcon(array[row][col]));
-        		
+
         		grid.add(labels[row][col]);
-        		
+
         	}
             //buttonArray[i] = new JButton(" ");
-            
+
             // This label is used to identify which button was clicked in the action listener
             //buttonArray[i].setActionCommand("" + i); // String "0", "1" etc.
             //buttonArray[i].addActionListener(this);
             //grid.add(buttonArray[i]);
-            
+
         }
         grid.addKeyListener(this);
 		grid.setFocusable(true);
         return grid;
     }
-    
+
     private ImageIcon getImageIcon(int x)
     {
     	switch(x)
@@ -237,40 +273,85 @@ public class SnakeGui implements ActionListener, KeyListener {
 		case 0:
 			//labels[row][col] = new JLabel(brownSquare);//For now this will be our squares
 			return blankSpace;
-			
+
 		case 1:
 			return softWall;
-			
+
 		case 2:
 			return snake;
-			
+
 		case 3:
 			return portal;
-			
+
 		case 4:
 			return food;
-			
+
 		case 5:
 			return defaultStart;
 		default: return null;
 		}
     }
-    
-    
+<<<<<<< HEAD
+
+    //private String get
+
+//    private void keyPressed(KeyEvent e)
+//    {
+//    	int key = e.getKeyCode();
+//    	if(key == KeyEvent.VK_SPACE)
+//    	{
+//    		System.out.println("Working?");
+//    	}
+//    }
+
+
+=======
+
+
+>>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
     /**
      * This method handles events from the Menu and the board.
      *
      */
-    public void actionPerformed(ActionEvent e) 
+    public void actionPerformed(ActionEvent e)
     {
         String classname = getClassName(e.getSource());
         JComponent component = (JComponent)(e.getSource());
-        
+<<<<<<< HEAD
+
+//        KeyListener keyListener = new KeyListener() {
+//
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				int key = e.getKeyCode();
+//				if(key == KeyEvent.VK_SPACE)
+//			    	{
+//			    		System.out.println("Working?");
+//			    	}
+//			}
+//		};
+		//component.addKeyListener(this);
+=======
+
+>>>>>>> 1e92ac91e6eb84b8646f7e9e2b4df966b93b49ed
         if (classname.equals("JMenuItem"))
         {
             JMenuItem menusource = (JMenuItem)(e.getSource());
             String menutext  = menusource.getText();
-            
+
             // Determine which menu option was chosen
             if (menutext.equals("Pause Game"))
             {
@@ -296,29 +377,29 @@ public class SnakeGui implements ActionListener, KeyListener {
 //            int bnum = Integer.parseInt(button.getActionCommand());
 //            int row = bnum % GRID_SIZE_X;
 //            int col = bnum / GRID_SIZE_X;
-//            
+//
 //            System.out.println("bnum=" + bnum);
-//                   
-//        }  
+//
+//        }
     }
-    
+
     /**
      *  Returns the class name
      */
-    protected String getClassName(Object o) 
+    protected String getClassName(Object o)
     {
         String classString = o.getClass().getName();
         int dotIndex = classString.lastIndexOf(".");
         return classString.substring(dotIndex+1);
     }
-    
-    
+
+
 
     /**
      * Create the GUI and show it.
      * For thread safety, this method should be invoked from the event-dispatching thread.
      */
-    private static void createAndShowGUI() 
+    private static void createAndShowGUI()
     {
         // Create and set up the window.
         //JFrame frame = new JFrame("SnakeGui");
@@ -333,32 +414,32 @@ public class SnakeGui implements ActionListener, KeyListener {
         frame.setSize(1000, 750);
         frame.setVisible(true);
     }
-    
-//    
-    
+
+//
+
     /**
      * This is a standard main function for a Java GUI
      */
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
 //    	SnakeGui test = new SnakeGui();
 //    	test.readArrayFromFile();
 //    	test.printArray();
-        javax.swing.SwingUtilities.invokeLater(new Runnable() 
+        javax.swing.SwingUtilities.invokeLater(new Runnable()
         {
-            public void run() 
+            public void run()
             {
-            	
+
                 createAndShowGUI();
             }
         });
     }
-      
+
     //************************************************************************
     //*** ConnectGUI: Modify the methods below to respond to Menu and Mouse click events
-     
+
     /**
      * This method is called from the Menu event: New Game.
      * ConnectGUI
@@ -366,14 +447,14 @@ public class SnakeGui implements ActionListener, KeyListener {
     public void NewGame()
     {
          System.out.println("New game selected");
-         
+
          // Initialise your game
          timer.start();
          System.out.println("Timer started");
-         
+
     }
-    
-    
+
+
     /**
      * This method is called from the Menu event: Load Game.
      * ConnectGUI
@@ -384,8 +465,8 @@ public class SnakeGui implements ActionListener, KeyListener {
           timer.stop();
           System.out.println("Timer stopped");
     }
-    
-    
+
+
     /**
      * This method is called from the Menu event: Save Game.
      * ConnectGUI
@@ -399,7 +480,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -415,7 +496,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
 
