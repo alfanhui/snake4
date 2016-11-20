@@ -211,6 +211,7 @@ public class Snake4{
         shuffleArray(portal_location);
         System.out.println("portal array shuffled: " + portal_location[0]);
         int index=0; //rn.nextInt() * portal_location.length;
+        System.out.println("Portal array size:" + portal_location.length);
         for(int i =0; i<portal_location.length;i++){
             index = i;
             if(portal_location[i] != head){
@@ -287,5 +288,13 @@ public class Snake4{
 
     public int[] getPortals(){
          return portal_location;
+    }
+
+    public boolean validPortal(int location){
+        for(int i = 0; i< portal_location.length;i++){
+            if (portal_location == location)
+                return true;
+        }
+        return false;
     }
 }
