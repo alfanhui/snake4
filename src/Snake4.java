@@ -47,19 +47,19 @@ public class Snake4{
         int location;
         System.out.println("Startlocation: "+snake.get(0));
         switch(direction) {
-            case 'r':
+            case 'd':
                 location =snake.get(head) + 100;
                 moveHere(location);
             break;
-            case 'l':
+            case 'u':
                 location = snake.get(head) - 100;
                 moveHere(location);
             break;
-            case 'd':
+            case 'r':
                 location = snake.get(head) + 1;
                 moveHere(location);
             break;
-            case 'u':
+            case 'l':
                 location = snake.get(head) - 1;
                 System.out.println("Location: "+location);
                 moveHere(location);
