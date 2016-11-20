@@ -177,7 +177,7 @@ public class Map {
 		return freeIndexes;
 	}
 
-	/* Add two portals to the snake board */
+	/* Add five portals to the snake board */
 	public int[][] addPortals(int[][] snakeBoard, List<Pair> freeIndexes) {
 		int starterAreaPortal, endAreaPortal, thirdPortal, fourthPortal, fifthPortal;
 
@@ -211,13 +211,15 @@ public class Map {
 					freeIndexes.remove(fifthPortal);
 					break;
 				}
-				
 			}		
 		}
 		return snakeBoard;
 	}
+	/* Check portals are at least 3 spaces away from soft walls */
 	public boolean coordsMeetReqs(int row, int column) {
-		if (row > 3 && row < ROW-4 && column > 3 && column <COLUMN-4){
+		if ((row > 3 && row < ROW-4 && column > 3 && column < COLUMN-4) &&
+				(row-3 != SOFTWALL)&& (row+3 != SOFTWALL) && (column+3 != SOFTWALL)
+				&& (column-3 != SOFTWALL)){
 			return true;
 		}			
 		return false;
