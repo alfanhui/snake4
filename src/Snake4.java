@@ -33,7 +33,7 @@ public class Snake4{
         snake = new ArrayList<Integer>(1);
         head = 0;
         int[] value = new int[2];
-        value = newMap.getDefaultStartPlace.getValues();
+        value = newMap.getDefaultStartPlace().getValues();
         snake.add(0,convertToInt(value[0], value[1]));
         dead = false;
     }
