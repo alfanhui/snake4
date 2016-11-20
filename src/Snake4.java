@@ -36,6 +36,7 @@ public class Snake4{
         width = newMap.ROW;
         snake = new ArrayList<Integer>(1);
         head = 0;
+        System.out.print(' ');
         Pair mapHead = newMap.getDefaultStartPlace(map);
         snake.add(0,convertToInt(mapHead.row, mapHead.column));
         dead = false;

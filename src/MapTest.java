@@ -85,7 +85,7 @@ public class MapTest {
 		Map newMap = new Map();
 		int[][] board = newMap.initialiseBoard();
 		
-		//newMap.printBoard(board);
+		newMap.printBoard(board);
 		
 	}
 }
