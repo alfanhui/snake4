@@ -27,30 +27,28 @@ public class Map {
 		int [][] snakeBoard = new int [ROW][COLUMN];
         System.out.println(' ');
 		snakeBoard = addSoftWalls(snakeBoard);
-		
-		int chance = new Random().nextInt(GAME_VERSION);
-		switch (chance){
-		case 0:
-			snakeBoard = addSoftCentralWall1(snakeBoard);
-			getStartingSidePositions1(snakeBoard);
-			getEndingSidePositions1(snakeBoard);
-			break;
-		case 1:
-			snakeBoard = addSoftCentralWall2(snakeBoard);
-			getStartingSidePositions2(snakeBoard);
-			getEndingSidePositions2(snakeBoard);
-			break;
-		case 2:
-			snakeBoard = addSoftCentralWall3(snakeBoard);
-			getStartingSidePositions3(snakeBoard);
-			getEndingSidePositions3(snakeBoard);
-			break;
-		case 3:
-			snakeBoard = addSoftCentralWall4(snakeBoard);
-			getStartingSidePositions4(snakeBoard);
-			getEndingSidePositions4(snakeBoard);
-			break;
-		}
+		snakeBoard = addSoftCentralWall1(snakeBoard);
+		getStartingSidePositions1(snakeBoard);
+		getEndingSidePositions1(snakeBoard);
+		/*for (int i = 0; i < GAME_VERSION; ++i){
+			if (i == 0){
+				snakeBoard = addSoftCentralWall1(snakeBoard);
+				getStartingSidePositions1(snakeBoard);
+				getEndingSidePositions1(snakeBoard);
+			} else if (i == 1){
+				snakeBoard = addSoftCentralWall2(snakeBoard);
+				getStartingSidePositions2(snakeBoard);
+				getEndingSidePositions2(snakeBoard);
+			} else if (i == 2){
+				snakeBoard = addSoftCentralWall3(snakeBoard);
+				getStartingSidePositions3(snakeBoard);
+				getEndingSidePositions3(snakeBoard);
+			} else {
+				snakeBoard = addSoftCentralWall4(snakeBoard);
+				getStartingSidePositions4(snakeBoard);
+				getEndingSidePositions4(snakeBoard);
+			}
+		}*/
 
 		//snakeBoard = addHardEdgeWallBottom(snakeBoard);
 
@@ -163,7 +161,7 @@ public class Map {
 		}
 		return snakeBoard;
 	}
-	
+
 	/* Create list of free positions on the snake board */
 	public List<Pair> generateFreePositions(int[][] snakeBoard) {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
@@ -230,11 +228,11 @@ public class Map {
 	/* Get array list of portal locations */
 	public List<Pair> getPortals (int[][] snakeBoard){
 		List<Pair> portals = new ArrayList<Pair>();
-
 		for (int i = 0; i < ROW; ++i){
-			for (int j = 0; j < COLUMN; ++i){
+			for (int j = 0; j < COLUMN; ++j){
 				if (snakeBoard[i][j] == PORTAL){
 					// add portal to list
+                    System.out.println("PORTAL LOCATION" + i + ":" + j);
 					Pair newPortal = new Pair(i, j);
 					portals.add(newPortal);
 				}
@@ -350,12 +348,13 @@ public class Map {
 				}
 			}
 		}		
-	}	
+	}
+
 	/* Print game board (ignore) */
 	public void printBoard(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
-				System.out.print(snakeBoard[i][j] + " ");
+				System.out.print(snakeBoard[i][j]);
 			}System.out.println();
 		}
 

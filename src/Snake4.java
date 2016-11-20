@@ -29,10 +29,12 @@ public class Snake4{
         map = newMap.initialiseBoard();//new int[80][60];
         snake = new ArrayList<Integer>();
         //Get portal locations
-        List<Pair> portalList = new ArrayList<Pair>();
+        List<Pair> portalList = newMap.getPortals(map);
         portal_location = new int[portalList.size()];
+        System.out.println(portalList.size());
         for(int i = 0; i<portalList.size();i++){
-            Pair portal = new Pair();
+            Pair portal = portalList.get(i);
+            System.out.println(portal.row + ":" + portal.column);
             portal_location[i] = convertToInt(portal.row, portal.column);
         }
         height = newMap.COLUMN;
@@ -209,32 +211,33 @@ public class Snake4{
         boolean success = false;
         int homePortal = 0;
         int loci[] = new int[2];
-        Random rn = new Random();
+        //Random rn = new Random();
         System.out.println("portal array: " + portal_location[0]);
         shuffleArray(portal_location);
         System.out.println("portal array shuffled: " + portal_location[0]);
         int index=0; //rn.nextInt() * portal_location.length;
+        for(int i = 0; i< portal_location.length;i++){
+            System.out.println(portal_location[i]);
+        }
         for(int i =0; i<portal_location.length;i++){
             index = i;
-            if(portal_location[i] == head){
-                homePortal = i;
-                continue;
-            }
-            loci = convertToMDA(portal_location[i]);
-            System.out.println("Should be the same as above: " + Integer.toString(loci[0]) + Integer.toString(loci[1]));
-            System.out.println("map value:" + map[loci[0]][loci[1]+1]);
-            if(map[loci[0]][loci[1]+1] != 2 || map[loci[0]][loci[1]+1]!=6){ //d
-                success = true;
-                break;
-            }else if (map[loci[0]][loci[1]-1] != 2 || map[loci[0]][loci[1]-1]!=6){ //u
-                success = true;
-                break;
-            }else if (map[loci[0]+1][loci[1]] != 2 || map[loci[0]+1][loci[1]]!=6){ //r
-                success = true;
-                break;
-            }else if (map[loci[0]-1][loci[1]] != 2 || map[loci[0]-1][loci[1]]!=6){ //l
-                success = true;
-                break;
+            if(portal_location[i] != head){
+                loci = convertToMDA(portal_location[i]);
+                System.out.println("Should be the same as above: " + Integer.toString(loci[0]) + Integer.toString(loci[1]));
+                System.out.println("map value:" + map[loci[0]][loci[1]++]);
+                if(map[loci[0]][loci[1]++] != 2 || map[loci[0]][loci[1]++]!=6){ //d
+                    success = true;
+                    break;
+                }else if (map[loci[0]][loci[1]-1] != 2 || map[loci[0]][loci[1]-1]!=6){ //u
+                    success = true;
+                    break;
+                }else if (map[loci[0]++][loci[1]] != 2 || map[loci[0]+1][loci[1]]!=6){ //r
+                    success = true;
+                    break;
+                }else if (map[loci[0]--][loci[1]] != 2 || map[loci[0]-1][loci[1]]!=6){ //l
+                    success = true;
+                    break;
+                }
             }
         }
         if(!success){
@@ -288,5 +291,9 @@ public class Snake4{
 
     public void setMap(int[][] map){
         this.map = map;
+    }
+
+    public int[] getPortals(){
+         return portal_location;
     }
 }
