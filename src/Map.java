@@ -125,6 +125,18 @@ public class Map {
 		}
 		return snakeBoard;
 	}
+	public int[][] addSoftCentralWall3(int[][] snakeBoard) {
+		for (int i = 0; i < ROW; ++i){
+			for (int j = 0; j < COLUMN; ++j){
+				if (i == 39 && j <= 59){
+					snakeBoard[i][j] = HARDWALL;
+				} else if (i < 39 && j == 59){
+					snakeBoard[i][j] = HARDWALL;
+				}
+			}
+		}
+		return snakeBoard;
+	}
 	/* Create list of free positions on the snake board */
 	public List<Pair> generateFreePositions(int[][] snakeBoard) {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
