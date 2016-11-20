@@ -165,27 +165,27 @@ public class Snake4{
     public int throughWall(int[] parts) {
         switch(direction) {
             case 'l':
-                for (int i=parts[1]; i>width; i++) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[0],i);
+                for (int i=parts[0]; i>width; i++) {
+                    if (map[i][parts[1]] == 1) {
+                        return convertToInt(i,parts[1]);
                     }
                 }
             case 'r':
-                for (int i = parts[1]; i<=0; i--) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[0],i);
-                    }
-                }
-            case 'u':
                 for (int i = parts[0]; i<=0; i--) {
                     if (map[i][parts[1]] == 1) {
                         return convertToInt(i,parts[1]);
                     }
                 }
+            case 'u':
+                for (int i = parts[1]; i<=0; i--) {
+                    if (map[parts[0]][i] == 1) {
+                        return convertToInt(parts[0],i);
+                    }
+                }
             case 'd':
-                for (int i = parts[0]; i>height; i++) {
-                    if (map[i][parts[1]] == 1) {
-                        return convertToInt(i,parts[1]);
+                for (int i = parts[1]; i>height; i++) {
+                    if (map[parts[0]][i] == 1) {
+                        return convertToInt(parts[0],i);
                     }
                 }
             default:
@@ -243,8 +243,9 @@ public class Snake4{
             }
             else
                 dead = true;
-        */
+
         }
+        */
         return convertToInt(loci[0],loci[1]);
     }
 
