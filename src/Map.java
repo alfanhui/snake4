@@ -48,9 +48,6 @@ public class Map {
 
 		snakeBoard = addPortals(snakeBoard, freeIndexes);
 		snakeBoard = addStart(snakeBoard, freeIndexes);
-		snakeBoard = addFood(snakeBoard, freeIndexes);
-
-		//startPosition = getDefaultStartPlace(snakeBoard);
 
 		// add snake to starting position
 		snakeBoard = addSnake(snakeBoard);
@@ -200,15 +197,13 @@ public class Map {
 		return snakeBoard;
 	}
 
-	/* Add food to board */
-	public int[][] addFood(int[][] snakeBoard, List<Pair> freeIndexes) {
+	/* Return free location where food can be placed */
+	public Pair getFoodLocation(int[][] snakeBoard, List<Pair> freeIndexes) {
 		int foodIndex = new Random().nextInt(freeIndexes.size());
 		Pair foodPosition = freeIndexes.get(foodIndex);
-
-		snakeBoard[foodPosition.row][foodPosition.column] = FOOD;
+		
 		freeIndexes.remove(foodPosition);
-
-		return snakeBoard;
+		return foodPosition;
 	}
 
 	/* Get array list of portal locations */
