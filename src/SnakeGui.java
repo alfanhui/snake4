@@ -20,7 +20,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.Random;
 
-public class SnakeGui implements ActionListener {
+public class SnakeGui implements ActionListener, KeyListener {
 
     /**
      * Enumerated type to allow us to refer to RED, YELLOW or BLANK
@@ -43,7 +43,9 @@ public class SnakeGui implements ActionListener {
     private int snakeSize = 2;
     private final int DELAY_IN_MILISEC = 1000;
     private int [][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
+    private TextField textField;
     
+   
     
     private String getPortalColour()
     {
@@ -178,6 +180,32 @@ public class SnakeGui implements ActionListener {
         JMenuBar menuBar  = new JMenuBar();;
         JMenu menu = new JMenu("Snake Menu");
         JMenuItem menuItem;
+//        JPanel jPanel = new JPanel();
+//        KeyListener keyListener = new KeyListener() {
+//			
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				int key = e.getKeyCode();
+//				if(key == KeyEvent.VK_UP)
+//			    	{
+//			    		System.out.println("Working?");
+//			    	}
+//			}
+//		};
+        
        
         menuBar.add(menu);
 
@@ -196,6 +224,7 @@ public class SnakeGui implements ActionListener {
 
         //a submenu
         menu.addSeparator();
+        
         return menuBar;
     }
 
@@ -234,6 +263,7 @@ public class SnakeGui implements ActionListener {
 //        			break;
 //        		}
         		grid.add(labels[row][col]);
+        		grid.addKeyListener(this);
         	}
             //buttonArray[i] = new JButton(" ");
             
@@ -274,6 +304,16 @@ public class SnakeGui implements ActionListener {
     
     //private String get
 
+//    private void keyPressed(KeyEvent e)
+//    {
+//    	int key = e.getKeyCode();
+//    	if(key == KeyEvent.VK_SPACE)
+//    	{
+//    		System.out.println("Working?");
+//    	}
+//    }
+    
+    
     /**
      * This method handles events from the Menu and the board.
      *
@@ -282,7 +322,32 @@ public class SnakeGui implements ActionListener {
     {
         String classname = getClassName(e.getSource());
         JComponent component = (JComponent)(e.getSource());
-    
+
+//        KeyListener keyListener = new KeyListener() {
+//			
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				int key = e.getKeyCode();
+//				if(key == KeyEvent.VK_SPACE)
+//			    	{
+//			    		System.out.println("Working?");
+//			    	}
+//			}
+//		};
+		//component.addKeyListener(this);
         if (classname.equals("JMenuItem"))
         {
             JMenuItem menusource = (JMenuItem)(e.getSource());
@@ -305,6 +370,10 @@ public class SnakeGui implements ActionListener {
                 NewGame();
             }
         }
+//        else if(classname.equals("KeyPressed"))
+//        {
+//        	keyPressed(e);
+//        }
         // Handle the event from the user clicking on a command button
 //        else if (classname.equals("JButton"))
 //        {
@@ -350,36 +419,7 @@ public class SnakeGui implements ActionListener {
         frame.setVisible(true);
     }
     
-//    /**
-//     * Sets a Gui grid square at row, col to display a character
-//     */
-//    public boolean setGuiSquare(int row, int col, GRID_COLOUR colour)
-//    {
-//        int bnum = col * GRID_SIZE_X + row;
-//        if (bnum >= (GRID_SIZE_X * GRID_SIZE_Y))
-//        {
-//            return false;
-//        }
-//        else
-//        {
-//            switch(colour)
-//            {
-//                case RED:
-//                    buttonArray[bnum].setBackground(Color.red);
-//                    break;
-//                case YELLOW:
-//                    buttonArray[bnum].setBackground(Color.yellow);
-//                    break;
-//                case BLANK:
-//                    buttonArray[bnum].setBackground(Color.gray);
-//                    break;
-//                default:
-//                    buttonArray[bnum].setBackground(Color.gray);
-//                    break;
-//                }
-//        }
-//        return true;
-//    }
+//    
     
     /**
      * This is a standard main function for a Java GUI
@@ -395,6 +435,7 @@ public class SnakeGui implements ActionListener {
         {
             public void run() 
             {
+            	
                 createAndShowGUI();
             }
         });
@@ -439,5 +480,28 @@ public class SnakeGui implements ActionListener {
           System.out.println("End game selected");
           System.exit(0);
     }
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Working????!?!!");
+		int key = e.getKeyCode();
+		if(key == KeyEvent.VK_SPACE)
+	    	{
+	    		System.out.println("Working?");
+	    	}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
