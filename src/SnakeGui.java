@@ -88,6 +88,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
         game.move();
+
         for (int row=0; row<GRID_SIZE_X; row++) {
         	for(int col=0;col<GRID_SIZE_Y;col++) {
         		//labels[row][col] = new JLabel(getImageIcon(array[row][col]));
@@ -174,7 +175,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     	try
     	{
-    		fileReader = new FileReader("board.txt");
+    		fileReader = new FileReader("board2.txt");
     		bufferedReader = new BufferedReader(fileReader);
     		String[] tempStringArray = new String[GRID_SIZE_Y];
     		String nextLine = bufferedReader.readLine();
@@ -263,16 +264,17 @@ public class SnakeGui implements ActionListener, KeyListener {
     {
         //int numButtons = GRID_SIZE_X * GRID_SIZE_Y;
         JPanel grid = new JPanel(new GridLayout(GRID_SIZE_X, GRID_SIZE_Y,0,0));
+
         //buttonArray = new JButton[numButtons];
         labels = new JLabel[GRID_SIZE_X][GRID_SIZE_Y];
         readArrayFromFile();
+        game.setMap(array);
         // array = game.getMap();
         for (int row=0; row<GRID_SIZE_X; row++)
         {
         	for(int col=0;col<GRID_SIZE_Y;col++)
         	{
         		labels[row][col] = new JLabel(getImageIcon(array[row][col]));
-
         		grid.add(labels[row][col]);
 
         	}
