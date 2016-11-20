@@ -87,10 +87,10 @@ public class SnakeGui implements ActionListener, KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-
         game.move();
         for (int row=0; row<GRID_SIZE_X; row++) {
         	for(int col=0;col<GRID_SIZE_Y;col++) {
+        		//labels[row][col] = new JLabel(getImageIcon(array[row][col]));
         		labels[row][col].setIcon(getImageIcon(array[row][col]));
             }
         }
