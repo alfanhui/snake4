@@ -19,7 +19,7 @@ public class Snake4{
     public int width;
     public final char printChars[] = new char[] {' ', '*', '.','@','~'};
     public Map newMap;
-    public Pair foodPair;
+    public Pair foodLoci;
 
     /*Constructor
      *
@@ -31,7 +31,6 @@ public class Snake4{
         //Get portal locations
         height = newMap.COLUMN;
         width = newMap.ROW;
-        map = new int[height][width];
         snake = new ArrayList<Integer>(1);
         head = 0;
         Pair mapHead = newMap.getDefaultStartPlace(map);
@@ -39,8 +38,32 @@ public class Snake4{
         dead = false;
     }
 
-    public void move(KeyEvent event) {
-	    int code =  event.getKeyCode();
+    public void move() {
+        int location;
+        switch(direction) {
+            case 'r':
+                location =snake.get(head) + 100;
+                moveHere(location);
+            break;
+            case 'l':
+                location = snake.get(head) - 100;
+                moveHere(location);
+            break;
+            case 'd':
+                location = snake.get(head) + 1;
+                moveHere(location);
+            break;
+            case 'u':
+                location = snake.get(head) - 1;
+                moveHere(location);
+            break;
+            default:
+                System.out.println("Snake doesn't know how to move");
+            break;
+        }
+    }
+
+    public void changeDirection(int code) {
         int coordinate;
         switch (code) {
         case 39:
@@ -83,35 +106,34 @@ public class Snake4{
         int newLocation = coordinate;
         //If food
         if(parts == foodLoci){
-            grow1(newLocation);
-            foodPair = newMap.getFoodLocation(map);
-            move1(newLocation);
-        }else{
-            switch (type) {
-                case 1:
-                    newLocation = throughWall(parts);
-                    move1(newLocation);
-                break;
-                case 2:
-                    dead = true;
-                break;
-                case 3:
-                    newLocation = portal();
-                    int[] coords = convertToMDA(newLocation);
-                    if (map[coords[0]][coords[1]] == 1) {
-                        newLocation = throughWall(coords);
-                    }
-                    move1(newLocation);
-                    break;
-                case 5:
-                case 0:
-                    move1(newLocation);
-                break;
-                default:
-                    System.out.println("ERROR - Snake does not know where to move");
-                break;
-            }
+            grow1();
         }
+        switch (type) {
+            case 1:
+                newLocation = throughWall(parts);
+                move1(newLocation);
+            break;
+            case 2:
+                dead = true;
+            break;
+            case 3:
+                newLocation = portal();
+                int[] coords = convertToMDA(newLocation);
+                if (map[coords[0]][coords[1]] == 1) {
+                    newLocation = throughWall(coords);
+                }
+                move1(newLocation);
+            break;
+            case 5:
+            case 0:
+                move1(newLocation);
+            break;
+            default:
+                System.out.println("ERROR - Snake does not know where to move");
+            break;
+        }
+
+
     }
     public void move1(int newLocation) {
         if (head == 0) {
@@ -243,8 +265,5 @@ public class Snake4{
          return snake;
     }
 
-    public Pair getFoodLocation(){
-        return foodPair;
-    }
 
 }
