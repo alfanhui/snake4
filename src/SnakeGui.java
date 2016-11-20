@@ -99,6 +99,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         		labels[row][col].setIcon(getImageIcon(array[row][col]));
             }
         }
+        foodLoc = game.getFoodLocation();
         labels[foodLoc.row][foodLoc.column].setIcon(food);
 
         gameSnake = game.getSnake();
