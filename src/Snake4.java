@@ -210,8 +210,10 @@ public class Snake4{
         int homePortal = 0;
         int loci[] = new int[2];
         Random rn = new Random();
+        System.out.println("portal array: " + portal_location);
         shuffleArray(portal_location);
-        int index ; //rn.nextInt() * portal_location.length;
+        System.out.println("portal array shuffled: " + portal_location);
+        int index=0; //rn.nextInt() * portal_location.length;
         for(int i =0; i<portal_location.length;i++){
             index = i;
             if(portal_location[i] == head){
@@ -220,7 +222,6 @@ public class Snake4{
             }
             loci = convertToMDA(portal_location[i]);
             if(map[loci[0]][loci[1]+=1] != 2 || map[loci[0]][loci[1]+=1]!=6){ //d
-
                 success = true;
                 break;
             }else if (map[loci[0]][loci[1]-=1] != 2 || map[loci[0]][loci[1]-=1]!=6){ //u
@@ -235,8 +236,7 @@ public class Snake4{
             }
         }
         if(!success){
-            index = homePortal;
-            loci = convertToMDA(portal_location[homePortal]);
+            loci = convertToMDA(portal_location[index]);
             if(map[loci[0]][loci[1]+=1] != 2 || map[loci[0]][loci[1]+=1]!=6){
             }else if (map[loci[0]][loci[1]-=1] != 2 || map[loci[0]][loci[1]-=1]!=6){
             }else if (map[loci[0]+=1][loci[1]] != 2 || map[loci[0]+=1][loci[1]]!=6){
