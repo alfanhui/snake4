@@ -41,12 +41,12 @@ public class SnakeGui implements ActionListener, KeyListener {
     private JLabel [][] labels;
     private static JFrame frame = new JFrame("SnakeGui");
     private int snakeSize = 2;
-    private final int DELAY_IN_MILISEC = 200;
+    private final int DELAY_IN_MILISEC = 400;
     private int [][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
     private TextField textField;
     private Snake4 game;
     public java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
-    public List<Pair> portalArray = new ArrayList<Pair>;
+    public java.util.List<Pair> portalArray = new java.util.ArrayList<Pair>();
     public Pair foodLoc;
 
     private static String currentLevel = "Zero";
@@ -100,12 +100,13 @@ public class SnakeGui implements ActionListener, KeyListener {
 
         gameSnake = game.getSnake();
         for (int i=0;i<gameSnake.size();i++) {
+            System.out.println("row:Col " + gameSnake.get(i).row + " : " + gameSnake.get(i).column);
             labels[gameSnake.get(i).row][gameSnake.get(i).column].setIcon(snake);
         }
 
         portalArray = game.getPortals();
         // System.out.println("PORTAL COORDINATES: "+portalArray[0]+" AND "+portalArray[1]);
-        for (int i=0;i<portalArray.length;i++) {
+        for (int i=0;i<portalArray.size();i++) {
             labels[portalArray.get(i).row][portalArray.get(i).column].setIcon(portal);
         }
 		}
@@ -282,7 +283,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         {
             JMenuItem menusource = (JMenuItem)(e.getSource());
             String menutext  = menusource.getText();
-            
+
             // Determine which menu option was chosen
             if (menutext.equals("Pause Game"))
             {
@@ -298,7 +299,7 @@ public class SnakeGui implements ActionListener, KeyListener {
             else if (menutext.equals("New Game"))
             {
                 /* ConnectGUI    Add your code here to handle Save Game **********/
-                newGame();
+                NewGame();
             }
             else if(menutext.equals("Resume Game"))
             {
@@ -372,7 +373,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     public void NewGame()
     {
          System.out.println("New game selected");
-         
+
          // Initialise your game
          SnakeGui.selectLevel();
          toolTip.setTipText("Current level is: " +  currentLevel);
@@ -431,12 +432,12 @@ private void infoPage()
 				+ "The rules are simple: Eat the food, walls are friendly,\nPortals teleport you to a random portal and DO NOT EAT yourself!\n"
 				+ "Pretty simple stuff! Now show us what you can do!", "Information");
 	}
-	
+
 	public static void infoBox(String infoMessage, String titleBar)
     {
         JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
-	
+
 	public static void selectLevel()
 	{
 		String[] possibleValues = { "One", "Two", "Three", "Four", "Five" };
@@ -447,7 +448,7 @@ private void infoPage()
 		System.out.println("A game has been selected and it is: " +  selectedValue);
 		currentLevel = selectedValue;
 	}
-	
+
 	private static boolean exitWarning()
 	{
 		int end;
@@ -458,7 +459,7 @@ private void infoPage()
 		if(end == 0) return true;//the function gives 0 when ok is clicked
 		else return false;
 	}
-	
+
 	private static void deathScreen()
 	{
 		infoBox("You have died! Sorry to hear that...", "Death Screen");

@@ -27,7 +27,7 @@ public class Snake4{
     public Snake4(){
     	newMap = new Map();
         map = newMap.initialiseBoard();//new int[80][60];
-        snake = new ArrayList<Pair>();
+        snake = new ArrayList<Pair>(2);
         //Get portal locations
         portal_location = newMap.getPortals(map);
         foodPair = newMap.getFoodLocation(map);
@@ -40,7 +40,10 @@ public class Snake4{
         Pair snakeSeg2 = new Pair(mapHead.row-1, mapHead.column);
 
         snake.add(0,snakeSeg);
-        snake.add(snakeSeg2);
+        snake.add(1,snakeSeg2);
+        System.out.println(snake.get(0).row + " : " + snake.get(0).column);
+        System.out.println(snake.get(1).row + " : " + snake.get(1).column);
+
         dead = false;
         System.out.println("End of constructor");
         direction = 'u';
@@ -57,6 +60,7 @@ public class Snake4{
             case 'u':
                 location = snake.get(head);
                 location.row--;
+                System.out.println(location.row + " : " + location.column);
                 moveHere(location);
             break;
             case 'r':
@@ -81,28 +85,28 @@ public class Snake4{
         case 39:
             if (direction != 'r') {
                 coordinate = snake.get(head);
-                coordinate.column++;
+                coordinate.column +=1;
                 direction = 'r';
             }
          break;
          case 37:
             if (direction != 'l') {
                 coordinate = snake.get(head);
-                coordinate.column--;
+                coordinate.column -=1;
                 direction = 'l';
             }
          break;
          case 40:
             if (direction != 'd') {
                 coordinate = snake.get(head);
-                coordinate.row++;
+                coordinate.row +=1;
                 direction = 'd';
             }
         break;
         case 38:
             if (direction != 'u') {
                 coordinate = snake.get(head);
-                coordinate.row--;
+                coordinate.row -=1;
                 direction = 'u';
             }
         break;
@@ -124,16 +128,17 @@ public class Snake4{
             foodPair = newMap.getFoodLocation(map);
         }else if (validPortal(coordinate)) {
             newLocation = portal();
+            Pair newLocation2 = new Pair();
             //Pair coords = convertToMDA(newLocation);
             if (map[newLocation.row][newLocation.column] == 1) {
-                newLocation = throughWall(newLocation);
+                newLocation2 = throughWall(newLocation);
             }
-            move1(newLocation);
+            move1(newLocation2);
         } else {
             switch (type) {
                 case 1:
-                    newLocation = throughWall(coordinate);
-                    move1(newLocation);
+                    Pair newLocation2 = throughWall(coordinate);
+                    move1(newLocation2);
                 break;
                 case 2:
                     dead = true;
@@ -150,10 +155,11 @@ public class Snake4{
         }
     }
     public void move1(Pair newLocation) {
+
         if (head == 0) {
-            head = snake.size() - 1;
+            head = (snake.size() - 1);
         } else {
-            head = head - 1;
+            head -= 1;
         }
         snake.set(head, newLocation);
 
@@ -165,7 +171,7 @@ public class Snake4{
     public Pair throughWall(Pair parts) {
         switch(direction) {
             case 'l':
-                for (int i=(parts.column+1); i>width; i++) {
+                for (int i=(parts.column+1); i<width; i++) {
                     if (map[parts.row][i] == 1) {
                         return new Pair(parts.row,i);
                     }
@@ -183,7 +189,7 @@ public class Snake4{
                     }
                 }break;
             case 'd':
-                for (int i = parts.row; i>height; i++) {
+                for (int i = parts.row; i<height; i++) {
                     if (map[i][parts.column] == 1) {
                         return new Pair(i,parts.column);
                     }
@@ -217,7 +223,7 @@ public class Snake4{
             index = i;
             if(portal_location.get(i) != snake.get(head)){
                 loci = portal_location.get(i);
-                if(map[loci.row][loci.column+1] != 2 || map[loci.row][loci.column++]!=6){ //l
+                if(map[loci.row][loci.column++] != 2 || map[loci.row][loci.column++]!=6){ //l
                     success = true;
                     break;
                 }else if (map[loci.row][loci.column--] != 2 || map[loci.row][loci.column--]!=6){ //r
