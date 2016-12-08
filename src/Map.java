@@ -177,27 +177,53 @@ public class Map {
 		return freeIndexes;
 	}
 
-	/* Add two portals to the snake board */
+	/* Add five portals to the snake board */
 	public int[][] addPortals(int[][] snakeBoard, List<Pair> freeIndexes) {
-		int starterAreaPortal, endAreaPortal;
+		int starterAreaPortal, endAreaPortal, thirdPortal, fourthPortal, fifthPortal;
 
 		while (true){
 			starterAreaPortal = new Random().nextInt(startingWallSide.size());
 			endAreaPortal = new Random().nextInt(endingWallSide.size());
+			thirdPortal = new Random().nextInt(endingWallSide.size());
+			fourthPortal = new Random().nextInt(startingWallSide.size());
+			fifthPortal = new Random().nextInt(endingWallSide.size());
+			
 			if (starterAreaPortal != endAreaPortal ){
-				break;
-			}
+				Pair portalPos1 = freeIndexes.get(starterAreaPortal);
+				Pair portalPos2 = freeIndexes.get(endAreaPortal);
+				Pair portalPos3 = freeIndexes.get(thirdPortal);
+				Pair portalPos4 = freeIndexes.get(fourthPortal);
+				Pair portalPos5 = freeIndexes.get(fifthPortal);
+				
+				if (coordsMeetReqs(portalPos1.row, portalPos1.column) && coordsMeetReqs(portalPos2.row, portalPos2.column)
+						&& coordsMeetReqs(portalPos3.row, portalPos3.column) && coordsMeetReqs(portalPos4.row, portalPos4.column)
+						&& coordsMeetReqs(portalPos5.row, portalPos5.column)){
+					snakeBoard[portalPos1.row][portalPos1.column] = PORTAL;
+					snakeBoard[portalPos2.row][portalPos2.column] = PORTAL;
+					snakeBoard[portalPos3.row][portalPos3.column] = PORTAL;
+					snakeBoard[portalPos4.row][portalPos4.column] = PORTAL;
+					snakeBoard[portalPos5.row][portalPos5.column] = PORTAL;
+					
+					freeIndexes.remove(starterAreaPortal);
+					freeIndexes.remove(endAreaPortal);
+					freeIndexes.remove(thirdPortal);
+					freeIndexes.remove(fourthPortal);
+					freeIndexes.remove(fifthPortal);
+					break;
+				}
+			}		
 		}
-		Pair portalPos1 = freeIndexes.get(starterAreaPortal);
-		Pair portalPos2 = freeIndexes.get(endAreaPortal);
-		snakeBoard[portalPos1.row][portalPos1.column] = PORTAL;
-		snakeBoard[portalPos2.row][portalPos2.column] = PORTAL;
-		freeIndexes.remove(starterAreaPortal);
-		freeIndexes.remove(endAreaPortal);
-
 		return snakeBoard;
 	}
-
+	/* Check portals are at least 3 spaces away from soft walls */
+	public boolean coordsMeetReqs(int row, int column) {
+		if ((row > 3 && row < ROW-4 && column > 3 && column < COLUMN-4) &&
+				(row-3 != SOFTWALL)&& (row+3 != SOFTWALL) && (column+3 != SOFTWALL)
+				&& (column-3 != SOFTWALL)){
+			return true;
+		}			
+		return false;
+	}
 	/* Add default starting position to the snake board (ensure away from walls) */
 	public int[][] addStart(int[][] snakeBoard, List<Pair> freeIndexes) {
 		int randomStart;

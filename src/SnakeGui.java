@@ -41,14 +41,17 @@ public class SnakeGui implements ActionListener, KeyListener {
     private JLabel [][] labels;
     private static JFrame frame = new JFrame("SnakeGui");
     private int snakeSize = 2;
-    private final int DELAY_IN_MILISEC = 200;
+    private final int DELAY_IN_MILISEC = 400;
     private int [][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
     private TextField textField;
     private Snake4 game;
-    public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
-    public int[] portalArray;
+    public java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
+    public java.util.List<Pair> portalArray = new java.util.ArrayList<Pair>();
     public Pair foodLoc;
    private static String currentLevel = "Zero";
+    private JToolTip toolTip = new JToolTip();
+
+    private static String currentLevel = "Zero";
     private JToolTip toolTip = new JToolTip();
 
 
@@ -78,13 +81,6 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     }
 
-    public int[] convertToMDA(int location){
-        String intString = Integer.toString(location);
-        int mid = intString.length()/2;
-        int[] parts = {Integer.parseInt(intString.substring(0, mid)),Integer.parseInt(intString.substring(mid))};
-        return parts;
-    }
-
     /*
      * A timer that makes changes to the game after an set interval of time
      */
@@ -105,23 +101,28 @@ public class SnakeGui implements ActionListener, KeyListener {
         labels[foodLoc.row][foodLoc.column].setIcon(food);
 
         gameSnake = game.getSnake();
-        int[] parts = new int[2];
         for (int i=0;i<gameSnake.size();i++) {
-            parts = convertToMDA(gameSnake.get(i));
-            labels[parts[0]][parts[1]].setIcon(snake);
+            System.out.println("row:Col " + gameSnake.get(i).row + " : " + gameSnake.get(i).column);
+            labels[gameSnake.get(i).row][gameSnake.get(i).column].setIcon(snake);
         }
 
         portalArray = game.getPortals();
         // System.out.println("PORTAL COORDINATES: "+portalArray[0]+" AND "+portalArray[1]);
-        for (int i=0;i<portalArray.length;i++) {
-            parts = convertToMDA(portalArray[i]);
-            labels[parts[0]][parts[1]].setIcon(portal);
+        for (int i=0;i<portalArray.size();i++) {
+            labels[portalArray.get(i).row][portalArray.get(i).column].setIcon(portal);
         }
+<<<<<<< HEAD
     }
     });
 
 
 /**
+=======
+		}
+	});
+
+    /**
+>>>>>>> 5ffb334bd5f2f2f98d9642646ac838a117b98a34
      * a method that resizes the pictures
      * @param name
      * @return
