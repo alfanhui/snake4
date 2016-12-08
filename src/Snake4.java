@@ -165,33 +165,34 @@ public class Snake4{
     public int throughWall(int[] parts) {
         switch(direction) {
             case 'l':
-                for (int i=parts[0]; i>width; i++) {
-                    if (map[i][parts[1]] == 1) {
-                        return convertToInt(i,parts[1]);
+                for (int i=(parts[1]+1); i>width; i++) {
+                    if (map[parts[0]][i] == 1) {
+                        return convertToInt(parts[1],i);
                     }
-                }
+                }break;
             case 'r':
-                for (int i = parts[0]; i<=0; i--) {
-                    if (map[i][parts[1]] == 1) {
-                        return convertToInt(i,parts[1]);
-                    }
-                }
-            case 'u':
-                for (int i = parts[1]; i<=0; i--) {
+                for (int i = (parts[1]-1); i>=0; i--) {
                     if (map[parts[0]][i] == 1) {
                         return convertToInt(parts[0],i);
                     }
-                }
+                }break;
+            case 'u':
+                for (int i = parts[1]; i>=0; i--) {
+                    if (map[parts[0]][i] == 1) {
+                        return convertToInt(parts[0],i);
+                    }
+                }break;
             case 'd':
                 for (int i = parts[1]; i>height; i++) {
                     if (map[parts[0]][i] == 1) {
                         return convertToInt(parts[0],i);
                     }
-                }
+                }break;
             default:
                 System.out.println("ERROR - Snake is confused about the Wall");
                 return -1;
         }
+        return -1;
     }
 
     public void print(){
@@ -298,6 +299,12 @@ public class Snake4{
             if (portal_location[i] == location)
                 return true;
         }
+        return false;
+    }
+
+    public boolean isDead(){
+        if(dead)
+            return true;
         return false;
     }
 }

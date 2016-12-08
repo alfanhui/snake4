@@ -48,6 +48,8 @@ public class SnakeGui implements ActionListener, KeyListener {
     public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
     public int[] portalArray;
     public Pair foodLoc;
+   private static String currentLevel = "Zero";
+    private JToolTip toolTip = new JToolTip();
 
 
     public SnakeGui() {
@@ -99,6 +101,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         		labels[row][col].setIcon(getImageIcon(array[row][col]));
             }
         }
+        foodLoc = game.getFoodLocation();
         labels[foodLoc.row][foodLoc.column].setIcon(food);
 
         gameSnake = game.getSnake();
@@ -114,38 +117,11 @@ public class SnakeGui implements ActionListener, KeyListener {
             parts = convertToMDA(portalArray[i]);
             labels[parts[0]][parts[1]].setIcon(portal);
         }
+    }
+    });
 
 
 /**
- *
-			System.out.println("HERE and counter is: " + counter);
-			int row = counter/GRID_SIZE_Y;
-			int col = counter%GRID_SIZE_Y;
-			if(counter <= snakeSize)
-			{
-				labels[row][col].setIcon(snake);
-				counter++;
-			}
-			else
-			{
-				labels[row][col].setIcon(snake);
-				if(col - snakeSize - 1 < 0)
-				{
-					labels[row-1][GRID_SIZE_Y + (col - snakeSize) - 1].setIcon(getImageIcon(array[row-1][GRID_SIZE_Y + (col - snakeSize) - 1]));
-					counter++;
-				}
-				else
-				{
-					labels[row][col-snakeSize - 1].setIcon(getImageIcon(array[row][col-snakeSize - 1]));
-					counter++;
-				}
-
-			}
-            */
-		}
-	});
-
-    /**
      * a method that resizes the pictures
      * @param name
      * @return
@@ -226,33 +202,6 @@ public class SnakeGui implements ActionListener, KeyListener {
         JMenuBar menuBar  = new JMenuBar();;
         JMenu menu = new JMenu("Snake Menu");
         JMenuItem menuItem;
-//        JPanel jPanel = new JPanel();
-//        KeyListener keyListener = new KeyListener() {
-//
-//			@Override
-//			public void keyTyped(KeyEvent e) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void keyReleased(KeyEvent e) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				// TODO Auto-generated method stub
-//				int key = e.getKeyCode();
-//				if(key == KeyEvent.VK_UP)
-//			    	{
-//			    		System.out.println("Working?");
-//			    	}
-//			}
-//		};
-
-
         menuBar.add(menu);
 
         // A group of JMenuItems. You can create other menu items here if desired
@@ -264,9 +213,16 @@ public class SnakeGui implements ActionListener, KeyListener {
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
+	menuItem = new JMenuItem("Info");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+
         menuItem = new JMenuItem("End Game");
         menuItem.addActionListener(this);
         menu.add(menuItem);
+
+	toolTip.setTipText("Current level is: " +  currentLevel);
+        menuBar.add(toolTip);
 
         //a submenu
         menu.addSeparator();
@@ -292,13 +248,6 @@ public class SnakeGui implements ActionListener, KeyListener {
         		grid.add(labels[row][col]);
 
         	}
-            //buttonArray[i] = new JButton(" ");
-
-            // This label is used to identify which button was clicked in the action listener
-            //buttonArray[i].setActionCommand("" + i); // String "0", "1" etc.
-            //buttonArray[i].addActionListener(this);
-            //grid.add(buttonArray[i]);
-
         }
         grid.addKeyListener(this);
 		grid.setFocusable(true);
@@ -331,56 +280,15 @@ public class SnakeGui implements ActionListener, KeyListener {
 		}
     }
 
-    //private String get
-
-//    private void keyPressed(KeyEvent e)
-//    {
-//    	int key = e.getKeyCode();
-//    	if(key == KeyEvent.VK_SPACE)
-//    	{
-//    		System.out.println("Working?");
-//    	}
-//    }
-
-
-
 
     /**
      * This method handles events from the Menu and the board.
      *
      */
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         String classname = getClassName(e.getSource());
         JComponent component = (JComponent)(e.getSource());
-
-//        KeyListener keyListener = new KeyListener() {
-//
-//			@Override
-//			public void keyTyped(KeyEvent e) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void keyReleased(KeyEvent e) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				// TODO Auto-generated method stub
-//				int key = e.getKeyCode();
-//				if(key == KeyEvent.VK_SPACE)
-//			    	{
-//			    		System.out.println("Working?");
-//			    	}
-//			}
-//		};
-		//component.addKeyListener(this);
-
-        if (classname.equals("JMenuItem"))
+         if (classname.equals("JMenuItem"))
         {
             JMenuItem menusource = (JMenuItem)(e.getSource());
             String menutext  = menusource.getText();
@@ -390,6 +298,7 @@ public class SnakeGui implements ActionListener, KeyListener {
             {
                 /* ConnectGUI    Add your code here to handle Load Game **********/
                 pauseGame();
+                menusource.setText("Resume Game");
             }
             else if (menutext.equals("End Game"))
             {
@@ -401,26 +310,22 @@ public class SnakeGui implements ActionListener, KeyListener {
                 /* ConnectGUI    Add your code here to handle Save Game **********/
                 NewGame();
             }
+            else if(menutext.equals("Resume Game"))
+            {
+            	timer.start();
+            	menusource.setText("Pause Game");
+            }
+            else if(menutext.equals("Info"))
+            {
+            	infoPage();
+            }
         }
-
-        // Handle the event from the user clicking on a command button
-//        else if (classname.equals("JButton"))
-//        {
-//            JButton button = (JButton)(e.getSource());
-//            int bnum = Integer.parseInt(button.getActionCommand());
-//            int row = bnum % GRID_SIZE_X;
-//            int col = bnum / GRID_SIZE_X;
-//
-//            System.out.println("bnum=" + bnum);
-//
-//        }
     }
 
     /**
      *  Returns the class name
      */
-    protected String getClassName(Object o)
-    {
+    protected String getClassName(Object o) {
         String classString = o.getClass().getName();
         int dotIndex = classString.lastIndexOf(".");
         return classString.substring(dotIndex+1);
@@ -455,17 +360,14 @@ public class SnakeGui implements ActionListener, KeyListener {
      */
     public static void main(String[] args)
     {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-//    	SnakeGui test = new SnakeGui();
-//    	test.readArrayFromFile();
-//    	test.printArray();
         javax.swing.SwingUtilities.invokeLater(new Runnable()
         {
             public void run()
             {
 
                 createAndShowGUI();
+		SnakeGui.infoBox("Hello! Welcome to Snake4! Where we have portals and sh*t!", "Welcome message");
+                SnakeGui.infoBox("Please go to our \"Snake Menu\" to start a game!", "Instructions message");
             }
         });
     }
@@ -480,10 +382,13 @@ public class SnakeGui implements ActionListener, KeyListener {
     public void NewGame()
     {
          System.out.println("New game selected");
-
+         SnakeGui snakeGui = new SnakeGui();
          // Initialise your game
+         SnakeGui.selectLevel();
+         toolTip.setTipText("Current level is: " +  currentLevel);
          timer.start();
          System.out.println("Timer started");
+         ///Put code that restarts the whole thing
 
     }
 
@@ -506,8 +411,11 @@ public class SnakeGui implements ActionListener, KeyListener {
      */
     public void endGame()
     {
-          System.out.println("End game selected");
-          System.exit(0);
+	  System.out.println("End game selected");
+          if(exitWarning())
+          {
+        	  System.exit(0);
+          }
     }
 
 	@Override
@@ -526,6 +434,44 @@ public class SnakeGui implements ActionListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+private void infoPage()
+	{
+		SnakeGui.infoBox("OK so this is our 'modern' implementation of the classic game Snake,\nwhich we loved to play on our old Nokia phones.\n"
+				+ "The rules are simple: Eat the food, walls are friendly,\nPortals teleport you to a random portal and DO NOT EAT yourself!\n"
+				+ "Pretty simple stuff! Now show us what you can do!", "Information");
+	}
+
+	public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+	public static void selectLevel()
+	{
+		String[] possibleValues = { "One", "Two", "Three", "Four", "Five" };
+		String selectedValue = (String) JOptionPane.showInputDialog(null,
+		"Choose a level", "Level",
+		JOptionPane.INFORMATION_MESSAGE, null,
+		possibleValues, possibleValues[0]);
+		System.out.println("A game has been selected and it is: " +  selectedValue);
+		currentLevel = selectedValue;
+	}
+
+	private static boolean exitWarning()
+	{
+		int end;
+		String[] options = { "OK", "CANCEL" };
+		end = JOptionPane.showOptionDialog(null, "Click OK to exit the game", "Warning",
+		JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+		null, options, options[0]);
+		if(end == 0) return true;//the function gives 0 when ok is clicked
+		else return false;
+	}
+
+	private static void deathScreen()
+	{
+		infoBox("You have died! Sorry to hear that...", "Death Screen");
 	}
 }
 
