@@ -171,23 +171,6 @@ public class Snake4{
     public Pair throughWall(Pair parts) {
         switch(direction) {
             case 'l':
-<<<<<<< HEAD
-                for (int i=(parts[1]+1); i>width; i++) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[1],i);
-                    }
-                }break;
-            case 'r':
-                for (int i = (parts[1]-1); i>=0; i--) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[0],i);
-                    }
-                }break;
-            case 'u':
-                for (int i = parts[1]; i>=0; i--) {
-                    if (map[parts[0]][i] == 1) {
-                        return convertToInt(parts[0],i);
-=======
                 for (int i=(parts.column+1); i<width; i++) {
                     if (map[parts.row][i] == 1) {
                         return new Pair(parts.row,i);
@@ -203,7 +186,6 @@ public class Snake4{
                 for (int i = parts.row; i>=0; i--) {
                     if (map[i][parts.column] == 1) {
                         return new Pair(i,parts.column);
->>>>>>> 5ffb334bd5f2f2f98d9642646ac838a117b98a34
                     }
                 }break;
             case 'd':
@@ -216,11 +198,7 @@ public class Snake4{
                 System.out.println("ERROR - Snake is confused about the Wall");
                 return null;
         }
-<<<<<<< HEAD
-        return -1;
-=======
         return null;
->>>>>>> 5ffb334bd5f2f2f98d9642646ac838a117b98a34
     }
 
     public void print(){

@@ -48,9 +48,6 @@ public class SnakeGui implements ActionListener, KeyListener {
     public java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
     public java.util.List<Pair> portalArray = new java.util.ArrayList<Pair>();
     public Pair foodLoc;
-   private static String currentLevel = "Zero";
-    private JToolTip toolTip = new JToolTip();
-
     private static String currentLevel = "Zero";
     private JToolTip toolTip = new JToolTip();
 
@@ -111,19 +108,11 @@ public class SnakeGui implements ActionListener, KeyListener {
         for (int i=0;i<portalArray.size();i++) {
             labels[portalArray.get(i).row][portalArray.get(i).column].setIcon(portal);
         }
-<<<<<<< HEAD
     }
     });
 
 
-/**
-=======
-		}
-	});
-
-    /**
->>>>>>> 5ffb334bd5f2f2f98d9642646ac838a117b98a34
-     * a method that resizes the pictures
+     /* a method that resizes the pictures
      * @param name
      * @return
      */
