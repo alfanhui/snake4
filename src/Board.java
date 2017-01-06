@@ -114,6 +114,7 @@ public class Board extends JPanel implements ActionListener{
     private void doDrawing(Graphics g){
 	if(inGame){
 	    //draw food
+		foodLoc = game.getFoodLocation();
 	    g.drawImage(food,foodLoc.row,foodLoc.column,this);
 	    //draw snake
 	    for(Pair snakeUnit : gameSnake){
