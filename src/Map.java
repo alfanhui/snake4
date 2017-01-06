@@ -5,8 +5,8 @@ import java.util.Random;
 public class Map {
 	/* define lengths of board */
 	public final int BOARDSIZE = 4800;
-	public final int COLUMN = 80;
-	public final int ROW = 60;
+	public int COLUMN = 80;
+	public int ROW = 60;
 	public final int SOFTWALL_LOCATION = 49;
 	public final int GAME_VERSION = 4;
 
@@ -23,7 +23,9 @@ public class Map {
 	public List<Pair> startingWallSide = new ArrayList<Pair>();
 	public List<Pair> endingWallSide = new ArrayList<Pair>();
 
-	public int[][] initialiseBoard(){
+	public int[][] initialiseBoard(int ROW, int COLUMN){
+		this.ROW = ROW;
+		this.COLUMN = COLUMN;
 		int [][] snakeBoard = new int [ROW][COLUMN];
         System.out.println(' ');
 		snakeBoard = addSoftWalls(snakeBoard);
