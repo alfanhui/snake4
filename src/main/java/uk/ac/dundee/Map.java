@@ -214,7 +214,8 @@ public class Map {
 				break;
 			}
 		}
-		snakeBoard[startPosition.row][startPosition.column] = START;
+		//snakeBoard[startPosition.row][startPosition.column] = START;
+		snakeBoard[5][71] = START;
 		freeIndexes.remove(startPosition);
 		return snakeBoard;
 	}

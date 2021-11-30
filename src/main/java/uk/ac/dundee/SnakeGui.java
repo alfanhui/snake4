@@ -41,11 +41,11 @@ public class SnakeGui implements ActionListener, KeyListener {
     // private ImageIcon defaultStart = convertPicutres("defaultStart.jpg");
     private JLabel[][] labels;
     private static JFrame frame = new JFrame("SnakeGui");
-    private final int DELAY_IN_MILISEC = 200;
+    private final int DELAY_IN_MILISEC = 50; //200
     private int[][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
     private Snake4 game;
-    public java.util.List<Integer> gameSnake = new java.util.ArrayList<Integer>();
-    public int[] portalArray;
+    public java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
+    public Pair[] portalArray;
     public Pair foodLoc;
 
     public SnakeGui() {
@@ -97,18 +97,18 @@ public class SnakeGui implements ActionListener, KeyListener {
             labels[foodLoc.row][foodLoc.column].setIcon(food);
 
             gameSnake = game.getSnake();
-            int[] parts = new int[2];
+
             for (int i = 0; i < gameSnake.size(); i++) {
-                parts = convertToMDA(gameSnake.get(i));
-                labels[parts[0]][parts[1]].setIcon(snake);
+                Pair parts = gameSnake.get(i);
+                labels[parts.row][parts.column].setIcon(snake);
             }
 
             portalArray = game.getPortals();
             // System.out.println("PORTAL COORDINATES: "+portalArray[0]+" AND
             // "+portalArray[1]);
             for (int i = 0; i < portalArray.length; i++) {
-                parts = convertToMDA(portalArray[i]);
-                labels[parts[0]][parts[1]].setIcon(portal);
+                Pair parts = portalArray[i];
+                labels[parts.row][parts.column].setIcon(portal);
             }
 
             /**
