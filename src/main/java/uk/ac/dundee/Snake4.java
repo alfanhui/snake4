@@ -200,10 +200,8 @@ public class Snake4{
         System.out.println("portal array: " + portal_location[0]);
         //shuffleArray(portal_location);
         System.out.println("portal array shuffled: " + portal_location[0]);
-        int index=0; //rn.nextInt() * portal_location.length;
         System.out.println("Portal array size:" + portal_location.length);
         for(int i =0; i<portal_location.length;i++){
-            index = i;
             if(portal_location[i] != snake.get(head)){
                 loci = portal_location[i];
                 System.out.println("Should be the same as above: " + loci.row + ""+loci.column);

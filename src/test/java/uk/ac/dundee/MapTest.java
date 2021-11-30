@@ -14,7 +14,7 @@ public class MapTest {
 		int wallCount = 0;
 		for (int i = 0; i < newMap.ROW; ++i){
 			for (int j = 0; j < newMap.COLUMN; ++j){
-				if (board[i][j] == newMap.SOFTWALL){
+				if (board[i][j] == Map.SOFTWALL){
 					wallCount++;
 				}
 			}
@@ -30,7 +30,7 @@ public class MapTest {
 		int portalCount = 0;
 		for (int i = 0; i < newMap.ROW; ++i){
 			for (int j = 0; j < newMap.COLUMN; ++j){
-				if (board[i][j] == newMap.PORTAL){
+				if (board[i][j] == Map.PORTAL){
 					portalCount++;
 				}
 			}
@@ -45,7 +45,7 @@ public class MapTest {
 		int startCount = 0;
 		for (int i = 0; i < newMap.ROW; ++i){
 			for (int j = 0; j < newMap.COLUMN; ++j){
-				if (board[i][j] == newMap.START){
+				if (board[i][j] == Map.START){
 					startCount++;
 				}
 			}
@@ -60,17 +60,18 @@ public class MapTest {
 		int hardWallCount = 0;
 		for (int i = 0; i < newMap.ROW; ++i){
 			for (int j = 0; j < newMap.COLUMN; ++j){
-				if (board[i][j] == newMap.HARDWALL){
+				if (board[i][j] == Map.HARDWALL){
 					hardWallCount++;
 				}
 			}
 		}
 		assertTrue("Incorrect start count", hardWallCount == 0);
 	}
+
 	@Test
 	public void testCorrectStartingList() {
 		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard();
+		newMap.initialiseBoard();
 		
 		System.out.println("Starting list Size is " + newMap.startingWallSide.size());
 		assertTrue("Incorrect starting list size", newMap.startingWallSide.size() == 2784);
@@ -78,7 +79,7 @@ public class MapTest {
 	@Test
 	public void testCorrectEndingList() {
 		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard();
+		newMap.initialiseBoard();
 		
 		System.out.println("Ending list Size is " + newMap.endingWallSide.size());
 		assertTrue("Incorrect ending list size", newMap.endingWallSide.size() == 1682);
@@ -88,8 +89,6 @@ public class MapTest {
 	// public void testCorrectPrintout() {
 	// 	Map newMap = new Map();
 	// 	int[][] board = newMap.initialiseBoard();
-		
 	// 	newMap.printBoard(board);
-		
 	// }
 }
