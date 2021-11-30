@@ -1,6 +1,8 @@
 package uk.ac.dundee;
 
-public class Pair {
+import java.util.Objects;
+
+public class Pair implements Cloneable{
     public int row;
     public int column;
 
@@ -15,21 +17,24 @@ public class Pair {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == this) return true;
+        if (!(obj instanceof Pair)) {
             return false;
         }
-
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        }
-
-        final Pair other = (Pair) obj;
-        if (this.row != other.row && this.column != other.column) {
-            return false;
-        }
-
-        return true;
+        Pair other = (Pair) obj;
+        return this.row == other.row &&
+                this.column == other.column;
     }
+
+    protected Object clone() throws CloneNotSupportedException{
+        Pair dolly = (Pair) super.clone();
+        return dolly;
+     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.row, this.column);
+     }
 
     @Override
     public String toString(){

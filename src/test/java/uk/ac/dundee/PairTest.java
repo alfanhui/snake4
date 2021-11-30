@@ -12,7 +12,9 @@ public class PairTest {
         Pair a = new Pair(1, 2);
         Pair b = new Pair(10, 20);
         Pair c = new Pair(1, 2);
+        Pair d = new Pair(1, 3);
         assertEquals(a, c);
         assertNotEquals(a, b);
+        assertNotEquals(a, d);
     }
 }

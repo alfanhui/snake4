@@ -66,13 +66,6 @@ public class SnakeGui implements ActionListener, KeyListener {
         return name;
     }
 
-    public int[] convertToMDA(int location) {
-        String intString = Integer.toString(location);
-        int mid = intString.length() / 2;
-        int[] parts = { Integer.parseInt(intString.substring(0, mid)), Integer.parseInt(intString.substring(mid)) };
-        return parts;
-    }
-
     /*
      * A timer that makes changes to the game after an set interval of time
      */
@@ -81,7 +74,12 @@ public class SnakeGui implements ActionListener, KeyListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            game.move();
+            try {
+                game.move();
+            } catch (CloneNotSupportedException e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
 
             for (int row = 0; row < GRID_SIZE_X; row++) {
                 for (int col = 0; col < GRID_SIZE_Y; col++) {

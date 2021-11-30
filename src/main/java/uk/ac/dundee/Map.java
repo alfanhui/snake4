@@ -63,6 +63,7 @@ public class Map {
 		//snakeBoard = addSnake(snakeBoard);
 		return snakeBoard;
 	}
+	
 	/* Add hard wall to specified row/column of board */
 	public int[][] addHardEdgeWallBottom(int[][] snakeBoard) {
 		for (int j = 0; j < COLUMN; ++j){
@@ -70,18 +71,21 @@ public class Map {
 		}		
 		return snakeBoard;
 	}
+	
 	public int[][] addHardEdgeWallTop(int[][] snakeBoard) {
 		for (int j = 0; j < COLUMN; ++j){
 			snakeBoard[0][j] = HARDWALL;
 		}	
 		return snakeBoard;
 	}
+
 	public int[][] addHardEdgeWallLeft(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			snakeBoard[i][0] = HARDWALL;
 		}	
 		return snakeBoard;
 	}
+
 	public int[][] addHardEdgeWallRight(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			snakeBoard[i][COLUMN-1] = HARDWALL;
@@ -140,6 +144,7 @@ public class Map {
 		}
 		return snakeBoard;
 	}
+
 	public int[][] addSoftCentralWall3(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
@@ -152,6 +157,7 @@ public class Map {
 		}
 		return snakeBoard;
 	}
+
 	public int[][] addSoftCentralWall4(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
@@ -278,6 +284,7 @@ public class Map {
 			}
 		}		
 	}
+
 	public void getEndingSidePositions1(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
@@ -303,6 +310,7 @@ public class Map {
 			}
 		}
 	}
+
 	public void getEndingSidePositions2(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
@@ -327,6 +335,7 @@ public class Map {
 			}
 		}		
 	}
+
 	public void getEndingSidePositions3(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
@@ -351,6 +360,7 @@ public class Map {
 			}
 		}		
 	}
+
 	public void getEndingSidePositions4(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
