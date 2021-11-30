@@ -1,3 +1,5 @@
+package uk.ac.dundee;
+
 public class Pair {
     public int row;
     public int column;

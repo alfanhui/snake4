@@ -1,3 +1,5 @@
+package uk.ac.dundee;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -5,8 +7,8 @@ import java.util.Random;
 public class Map {
 	/* define lengths of board */
 	public final int BOARDSIZE = 4800;
-	public int COLUMN = 80;
-	public int ROW = 60;
+	public final int COLUMN = 80;
+	public final int ROW = 60;
 	public final int SOFTWALL_LOCATION = 49;
 	public final int GAME_VERSION = 4;
 
@@ -23,9 +25,7 @@ public class Map {
 	public List<Pair> startingWallSide = new ArrayList<Pair>();
 	public List<Pair> endingWallSide = new ArrayList<Pair>();
 
-	public int[][] initialiseBoard(int ROW, int COLUMN){
-		this.ROW = ROW;
-		this.COLUMN = COLUMN;
+	public int[][] initialiseBoard(){
 		int [][] snakeBoard = new int [ROW][COLUMN];
         System.out.println(' ');
 		snakeBoard = addSoftWalls(snakeBoard);
@@ -124,6 +124,7 @@ public class Map {
 		}
 		return snakeBoard;
 	}
+	
 	/* Add soft central wall to the snake board (jagged) */
 	public int[][] addSoftCentralWall2(int[][] snakeBoard) {
 		for (int i = 0; i < ROW; ++i){
@@ -169,7 +170,7 @@ public class Map {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
 		for (int i = 0; i < ROW; ++i){
 			for (int j = 0; j < COLUMN; ++j){
-				if (snakeBoard[i][j] != SOFTWALL && snakeBoard[i][j] != HARDWALL){
+				if (snakeBoard[i][j] == SPACE){
 					// add position to list
 					Pair empty = new Pair(i, j);
 					freeIndexes.add(empty);
@@ -179,53 +180,27 @@ public class Map {
 		return freeIndexes;
 	}
 
-	/* Add five portals to the snake board */
+	/* Add two portals to the snake board */
 	public int[][] addPortals(int[][] snakeBoard, List<Pair> freeIndexes) {
-		int starterAreaPortal, endAreaPortal, thirdPortal, fourthPortal, fifthPortal;
+		int starterAreaPortal, endAreaPortal;
 
 		while (true){
 			starterAreaPortal = new Random().nextInt(startingWallSide.size());
 			endAreaPortal = new Random().nextInt(endingWallSide.size());
-			thirdPortal = new Random().nextInt(endingWallSide.size());
-			fourthPortal = new Random().nextInt(startingWallSide.size());
-			fifthPortal = new Random().nextInt(endingWallSide.size());
-			
 			if (starterAreaPortal != endAreaPortal ){
-				Pair portalPos1 = freeIndexes.get(starterAreaPortal);
-				Pair portalPos2 = freeIndexes.get(endAreaPortal);
-				Pair portalPos3 = freeIndexes.get(thirdPortal);
-				Pair portalPos4 = freeIndexes.get(fourthPortal);
-				Pair portalPos5 = freeIndexes.get(fifthPortal);
-				
-				if (coordsMeetReqs(portalPos1.row, portalPos1.column) && coordsMeetReqs(portalPos2.row, portalPos2.column)
-						&& coordsMeetReqs(portalPos3.row, portalPos3.column) && coordsMeetReqs(portalPos4.row, portalPos4.column)
-						&& coordsMeetReqs(portalPos5.row, portalPos5.column)){
-					snakeBoard[portalPos1.row][portalPos1.column] = PORTAL;
-					snakeBoard[portalPos2.row][portalPos2.column] = PORTAL;
-					snakeBoard[portalPos3.row][portalPos3.column] = PORTAL;
-					snakeBoard[portalPos4.row][portalPos4.column] = PORTAL;
-					snakeBoard[portalPos5.row][portalPos5.column] = PORTAL;
-					
-					freeIndexes.remove(starterAreaPortal);
-					freeIndexes.remove(endAreaPortal);
-					freeIndexes.remove(thirdPortal);
-					freeIndexes.remove(fourthPortal);
-					freeIndexes.remove(fifthPortal);
-					break;
-				}
-			}		
+				break;
+			}
 		}
+		Pair portalPos1 = freeIndexes.get(starterAreaPortal);
+		Pair portalPos2 = freeIndexes.get(endAreaPortal);
+		snakeBoard[portalPos1.row][portalPos1.column] = PORTAL;
+		snakeBoard[portalPos2.row][portalPos2.column] = PORTAL;
+		freeIndexes.remove(starterAreaPortal);
+		freeIndexes.remove(endAreaPortal);
+
 		return snakeBoard;
 	}
-	/* Check portals are at least 3 spaces away from soft walls */
-	public boolean coordsMeetReqs(int row, int column) {
-		if ((row > 3 && row < ROW-4 && column > 3 && column < COLUMN-4) &&
-				(row-3 != SOFTWALL)&& (row+3 != SOFTWALL) && (column+3 != SOFTWALL)
-				&& (column-3 != SOFTWALL)){
-			return true;
-		}			
-		return false;
-	}
+
 	/* Add default starting position to the snake board (ensure away from walls) */
 	public int[][] addStart(int[][] snakeBoard, List<Pair> freeIndexes) {
 		int randomStart;
@@ -245,13 +220,21 @@ public class Map {
 	}
 
 	/* Return free location where food can be placed */
-	public Pair getFoodLocation(int[][] snakeBoard) {
-		int foodIndex = new Random().nextInt(freeIndexes.size());
-		Pair foodPosition = freeIndexes.get(foodIndex);
-
+	public int[][] setNewFoodLocation(int[][] snakeBoard, Pair oldFoodLocation) {
+		Pair foodPosition = getNewFoodLocation(snakeBoard);
+		freeIndexes.add(oldFoodLocation);
 		freeIndexes.remove(foodPosition);
+		snakeBoard[foodPosition.row][foodPosition.column] = FOOD;
+		snakeBoard[oldFoodLocation.row][oldFoodLocation.column] = SPACE;
+		return snakeBoard;
+	}
+
+	public Pair getNewFoodLocation(int[][] snakeBoard) {
+		freeIndexes = generateFreePositions(snakeBoard);
+		Pair foodPosition = freeIndexes.get(new Random().nextInt(freeIndexes.size()));
 		return foodPosition;
 	}
+
 
 	/* Get array list of portal locations */
 	public List<Pair> getPortals (int[][] snakeBoard){
@@ -260,7 +243,7 @@ public class Map {
 			for (int j = 0; j < COLUMN; ++j){
 				if (snakeBoard[i][j] == PORTAL){
 					// add portal to list
-                    System.out.println("PORTAL LOCATION" + i + ":" + j);
+                    System.out.println("PORTAL=" + i + ":" + j);
 					Pair newPortal = new Pair(i, j);
 					portals.add(newPortal);
 				}

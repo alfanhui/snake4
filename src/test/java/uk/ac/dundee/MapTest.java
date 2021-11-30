@@ -1,3 +1,5 @@
+package uk.ac.dundee;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -16,8 +18,9 @@ public class MapTest {
 					wallCount++;
 				}
 			}
-		}//System.out.println("Wall:" + wallCount);
-		assertTrue("Not sufficent soft wall values", wallCount == 338); //334 with vertical wall
+		}
+		System.out.println("Wall:" + wallCount);
+		assertTrue("Not sufficent soft wall values", wallCount == 334);
 	}
 	@Test
 	public void testCorrectPortal() {
@@ -69,23 +72,24 @@ public class MapTest {
 		Map newMap = new Map();
 		int[][] board = newMap.initialiseBoard();
 		
-		System.out.println("Size is " + newMap.startingWallSide.size());
-		assertTrue("Incorrect starting list size", newMap.startingWallSide.size() == 2704);
+		System.out.println("Starting list Size is " + newMap.startingWallSide.size());
+		assertTrue("Incorrect starting list size", newMap.startingWallSide.size() == 2784);
 	}
 	@Test
 	public void testCorrectEndingList() {
 		Map newMap = new Map();
 		int[][] board = newMap.initialiseBoard();
 		
-		System.out.println("Size is " + newMap.endingWallSide.size());
-		assertTrue("Incorrect ending list size", newMap.endingWallSide.size() == 1758);
+		System.out.println("Ending list Size is " + newMap.endingWallSide.size());
+		assertTrue("Incorrect ending list size", newMap.endingWallSide.size() == 1682);
 	}
-	@Test
-	public void testCorrectPrintout() {
-		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard();
+
+	// @Test
+	// public void testCorrectPrintout() {
+	// 	Map newMap = new Map();
+	// 	int[][] board = newMap.initialiseBoard();
 		
-		newMap.printBoard(board);
+	// 	newMap.printBoard(board);
 		
-	}
+	// }
 }
