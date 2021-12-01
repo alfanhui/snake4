@@ -72,21 +72,25 @@ public class Snake4 {
     public void changeDirection(int code) {
         switch (code) {
             case 39:
+            case 68:
                 if (direction != 'r') {
                     direction = 'r';
                 }
                 break;
             case 37:
+            case 65:
                 if (direction != 'l') {
                     direction = 'l';
                 }
                 break;
             case 40:
+            case 83:
                 if (direction != 'd') {
                     direction = 'd';
                 }
                 break;
             case 38:
+            case 87:
                 if (direction != 'u') {
                     direction = 'u';
                 }
@@ -101,7 +105,7 @@ public class Snake4 {
         int type = map[coordinate.row][coordinate.column];
         Pair newLocation = coordinate;
 
-        if (coordinate.equals(foodPair)) {
+        if (map[coordinate.row][coordinate.column] == Map.FOOD) {
             System.out.println("Were in the food place");
             grow1(newLocation);
             move1(newLocation);
@@ -109,9 +113,9 @@ public class Snake4 {
         } else if (validPortal(coordinate)) {
             newLocation = portal(coordinate);
 
-            // if (map[newLocation.row][newLocation.column] == 1) {
-            // newLocation = throughWall(newLocation);
-            // }
+            if (map[newLocation.row][newLocation.column] == 1) {
+            newLocation = throughWall(newLocation);
+            }
             move1(newLocation);
         } else {
             switch (type) {
@@ -122,8 +126,9 @@ public class Snake4 {
                 case 2:
                     dead = true;
                     break;
-                case 5:
                 case 0:
+                case 5:
+                case 7:
                     move1(newLocation);
                     break;
                 default:

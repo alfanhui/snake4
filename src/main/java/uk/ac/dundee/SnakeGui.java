@@ -31,14 +31,13 @@ public class SnakeGui implements ActionListener, KeyListener {
      * Enumerated type to allow us to refer to RED, YELLOW or BLANK
      */
     private final int GRID_SIZE_X = 60, GRID_SIZE_Y = 80;
-    // private ImageIcon brownSquare = convertPicutres("tiles/brownSquare.jpg");
-    // private ImageIcon blueSquare = convertPicutres("tiles/blueSquare.jpg");
     private ImageIcon blankSpace = convertPicutres("tiles/blankSpace.jpg");
-    private ImageIcon softWall = convertPicutres("tiles/softWall.jpg");
-    private ImageIcon snake = convertPicutres("tiles/snake.jpg");
     private ImageIcon food = convertPicutres("tiles/food.jpg");
+    private ImageIcon hardWall = convertPicutres("tiles/hardWall.jpg");
     private ImageIcon portal = convertPicutres(getPortalColour());
-    // private ImageIcon defaultStart = convertPicutres("defaultStart.jpg");
+    private ImageIcon snake = convertPicutres("tiles/snake.jpg");
+    private ImageIcon softWall = convertPicutres("tiles/softWall.jpg");
+    
     private JLabel[][] labels;
     private static JFrame frame = new JFrame("SnakeGui");
     private final int DELAY_IN_MILISEC = 50; //200
@@ -50,6 +49,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     public SnakeGui() {
         game = new Snake4();
+        array = game.getMap();
         gameSnake = game.getSnake();
         portalArray = game.getPortals();
         foodLoc = game.getFoodLocation();
@@ -92,8 +92,6 @@ public class SnakeGui implements ActionListener, KeyListener {
                 }
             }
 
-            labels[foodLoc.row][foodLoc.column].setIcon(food);
-
             gameSnake = game.getSnake();
 
             for (int i = 0; i < gameSnake.size(); i++) {
@@ -108,35 +106,6 @@ public class SnakeGui implements ActionListener, KeyListener {
                 Pair parts = portalArray[i];
                 labels[parts.row][parts.column].setIcon(portal);
             }
-
-            /**
-             *
-             * System.out.println("HERE and counter is: " + counter);
-             * int row = counter/GRID_SIZE_Y;
-             * int col = counter%GRID_SIZE_Y;
-             * if(counter <= snakeSize)
-             * {
-             * labels[row][col].setIcon(snake);
-             * counter++;
-             * }
-             * else
-             * {
-             * labels[row][col].setIcon(snake);
-             * if(col - snakeSize - 1 < 0)
-             * {
-             * labels[row-1][GRID_SIZE_Y + (col - snakeSize) -
-             * 1].setIcon(getImageIcon(array[row-1][GRID_SIZE_Y + (col - snakeSize) - 1]));
-             * counter++;
-             * }
-             * else
-             * {
-             * labels[row][col-snakeSize - 1].setIcon(getImageIcon(array[row][col-snakeSize
-             * - 1]));
-             * counter++;
-             * }
-             * 
-             * }
-             */
         }
     });
 
@@ -173,40 +142,8 @@ public class SnakeGui implements ActionListener, KeyListener {
         }
     }
 
-    private void readArrayFromFile() {
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
-
-        try {
-            URL url = getClass().getClassLoader().getResource("boards/board2.txt");
-            fileReader = new FileReader(url.getPath());
-            bufferedReader = new BufferedReader(fileReader);
-            String[] tempStringArray = new String[GRID_SIZE_Y];
-            String nextLine = bufferedReader.readLine();
-
-            for (int i = 0; i < array.length; i++) {
-                tempStringArray = nextLine.split(" ");
-                for (int j = 0; j < tempStringArray.length; j++) {
-                    array[i][j] = Integer.parseInt(tempStringArray[j]);
-                }
-                nextLine = bufferedReader.readLine();
-            }
-        }
-
-        catch (IOException e) {
-            System.out.println("Cannot read file!");
-        }
-        try {
-            bufferedReader.close();
-        } catch (Exception e) {
-            System.out.println("Could not close file");
-        }
-
-    }
-
     public JMenuBar createMenu() {
         JMenuBar menuBar = new JMenuBar();
-        ;
         JMenu menu = new JMenu("Snake Menu");
         JMenuItem menuItem;
 
@@ -237,7 +174,7 @@ public class SnakeGui implements ActionListener, KeyListener {
 
         // buttonArray = new JButton[numButtons];
         labels = new JLabel[GRID_SIZE_X][GRID_SIZE_Y];
-        readArrayFromFile();
+        //readArrayFromFile();
         game.setMap(array);
         // array = game.getMap();
         for (int row = 0; row < GRID_SIZE_X; row++) {
@@ -263,22 +200,20 @@ public class SnakeGui implements ActionListener, KeyListener {
     private ImageIcon getImageIcon(int x) throws Exception {
         switch (x) {
             case 0:
-                // labels[row][col] = new JLabel(brownSquare);//For now this will be our squares
                 return blankSpace;
-
             case 1:
                 return softWall;
-
             case 2:
                 return snake;
-
             case 3:
                 return portal;
-
             case 4:
                 return food;
-
             case 5:
+                return blankSpace;
+            case 6:
+                return hardWall;
+            case 7:
                 return blankSpace;
             default:
                 throw new Exception("Default switch found");
@@ -358,7 +293,6 @@ public class SnakeGui implements ActionListener, KeyListener {
      */
     public void NewGame() {
         System.out.println("New game selected");
-
         // Initialise your game
         timer.start();
         System.out.println("Timer started");
@@ -371,8 +305,13 @@ public class SnakeGui implements ActionListener, KeyListener {
      */
     public void pauseGame() {
         System.out.println("Pause game selected");
-        timer.stop();
-        System.out.println("Timer stopped");
+        if(timer.isRunning()){
+            timer.stop();
+            System.out.println("Timer stopped");
+        }else {
+            timer.start();
+            System.out.println("Timer started");
+        }
     }
 
     /**
