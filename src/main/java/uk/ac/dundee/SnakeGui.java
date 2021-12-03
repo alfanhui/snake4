@@ -21,7 +21,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import java.util.Random;
 
@@ -30,7 +29,6 @@ public class SnakeGui implements ActionListener, KeyListener {
     /**
      * Enumerated type to allow us to refer to RED, YELLOW or BLANK
      */
-    private final int GRID_SIZE_X = 60, GRID_SIZE_Y = 80;
     private ImageIcon blankSpace = convertPicutres("tiles/blankSpace.jpg");
     private ImageIcon food = convertPicutres("tiles/food.jpg");
     private ImageIcon hardWall = convertPicutres("tiles/hardWall.jpg");
@@ -40,8 +38,8 @@ public class SnakeGui implements ActionListener, KeyListener {
     
     private JLabel[][] labels;
     private static JFrame frame = new JFrame("SnakeGui");
-    private final int DELAY_IN_MILISEC = 50; //200
-    private int[][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
+    private final int DELAY_IN_MILISEC = 100; //200
+    private int[][] array;
     private Snake4 game;
     public java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
     public Pair[] portalArray;
@@ -81,8 +79,8 @@ public class SnakeGui implements ActionListener, KeyListener {
                 e2.printStackTrace();
             }
 
-            for (int row = 0; row < GRID_SIZE_X; row++) {
-                for (int col = 0; col < GRID_SIZE_Y; col++) {
+            for (int row = 0; row < array.length; row++) {
+                for (int col = 0; col < array[row].length; col++) {
                     try {
                         labels[row][col].setIcon(getImageIcon(array[row][col]));
                     } catch (Exception e1) {
@@ -117,16 +115,17 @@ public class SnakeGui implements ActionListener, KeyListener {
      * @throws URISyntaxException
      */
     private ImageIcon convertPicutres(String name) {
-        URL url = getClass().getClassLoader().getResource(name);
-        ImageIcon imageTemporary = new ImageIcon(url.getPath());
+        File imageFile = new File(getClass().getClassLoader().getResource(name).getFile());
+        //URL url = getClass().getClassLoader().getResource(name);
+        ImageIcon imageTemporary = new ImageIcon(imageFile.getPath());
         Image image2 = imageTemporary.getImage(); // transform it
         Image newimg = image2.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);// scale it the smooth way
         return new ImageIcon(newimg);// transform it back
     }
 
     private void printArrayArg(int[][] arr) {
-        for (int i = 0; i < GRID_SIZE_X; i++) {
-            for (int j = 0; j < GRID_SIZE_Y; j++) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
                 System.out.print(arr[i][j] + " ");
             }
             System.out.println();
@@ -134,8 +133,8 @@ public class SnakeGui implements ActionListener, KeyListener {
     }
 
     private void printArray() {
-        for (int i = 0; i < GRID_SIZE_X; i++) {
-            for (int j = 0; j < GRID_SIZE_Y; j++) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array.length; j++) {
                 System.out.print(array[i][j] + " ");
             }
             System.out.println();
@@ -169,28 +168,17 @@ public class SnakeGui implements ActionListener, KeyListener {
     }
 
     public Container createContentPane() throws Exception {
-        // int numButtons = GRID_SIZE_X * GRID_SIZE_Y;
-        JPanel grid = new JPanel(new GridLayout(GRID_SIZE_X, GRID_SIZE_Y, 0, 0));
-
-        // buttonArray = new JButton[numButtons];
-        labels = new JLabel[GRID_SIZE_X][GRID_SIZE_Y];
-        //readArrayFromFile();
         game.setMap(array);
-        // array = game.getMap();
+        int GRID_SIZE_X = array.length;
+        int GRID_SIZE_Y = array[0].length;
+        JPanel grid = new JPanel(new GridLayout(GRID_SIZE_X, GRID_SIZE_Y, 0, 0));
+        labels = new JLabel[GRID_SIZE_X][GRID_SIZE_Y];
         for (int row = 0; row < GRID_SIZE_X; row++) {
             for (int col = 0; col < GRID_SIZE_Y; col++) {
                 labels[row][col] = new JLabel(getImageIcon(array[row][col]));
                 grid.add(labels[row][col]);
 
             }
-            // buttonArray[i] = new JButton(" ");
-
-            // This label is used to identify which button was clicked in the action
-            // listener
-            // buttonArray[i].setActionCommand("" + i); // String "0", "1" etc.
-            // buttonArray[i].addActionListener(this);
-            // grid.add(buttonArray[i]);
-
         }
         grid.addKeyListener(this);
         grid.setFocusable(true);
@@ -269,15 +257,17 @@ public class SnakeGui implements ActionListener, KeyListener {
                 // Create and set up the content pane.
                 SnakeGui snakeGui = new SnakeGui();
                 frame.setJMenuBar(snakeGui.createMenu());
+                Container snakeFrame;
                 try {
-                    frame.setContentPane(snakeGui.createContentPane());
+                    snakeFrame = snakeGui.createContentPane();
+                    frame.setContentPane(snakeFrame);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
                 // Display the window, setting the size
-                frame.setSize(1000, 750);
+                frame.setSize(300, 300);
                 frame.setVisible(true);
             }
         });

@@ -4,26 +4,29 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
+import org.apache.commons.lang3.ArrayUtils;
 
 public class FileIO {
-    public int[][] readArrayFromFile(int GRID_SIZE_X, int GRID_SIZE_Y) {
+    public int[][] readArrayFromFile(String boardResourcePath) {
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
-        int[][] array = new int[GRID_SIZE_X][GRID_SIZE_Y];
+        ArrayList<ArrayList<Integer>> outterArrayList = new ArrayList<ArrayList<Integer>>();
         try {
-            URL url = getClass().getClassLoader().getResource("boards/board1.txt");
+            URL url = getClass().getClassLoader().getResource(boardResourcePath);
             fileReader = new FileReader(url.getPath());
             bufferedReader = new BufferedReader(fileReader);
-            String[] tempStringArray = new String[GRID_SIZE_Y];
-            String nextLine = bufferedReader.readLine();
-
-            for (int i = 0; i < array.length; i++) {
+            String nextLine;
+            ArrayList<Integer> innerArrayList;
+            String[] tempStringArray;
+            while ((nextLine = bufferedReader.readLine()) != null) {
                 tempStringArray = nextLine.split(" ");
+                innerArrayList = new ArrayList<Integer>();
                 for (int j = 0; j < tempStringArray.length; j++) {
-                    array[i][j] = Integer.parseInt(tempStringArray[j]);
+                    innerArrayList.add(Integer.parseInt(tempStringArray[j]));
                 }
-                nextLine = bufferedReader.readLine();
+                outterArrayList.add(innerArrayList);
             }
         }
 
@@ -35,6 +38,19 @@ public class FileIO {
         } catch (Exception e) {
             System.out.println("Could not close file");
         }
+        
+        //Convert to int[][]
+        return multiArrayListToMultiIntArray(outterArrayList);
+    }
+    
+    public int[][] multiArrayListToMultiIntArray(ArrayList<ArrayList<Integer>> outterArrayList){
+        if (outterArrayList.isEmpty()) return new int[0][0];
+
+        int[][] array = new int[outterArrayList.size()][outterArrayList.get(0).size()];
+        for(int i = 0; i< outterArrayList.size(); i++){
+            array[i] = ArrayUtils.toPrimitive((Integer[])outterArrayList.get(i).toArray(new Integer[outterArrayList.get(i).size()]));
+        }        
         return array;
     }
+
 }

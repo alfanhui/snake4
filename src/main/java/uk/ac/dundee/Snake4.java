@@ -27,7 +27,7 @@ public class Snake4 {
      */
     public Snake4() {
         mapClass = new Map();
-        map = mapClass.initialiseBoard();// new int[80][60];
+        map = mapClass.initialiseBoard();
         snake = new ArrayList<Pair>();
         // Get portal locations
         List<Pair> portalList = mapClass.getPortals(map);
@@ -38,8 +38,8 @@ public class Snake4 {
         }
         foodPair = mapClass.getNewFoodLocation(map);
         map[foodPair.row][foodPair.column] = 4;
-        height = mapClass.ROW;
-        width = mapClass.COLUMN;
+        height = map.length;
+        width = map[0].length;
         head = 0;
         Pair mapHead = mapClass.getDefaultStartPlace(map);
         snake.add(0, new Pair(mapHead.row, mapHead.column));
@@ -49,7 +49,7 @@ public class Snake4 {
     }
 
     public void move() throws CloneNotSupportedException {
-        System.out.println("location: " + snake.get(0));
+        //System.out.println("location: " + snake.get(0));
         switch (direction) {
             case 'd':
                 moveHere(new Pair(snake.get(head).row + 1, snake.get(head).column));

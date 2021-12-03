@@ -12,8 +12,8 @@ public class MapTest {
 		int[][] board = newMap.initialiseBoard();
 		
 		int wallCount = 0;
-		for (int i = 0; i < newMap.ROW; ++i){
-			for (int j = 0; j < newMap.COLUMN; ++j){
+		for (int i = 0; i < board.length; ++i){
+			for (int j = 0; j < board[i].length; ++j){
 				if (board[i][j] == Map.SOFTWALL){
 					wallCount++;
 				}
@@ -28,8 +28,8 @@ public class MapTest {
 		int[][] board = newMap.initialiseBoard();
 		
 		int portalCount = 0;
-		for (int i = 0; i < newMap.ROW; ++i){
-			for (int j = 0; j < newMap.COLUMN; ++j){
+		for (int i = 0; i < board.length; ++i){
+			for (int j = 0; j < board[i].length; ++j){
 				if (board[i][j] == Map.PORTAL){
 					portalCount++;
 				}
@@ -37,29 +37,29 @@ public class MapTest {
 		}
 		assertTrue("No portals present", portalCount == 2);
 	}
-	@Test
-	public void testCorrectStart() {
-		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard();
+	// @Test
+	// public void testCorrectStart() {
+	// 	Map newMap = new Map();
+	// 	int[][] board = newMap.initialiseBoard();
 		
-		int startCount = 0;
-		for (int i = 0; i < newMap.ROW; ++i){
-			for (int j = 0; j < newMap.COLUMN; ++j){
-				if (board[i][j] == Map.START){
-					startCount++;
-				}
-			}
-		}
-		assertTrue("Incorrect start count", startCount == 1);
-	}
+	// 	int startCount = 0;
+	// 	for (int i = 0; i < newMap.ROW; ++i){
+	// 		for (int j = 0; j < newMap.COLUMN; ++j){
+	// 			if (board[i][j] == Map.START){
+	// 				startCount++;
+	// 			}
+	// 		}
+	// 	}
+	// 	assertTrue("Incorrect start count", startCount == 1);
+	// }
 	@Test
 	public void testCorrectHardWall() {
 		Map newMap = new Map();
 		int[][] board = newMap.initialiseBoard();
 		
 		int hardWallCount = 0;
-		for (int i = 0; i < newMap.ROW; ++i){
-			for (int j = 0; j < newMap.COLUMN; ++j){
+		for (int i = 0; i < board.length; ++i){
+			for (int j = 0; j < board[i].length; ++j){
 				if (board[i][j] == Map.HARDWALL){
 					hardWallCount++;
 				}
@@ -68,22 +68,22 @@ public class MapTest {
 		assertTrue("Incorrect start count", hardWallCount == 0);
 	}
 
-	@Test
-	public void testCorrectStartingList() {
-		Map newMap = new Map();
-		newMap.initialiseBoard();
+	// @Test
+	// public void testCorrectStartingList() {
+	// 	Map newMap = new Map();
+	// 	newMap.initialiseBoard();
 		
-		System.out.println("Starting list Size is " + newMap.startingWallSide.size());
-		assertTrue("Incorrect starting list size", newMap.startingWallSide.size() == 2784);
-	}
-	@Test
-	public void testCorrectEndingList() {
-		Map newMap = new Map();
-		newMap.initialiseBoard();
+	// 	System.out.println("Starting list Size is " + newMap.startingWallSide.size());
+	// 	assertTrue("Incorrect starting list size", newMap.startingWallSide.size() == 2784);
+	// }
+	// @Test
+	// public void testCorrectEndingList() {
+	// 	Map newMap = new Map();
+	// 	newMap.initialiseBoard();
 		
-		System.out.println("Ending list Size is " + newMap.endingWallSide.size());
-		assertTrue("Incorrect ending list size", newMap.endingWallSide.size() == 1682);
-	}
+	// 	System.out.println("Ending list Size is " + newMap.endingWallSide.size());
+	// 	assertTrue("Incorrect ending list size", newMap.endingWallSide.size() == 1682);
+	// }
 
 	// @Test
 	// public void testCorrectPrintout() {
