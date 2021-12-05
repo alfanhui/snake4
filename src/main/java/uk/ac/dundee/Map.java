@@ -18,7 +18,7 @@ public class Map {
 	public static final int SNAKE = 2;
 	public static final int PORTAL = 3;
 	public static final int FOOD = 4;
-	public static final int START = 5;
+	public static final int SNAKE_START = 5;
 	public static final int HARDWALL = 6;
 	public static final int SPACE_2 = 7;
 
@@ -26,17 +26,19 @@ public class Map {
 	public List<Pair> startingWallSide = new ArrayList<Pair>();
 	public List<Pair> endingWallSide = new ArrayList<Pair>();
 
-	public int[][] initialiseBoard(){
+	public int[][] initialiseBoard(String boardPath, boolean useDefaultStart, boolean useDefaultPortals){
 		int [][] snakeBoard;
-        System.out.println(' ');
 		FileIO fileIO = new FileIO();
-		snakeBoard = fileIO.readArrayFromFile("boards/board1.txt");
-		snakeBoard = addSoftWalls(snakeBoard);
+		snakeBoard = fileIO.readArrayFromFile(boardPath);
 
 		freeIndexes = generateFreePositions(snakeBoard);
 
-		snakeBoard = addPortals(snakeBoard, freeIndexes);
-		snakeBoard = addStart(snakeBoard, freeIndexes);
+		if(!useDefaultPortals) {
+			snakeBoard = addPortals(snakeBoard, freeIndexes);
+		}
+		if(!useDefaultStart){
+			snakeBoard = addRandomSnakeStart(snakeBoard, freeIndexes);
+		}
 
 		// add snake to starting position
 		return snakeBoard;
@@ -75,7 +77,7 @@ public class Map {
 	public Pair getDefaultStartPlace(int[][] snakeBoard) {
 		for (int i = 0; i < snakeBoard.length; ++i){
 			for (int j = 0; j < snakeBoard[0].length; ++j){
-				if (snakeBoard[i][j] == START){
+				if (snakeBoard[i][j] == SNAKE_START){
 					return new Pair(i,j);
 				}
 			}
@@ -94,7 +96,6 @@ public class Map {
 			}
 		}
 		return snakeBoard;
-
 	}
 
 	/* Add soft central wall to the snake board (vertical only) */
@@ -216,20 +217,20 @@ public class Map {
 	}
 
 	/* Add default starting position to the snake board (ensure away from walls) */
-	public int[][] addStart(int[][] snakeBoard, List<Pair> freeIndexes) {
+	public int[][] addRandomSnakeStart(int[][] snakeBoard, List<Pair> freeIndexes) {
 		int randomStart;
 		Pair startPosition;
 
 		while (true){
 			randomStart = new Random().nextInt(freeIndexes.size());
 			startPosition = freeIndexes.get(randomStart);
-			if (startPosition.row > 2 && startPosition.row < 77 && startPosition.column > 2
-					&& startPosition.column < 57){
+			if (startPosition.row > 2 && startPosition.row < snakeBoard.length && startPosition.column > 2
+					&& startPosition.column < snakeBoard[0].length -2){
 				break;
 			}
 		}
-		snakeBoard[startPosition.row][startPosition.column] = START;
-		//snakeBoard[5][71] = START;
+		snakeBoard[startPosition.row][startPosition.column] = SNAKE_START;
+
 		freeIndexes.remove(startPosition);
 		return snakeBoard;
 	}
@@ -272,7 +273,7 @@ public class Map {
 	public int[][] addSnake(int[][] snakeBoard) {
 		for (int i = 0; i < snakeBoard.length; ++i){
 			for (int j = 0; j < snakeBoard[0].length; ++i){
-				if (snakeBoard[i][j] == START){
+				if (snakeBoard[i][j] == SNAKE_START){
 					snakeBoard[i][j] = SNAKE;
 					return snakeBoard;
 				}

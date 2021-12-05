@@ -41,16 +41,14 @@ public class SnakeGui implements ActionListener, KeyListener {
     private final int DELAY_IN_MILISEC = 100; //200
     private int[][] array;
     private Snake4 game;
-    public java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
-    public Pair[] portalArray;
-    public Pair foodLoc;
+    private java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
+    private Pair[] portalArray;
 
     public SnakeGui() {
-        game = new Snake4();
+        game = new Snake4("boards/board1.txt", false, false, true);
         array = game.getMap();
         gameSnake = game.getSnake();
         portalArray = game.getPortals();
-        foodLoc = game.getFoodLocation();
     }
 
     private String getPortalColour() {
@@ -72,12 +70,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            try {
-                game.move();
-            } catch (CloneNotSupportedException e2) {
-                // TODO Auto-generated catch block
-                e2.printStackTrace();
-            }
+            gameSnake = game.move();            
 
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
@@ -89,8 +82,6 @@ public class SnakeGui implements ActionListener, KeyListener {
                     }
                 }
             }
-
-            gameSnake = game.getSnake();
 
             for (int i = 0; i < gameSnake.size(); i++) {
                 Pair parts = gameSnake.get(i);

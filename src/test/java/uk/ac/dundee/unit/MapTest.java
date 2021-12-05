@@ -1,15 +1,17 @@
-package uk.ac.dundee;
+package uk.ac.dundee.unit;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import uk.ac.dundee.Map;
 
 public class MapTest {
 
 	@Test
 	public void testCorrectSoftWalls() {
 		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard();
+		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, true);
 		
 		int wallCount = 0;
 		for (int i = 0; i < board.length; ++i){
@@ -25,7 +27,7 @@ public class MapTest {
 	@Test
 	public void testCorrectPortal() {
 		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard();
+		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, true);
 		
 		int portalCount = 0;
 		for (int i = 0; i < board.length; ++i){
@@ -45,7 +47,7 @@ public class MapTest {
 	// 	int startCount = 0;
 	// 	for (int i = 0; i < newMap.ROW; ++i){
 	// 		for (int j = 0; j < newMap.COLUMN; ++j){
-	// 			if (board[i][j] == Map.START){
+	// 			if (board[i][j] == Map.SNAKE_START){
 	// 				startCount++;
 	// 			}
 	// 		}
@@ -55,7 +57,7 @@ public class MapTest {
 	@Test
 	public void testCorrectHardWall() {
 		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard();
+		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, true);
 		
 		int hardWallCount = 0;
 		for (int i = 0; i < board.length; ++i){

@@ -1,4 +1,4 @@
-package uk.ac.dundee;
+package uk.ac.dundee.unit;
 
 import static org.junit.Assert.assertArrayEquals;
 

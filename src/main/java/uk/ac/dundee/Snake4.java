@@ -9,25 +9,27 @@ import java.util.Random;
 
 public class Snake4 {
     // Global variables
-    public int map[][];
-    public int head;
-    public char direction;
-    public Pair[] portal_location;
-    public List<Pair> snake;
-    public boolean dead;
-    public int height;
-    public int width;
-    public final char printChars[] = new char[] { ' ', '*', '.', '@', '~' };
-    public Map mapClass;
-    public Pair foodPair;
+    private int map[][];
+    private int head = 0;
+    private char direction = 'u';
+    private Pair[] portal_location;
+    private List<Pair> snake;
+    private boolean dead = false;
+    private int height;
+    private int width;
+    private final char printChars[] = new char[] { ' ', '*', '.', '@', '~' };
+    private Map mapClass;
+    private Pair foodPair;
 
     /*
-     * Constructor
-     *
-     */
-    public Snake4() {
+    * @param boardPath location in resources folder of the board to use
+    * @param useDefaultStart use default snake start location from board (noted with '5')
+    * @param useDefaultPortals use default ports locations from board (noted with '3')
+    * @param setFoodDown boolean whether the board should have food
+    **/
+    public Snake4(String boardPath, boolean useDefaultStart, boolean useDefaultPortals, boolean setFoodDown) {
         mapClass = new Map();
-        map = mapClass.initialiseBoard();
+        map = mapClass.initialiseBoard(boardPath, useDefaultStart, useDefaultPortals);
         snake = new ArrayList<Pair>();
         // Get portal locations
         List<Pair> portalList = mapClass.getPortals(map);
@@ -36,19 +38,19 @@ public class Snake4 {
             Pair portal = portalList.get(i);
             portal_location[i] = new Pair(portal.row, portal.column);
         }
-        foodPair = mapClass.getNewFoodLocation(map);
-        map[foodPair.row][foodPair.column] = 4;
+        if(setFoodDown){
+            foodPair = mapClass.getNewFoodLocation(map);
+            map[foodPair.row][foodPair.column] = 4;
+        }
         height = map.length;
         width = map[0].length;
-        head = 0;
         Pair mapHead = mapClass.getDefaultStartPlace(map);
         snake.add(0, new Pair(mapHead.row, mapHead.column));
-        snake.add(new Pair(mapHead.row - 1, mapHead.column));
-        dead = false;
-        direction = 'u';
+        snake.add(new Pair(mapHead.row + 1, mapHead.column));
+
     }
 
-    public void move() throws CloneNotSupportedException {
+    public List<Pair> move(){
         //System.out.println("location: " + snake.get(0));
         switch (direction) {
             case 'd':
@@ -67,6 +69,7 @@ public class Snake4 {
                 System.out.println("Snake doesn't know how to move");
                 break;
         }
+        return snake;
     }
 
     public void changeDirection(int code) {
@@ -100,7 +103,7 @@ public class Snake4 {
         }
     }
 
-    public void moveHere(Pair coordinate) throws CloneNotSupportedException {
+    public void moveHere(Pair coordinate) {
 
         int type = map[coordinate.row][coordinate.column];
         Pair newLocation = coordinate;
@@ -112,15 +115,23 @@ public class Snake4 {
             map = mapClass.setNewFoodLocation(map, coordinate);
         } else if (validPortal(coordinate)) {
             newLocation = portal(coordinate);
-
-            if (map[newLocation.row][newLocation.column] == 1) {
-            newLocation = throughWall(newLocation);
+            if (map[newLocation.row][newLocation.column] == Map.SOFTWALL) {
+                newLocation = throughWall(newLocation);
             }
             move1(newLocation);
         } else {
             switch (type) {
                 case 1:
                     newLocation = throughWall(coordinate);
+                    if (map[newLocation.row][newLocation.column] == Map.FOOD) { //fix bug on not eating after softwall
+                        System.out.println("Were in the food place");
+                        grow1(newLocation);
+                        map = mapClass.setNewFoodLocation(map, coordinate);
+                    }
+                    //TODO what happens if you go through a softwall straight into a portal?
+                    if(validPortal(coordinate)){
+                        newLocation = portal(coordinate);
+                    }
                     move1(newLocation);
                     break;
                 case 2:
@@ -130,6 +141,10 @@ public class Snake4 {
                 case 5:
                 case 7:
                     move1(newLocation);
+                    break;
+                case 6:
+                    System.out.print("You are dead. ");
+                    dead = true;
                     break;
                 default:
                     System.out.println("ERROR - Snake does not know where to move");
@@ -193,13 +208,17 @@ public class Snake4 {
     }
 
     // This method is called to move location to other portal
-    public Pair portal(Pair coordinate) throws CloneNotSupportedException {
+    public Pair portal(Pair coordinate) {
         // WE need to know the direction and which portal it hits, then its the other
         // portal becomes the new head + direction of portal
         Pair loci = new Pair();
         for (int i = 0; i < portal_location.length; i++) {
             if (!portal_location[i].equals(coordinate)) { // get the portal which does not have the snake on it.
-                loci = (Pair) portal_location[i].clone();
+                try{
+                    loci = (Pair) portal_location[i].clone();
+                } catch (CloneNotSupportedException e){
+                    System.out.println(e);
+                }
                 switch (direction) {
                     case 'l':
                         loci.column = loci.column - 1;
@@ -212,10 +231,35 @@ public class Snake4 {
                         break;
                     case 'd':
                         loci.row = loci.row + 1;
-                        break;
                 }
-                if (map[loci.row][loci.column] == Map.SNAKE || map[loci.row][loci.column] == Map.HARDWALL) { // r
+                if (map[loci.row][loci.column] == Map.SNAKE || map[loci.row][loci.column] == Map.HARDWALL) { 
                     dead = true;
+                }
+                if (map[loci.row][loci.column] == Map.SOFTWALL) {
+                    try{
+                        loci = (Pair) portal_location[i-1].clone();
+                    } catch (CloneNotSupportedException e){
+                        System.out.println(e);
+                    }
+                    //Go opposite direction
+                    switch (direction) {
+                        case 'l':
+                            loci.column = loci.column + 2;
+                            direction = 'r';
+                            break;
+                        case 'r':
+                            loci.column = loci.column - 2;
+                            direction = 'l';
+                            break;
+                        case 'u':
+                            loci.row = loci.row + 2;
+                            direction = 'd';
+                            break;
+                        case 'd':
+                            loci.row = loci.row - 2;
+                            direction = 'u';
+                            break;
+                    }           
                 }
             }
         }
@@ -246,16 +290,24 @@ public class Snake4 {
         return map;
     }
 
+    public void setMap(int[][] map) {
+        this.map = map;
+    }
+
+    public char getDirection(){
+        return this.direction;
+    }
+
+    public void setDirection(char direction){
+        this.direction = direction;
+    }
+
     public List<Pair> getSnake() {
         return snake;
     }
 
     public Pair getFoodLocation() {
         return foodPair;
-    }
-
-    public void setMap(int[][] map) {
-        this.map = map;
     }
 
     public Pair[] getPortals() {
