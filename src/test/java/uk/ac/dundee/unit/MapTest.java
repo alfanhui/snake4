@@ -11,7 +11,7 @@ public class MapTest {
 	@Test
 	public void testCorrectSoftWalls() {
 		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, true);
+		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, false);
 		
 		int wallCount = 0;
 		for (int i = 0; i < board.length; ++i){
@@ -27,7 +27,7 @@ public class MapTest {
 	@Test
 	public void testCorrectPortal() {
 		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, true);
+		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, false);
 		
 		int portalCount = 0;
 		for (int i = 0; i < board.length; ++i){
@@ -57,7 +57,7 @@ public class MapTest {
 	@Test
 	public void testCorrectHardWall() {
 		Map newMap = new Map();
-		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, true);
+		int[][] board = newMap.initialiseBoard("boards/board1.txt", false, false);
 		
 		int hardWallCount = 0;
 		for (int i = 0; i < board.length; ++i){

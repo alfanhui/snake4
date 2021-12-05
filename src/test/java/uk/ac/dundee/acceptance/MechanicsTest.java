@@ -91,4 +91,32 @@ public class MechanicsTest {
         gameSnake = game.move();
         assertEquals(new Pair(2,1), gameSnake.get(game.getSnake().size()-1));
     }
+    
+    @Test
+    public void moveUpEatFoodTest(){
+        game = new Snake4("boards/spaces4x4WithFood.txt", true, false, false);
+        gameSnake = game.getSnake();
+        assertEquals(2, gameSnake.size());
+        assertEquals(new Pair(3,1), gameSnake.get(0));
+        // game.setDirection('u'); default start direction is up
+        gameSnake = game.move();
+        assertEquals(3, gameSnake.size());
+        // Food is consummed from location and extends from location, so we have to surpass the location by the size before seeing the effects
+        gameSnake = game.move();  
+        gameSnake = game.move();
+        assertEquals(new Pair(0,1), gameSnake.get(0));
+        assertEquals(new Pair(1,1), gameSnake.get(1));
+        assertEquals(new Pair(2,1), gameSnake.get(2));
+    }
+
+    @Test
+    public void moveIntoPortalAboveEatFoodAfterTest(){
+        game = new Snake4("boards/foodAfterPortalAbove.txt", true, true, false);
+        gameSnake = game.getSnake();
+        assertEquals(new Pair(2,1), gameSnake.get(0));
+        // game.setDirection('u'); default start direction is up
+        gameSnake = game.move();
+        assertEquals(new Pair(0,4), gameSnake.get(game.getSnake().size()-1));
+        assertEquals(3, gameSnake.size());
+    }
 }
