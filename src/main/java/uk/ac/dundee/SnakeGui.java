@@ -37,15 +37,22 @@ public class SnakeGui implements ActionListener, KeyListener {
     private ImageIcon softWall = convertPicutres("tiles/softWall.jpg");
     
     private JLabel[][] labels;
+    private JToolTip toolTip = new JToolTip();
     private static JFrame frame = new JFrame("SnakeGui");
-    private final int DELAY_IN_MILISEC = 100; //200
+
+    private final int DELAY_IN_MILISEC = 125; //200
     private int[][] array;
     private Snake4 game;
     private java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
     private Pair[] portalArray;
 
+    private static final int windowDimentionsX= 450;
+    private static final int windowDimentionsY= 400;
+    
+    private int level = 1;
+
     public SnakeGui() {
-        game = new Snake4("boards/board1.txt", false, false, true);
+        game = new Snake4("boards/board" + level + ".txt", false, false, true);
         array = game.getMap();
         gameSnake = game.getSnake();
         portalArray = game.getPortals();
@@ -110,7 +117,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         //URL url = getClass().getClassLoader().getResource(name);
         ImageIcon imageTemporary = new ImageIcon(imageFile.getPath());
         Image image2 = imageTemporary.getImage(); // transform it
-        Image newimg = image2.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);// scale it the smooth way
+        Image newimg = image2.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);// scale it the smooth way
         return new ImageIcon(newimg);// transform it back
     }
 
@@ -152,8 +159,8 @@ public class SnakeGui implements ActionListener, KeyListener {
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        // a submenu
-        menu.addSeparator();
+        toolTip.setTipText("Level " + level);
+		menuBar.add(toolTip);
 
         return menuBar;
     }
@@ -252,21 +259,39 @@ public class SnakeGui implements ActionListener, KeyListener {
                 try {
                     snakeFrame = snakeGui.createContentPane();
                     frame.setContentPane(snakeFrame);
+                    //frame.setLocationRelativeTo(null);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
                 // Display the window, setting the size
-                frame.setSize(300, 300);
+                centreWindow();
+                frame.setSize(windowDimentionsX, windowDimentionsY);
                 frame.setVisible(true);
             }
         });
     }
 
+    
+    public static void centreWindow() {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2 - (windowDimentionsX/2));
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2 - (windowDimentionsY/2));
+        frame.setLocation(x, y);
+    }
+
     // ************************************************************************
     // *** ConnectGUI: Modify the methods below to respond to Menu and Mouse click
     // events
+
+    private static void deathScreen() {
+		infoBox("You have died! Sorry to hear that...", "Death Screen");
+	}
+
+    public static void infoBox(String infoMessage, String titleBar) {
+		JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.ERROR_MESSAGE);
+	}
 
     /**
      * This method is called from the Menu event: New Game.
@@ -301,8 +326,20 @@ public class SnakeGui implements ActionListener, KeyListener {
      */
     public void endGame() {
         System.out.println("End game selected");
-        System.exit(0);
+        if (exitWarning()) {
+			System.exit(0);
+		}
     }
+
+    private static boolean exitWarning() {
+		String[] options = { "EXIT", "PLAY" };
+		int end = JOptionPane.showOptionDialog(null, "Do you want to exit the game?", "Warning", JOptionPane.DEFAULT_OPTION,
+				JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+		if (end == 0)
+			return true;// the function gives 0 when ok is clicked
+		else
+			return false;
+	}
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -321,3 +358,5 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     }
 }
+
+
