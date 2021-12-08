@@ -32,8 +32,10 @@ public class SnakeGui implements ActionListener, KeyListener {
     private ImageIcon blankSpace = convertPicutres("tiles/blankSpace.jpg");
     private ImageIcon food = convertPicutres("tiles/food.jpg");
     private ImageIcon hardWall = convertPicutres("tiles/hardWall.jpg");
-    private ImageIcon portal = convertPicutres(getPortalColour());
+    private ImageIcon portalBlue = convertPicutres("tiles/portalBlue.jpg");
+    private ImageIcon portalOrange = convertPicutres("tiles/portalOrange.jpg");
     private ImageIcon snake = convertPicutres("tiles/snake.jpg");
+    private ImageIcon snakeHead = convertPicutres("tiles/snakeHead.jpg");
     private ImageIcon softWall = convertPicutres("tiles/softWall.jpg");
     
     private JLabel[][] labels;
@@ -46,10 +48,12 @@ public class SnakeGui implements ActionListener, KeyListener {
     private java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
     private Pair[] portalArray;
 
-    private static final int windowDimentionsX= 450;
-    private static final int windowDimentionsY= 400;
+    private boolean portalColourToggle = false;
+
+    private static final int windowDimentionsX= 460;
+    private static final int windowDimentionsY= 500;
     
-    private int level = 1;
+    private int level = 2;
 
     public SnakeGui() {
         game = new Snake4("boards/board" + level + ".txt", false, false, true);
@@ -58,15 +62,13 @@ public class SnakeGui implements ActionListener, KeyListener {
         portalArray = game.getPortals();
     }
 
-    private String getPortalColour() {
-        String name;
-        Random rand = new Random();
-        if (rand.nextBoolean()) {
-            name = "tiles/portalBlue.jpg";
+    private ImageIcon getPortalColour() {
+        portalColourToggle = !portalColourToggle;
+        if (portalColourToggle) {
+            return portalBlue;
         } else {
-            name = "tiles/portalOrange.jpg";
+            return portalOrange;
         }
-        return name;
     }
 
     /*
@@ -77,7 +79,11 @@ public class SnakeGui implements ActionListener, KeyListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            gameSnake = game.move();            
+            gameSnake = game.move();
+            if (game.isDead()){
+                timer.stop();
+                deathScreen();
+            }
 
             for (int row = 0; row < array.length; row++) {
                 for (int col = 0; col < array[row].length; col++) {
@@ -92,15 +98,18 @@ public class SnakeGui implements ActionListener, KeyListener {
 
             for (int i = 0; i < gameSnake.size(); i++) {
                 Pair parts = gameSnake.get(i);
-                labels[parts.row][parts.column].setIcon(snake);
+                if(game.getHead() == i){
+                    labels[parts.row][parts.column].setIcon(snakeHead);
+                }else{
+                    labels[parts.row][parts.column].setIcon(snake);
+                }
             }
 
             portalArray = game.getPortals();
-            // System.out.println("PORTAL COORDINATES: "+portalArray[0]+" AND
-            // "+portalArray[1]);
+
             for (int i = 0; i < portalArray.length; i++) {
                 Pair parts = portalArray[i];
-                labels[parts.row][parts.column].setIcon(portal);
+                labels[parts.row][parts.column].setIcon(getPortalColour());
             }
         }
     });
@@ -114,7 +123,6 @@ public class SnakeGui implements ActionListener, KeyListener {
      */
     private ImageIcon convertPicutres(String name) {
         File imageFile = new File(getClass().getClassLoader().getResource(name).getFile());
-        //URL url = getClass().getClassLoader().getResource(name);
         ImageIcon imageTemporary = new ImageIcon(imageFile.getPath());
         Image image2 = imageTemporary.getImage(); // transform it
         Image newimg = image2.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);// scale it the smooth way
@@ -146,7 +154,6 @@ public class SnakeGui implements ActionListener, KeyListener {
 
         menuBar.add(menu);
 
-        // A group of JMenuItems. You can create other menu items here if desired
         menuItem = new JMenuItem("New Game");
         menuItem.addActionListener(this);
         menu.add(menuItem);
@@ -185,22 +192,22 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     private ImageIcon getImageIcon(int x) throws Exception {
         switch (x) {
-            case 0:
-                return blankSpace;
             case 1:
                 return softWall;
             case 2:
                 return snake;
             case 3:
-                return portal;
+                return getPortalColour();
             case 4:
                 return food;
-            case 5:
-                return blankSpace;
             case 6:
                 return hardWall;
+            case 0:
+            case 5: 
             case 7:
                 return blankSpace;
+            case 8:
+                return snakeHead;
             default:
                 throw new Exception("Default switch found");
         }

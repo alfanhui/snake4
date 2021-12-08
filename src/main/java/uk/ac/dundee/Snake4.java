@@ -109,7 +109,7 @@ public class Snake4 {
         Pair newLocation = originalLocation;
 
         switch (type) {
-            case 1:
+            case Map.SOFTWALL:
                 newLocation = throughWall(originalLocation);
                 if (map[newLocation.row][newLocation.column] == Map.FOOD) { //fix bug on not eating after softwall
                     grow1(newLocation, originalLocation);
@@ -120,10 +120,7 @@ public class Snake4 {
                 }
                 move1(newLocation);
                 break;
-            case 2:
-                dead = true;
-                break;
-            case 3:
+            case Map.PORTAL:
                 newLocation = portal(originalLocation);
                 if (map[newLocation.row][newLocation.column] == Map.SOFTWALL) {
                     newLocation = throughWall(newLocation);
@@ -133,16 +130,18 @@ public class Snake4 {
                 }
                 move1(newLocation);
                 break;
-            case 4:
+            case Map.FOOD:
                 grow1(newLocation, originalLocation);
                 move1(newLocation);
                 break;
-            case 0:
-            case 5:
-            case 7:
+            case Map.SPACE:
+            case Map.SNAKE_START:
+            case Map.SPACE_2:
                 move1(newLocation);
                 break;
-            case 6:
+            case Map.SNAKE:
+            case Map.HARDWALL:
+            case Map.SNAKE_HEAD:
                 System.out.print("You are dead. ");
                 dead = true;
                 break;
@@ -287,6 +286,10 @@ public class Snake4 {
         }
     }
 
+    public int getHead(){
+        return head;
+    }
+
     public int[][] getMap() {
         return map;
     }
@@ -324,8 +327,6 @@ public class Snake4 {
     }
 
     public boolean isDead() {
-        if (dead)
-            return true;
-        return false;
+        return dead;
     }
 }

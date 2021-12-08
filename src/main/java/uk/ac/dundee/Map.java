@@ -21,6 +21,7 @@ public class Map {
 	public static final int SNAKE_START = 5;
 	public static final int HARDWALL = 6;
 	public static final int SPACE_2 = 7;
+	public static final int SNAKE_HEAD = 8;
 
 	public List<Pair> freeIndexes = new ArrayList<Pair>();
 	public List<Pair> startingWallSide = new ArrayList<Pair>();
