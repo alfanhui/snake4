@@ -110,6 +110,63 @@ public class MechanicsTest {
     }
 
     @Test
+    public void moveIntoSoftWallAboveTest(){
+        game = new Snake4("boards/softWallAbove.txt", true, true, false);
+        gameSnake = game.getSnake();
+        assertEquals(new Pair(1,3), gameSnake.get(0));
+        // game.setDirection('u'); default start direction is up
+        gameSnake = game.move();
+        gameSnake = game.move();
+        assertEquals(new Pair(2,3), gameSnake.get(game.getSnake().size()-1));
+    }
+    
+    @Test
+    public void moveIntoSoftWallBelowTest(){
+        game = new Snake4("boards/softWallBelow.txt", true, true, false);
+        gameSnake = game.getSnake();
+        assertEquals(new Pair(2,3), gameSnake.get(0));
+        game.setDirection('d');
+        gameSnake = game.move();
+        gameSnake = game.move();
+        assertEquals(new Pair(1,3), gameSnake.get(game.getSnake().size()-1));
+    }
+    
+    @Test
+    public void moveIntoSoftWallLeftTest(){
+        game = new Snake4("boards/softWallLeft.txt", true, true, false);
+        gameSnake = game.getSnake();
+        assertEquals(new Pair(1,1), gameSnake.get(0));
+        game.setDirection('l');
+        gameSnake = game.move();
+        gameSnake = game.move();
+        assertEquals(new Pair(1,3), gameSnake.get(game.getSnake().size()-1));
+    }
+    
+    @Test
+    public void moveIntoSoftWallRightTest(){
+        game = new Snake4("boards/softWallRight.txt", true, true, false);
+        gameSnake = game.getSnake();
+        assertEquals(new Pair(1,3), gameSnake.get(0));
+        game.setDirection('r');
+        gameSnake = game.move();
+        gameSnake = game.move();
+        assertEquals(new Pair(1,1), gameSnake.get(game.getSnake().size()-1));
+    }
+    
+    
+    
+    @Test
+    public void moveIntoPortalRightIntoSoftWallTest(){
+        game = new Snake4("boards/portalsSoftWallRight.txt", true, true, false);
+        gameSnake = game.getSnake();
+        assertEquals(new Pair(1,1), gameSnake.get(0));
+        game.setDirection('r');
+        gameSnake = game.move();
+        gameSnake = game.move();
+        assertEquals(new Pair(1,5), gameSnake.get(game.getSnake().size()-1));
+    }
+
+    @Test
     public void moveIntoPortalAboveEatFoodAfterTest(){
         game = new Snake4("boards/foodAfterPortalAbove.txt", true, true, false);
         gameSnake = game.getSnake();
