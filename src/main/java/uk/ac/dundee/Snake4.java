@@ -114,37 +114,37 @@ public class Snake4 {
         switch (type) {
             case Map.SOFTWALL:
                 newLocation = throughWall(originalLocation);
-                if (map[newLocation.row][newLocation.column] == Map.FOOD) { // fix bug on not eating after softwall
-                    grow1(newLocation, originalLocation);
-                }
                 // TODO what happens if you go through a softwall straight into a portal?
                 if (validPortal(originalLocation)) {
                     newLocation = portal(originalLocation);
                 }
                 move1(newLocation);
+                if (map[newLocation.row][newLocation.column] == Map.FOOD) { // fix bug on not eating after softwall
+                    grow1(newLocation, originalLocation);
+                }
                 break;
             case Map.PORTAL:
                 newLocation = portal(originalLocation);
                 if (map[newLocation.row][newLocation.column] == Map.SOFTWALL) {
                     newLocation = throughWall(newLocation);
                 }
+                move1(newLocation);
                 if (map[newLocation.row][newLocation.column] == Map.FOOD) { // fix bug on not eating after portal
                     grow1(newLocation, originalLocation);
                 }
-                move1(newLocation);
                 break;
             case Map.FOOD:
-                grow1(newLocation, originalLocation);
                 move1(newLocation);
+                grow1(newLocation, originalLocation);
                 break;
             case Map.SPACE:
             case Map.SNAKE_START:
             case Map.SPACE_2:
                 move1(newLocation);
                 break;
-            case Map.SNAKE:
             case Map.HARDWALL:
-            case Map.SNAKE_HEAD:
+            case Map.SNAKE: //doesn't work, they are not on the board
+            case Map.SNAKE_HEAD: // doesn't work, they are not on the board
                 System.out.print("You are dead. ");
                 dead = true;
                 break;
@@ -154,11 +154,18 @@ public class Snake4 {
         }
     }
 
+    public boolean isSnakeValidToMove(Pair newLocation){
+        return !snake.contains(newLocation);
+    }
+
     public void move1(Pair newLocation) {
         if (head == 0) {
             head = snake.size() - 1;
         } else {
             head = head - 1;
+        }
+        if(!isSnakeValidToMove(newLocation)){
+            dead = true;
         }
         snake.set(head, newLocation);
     }
