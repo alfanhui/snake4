@@ -12,6 +12,7 @@ public class Snake4 {
     private int map[][];
     private int head = 0;
     private char direction = 'u';
+    private char previousDirection = 'u';
     private Pair[] portal_location;
     private List<Pair> snake;
     private boolean dead = false;
@@ -71,6 +72,7 @@ public class Snake4 {
                 System.out.println("Snake doesn't know how to move");
                 break;
         }
+        previousDirection = direction;
         return snake;
     }
 
@@ -78,25 +80,25 @@ public class Snake4 {
         switch (code) {
             case 39:
             case 68:
-                if (direction != 'l') {
+                if (direction != 'l' && previousDirection != 'l') {
                     direction = 'r';
                 }
                 break;
             case 37:
             case 65:
-                if (direction != 'r') {
+                if (direction != 'r' && previousDirection != 'r') {
                     direction = 'l';
                 }
                 break;
             case 40:
             case 83:
-                if (direction != 'u') {
+                if (direction != 'u' && previousDirection != 'u') {
                     direction = 'd';
                 }
                 break;
             case 38:
             case 87:
-                if (direction != 'd') {
+                if (direction != 'd' && previousDirection != 'd') {
                     direction = 'u';
                 }
                 break;
