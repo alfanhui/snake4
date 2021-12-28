@@ -14,7 +14,6 @@ import javax.swing.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-
 public class SnakeGui implements ActionListener, KeyListener {
 
     /**
@@ -28,12 +27,12 @@ public class SnakeGui implements ActionListener, KeyListener {
     private ImageIcon snake = convertPicutres("tiles/snake.jpg");
     private ImageIcon snakeHead = convertPicutres("tiles/snakeHead.jpg");
     private ImageIcon softWall = convertPicutres("tiles/softWall.jpg");
-    
+
     private JLabel[][] labels;
     private JToolTip toolTip = new JToolTip();
     private static JFrame frame = new JFrame("SnakeGui");
 
-    private final int DELAY_IN_MILISEC = 125; //200
+    private final int DELAY_IN_MILISEC = 125; // 200
     private int[][] array;
     private Snake4 game;
     private java.util.List<Pair> gameSnake = new java.util.ArrayList<Pair>();
@@ -41,9 +40,9 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     private boolean portalColourToggle = false;
 
-    private static final int windowDimentionsX= 460;
-    private static final int windowDimentionsY= 500;
-    
+    private static final int windowDimentionsX = 460;
+    private static final int windowDimentionsY = 500;
+
     private int level = 1;
 
     public SnakeGui() {
@@ -71,7 +70,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         public void actionPerformed(ActionEvent e) {
 
             gameSnake = game.move();
-            if (game.isDead()){
+            if (game.isDead()) {
                 timer.stop();
                 deathScreen();
             }
@@ -89,9 +88,9 @@ public class SnakeGui implements ActionListener, KeyListener {
 
             for (int i = 0; i < gameSnake.size(); i++) {
                 Pair parts = gameSnake.get(i);
-                if(game.getHead() == i){
+                if (game.getHead() == i) {
                     labels[parts.row][parts.column].setIcon(snakeHead);
-                }else{
+                } else {
                     labels[parts.row][parts.column].setIcon(snake);
                 }
             }
@@ -156,7 +155,7 @@ public class SnakeGui implements ActionListener, KeyListener {
         menu.add(menuItem);
 
         toolTip.setTipText("Level " + level);
-		menuBar.add(toolTip);
+        menuBar.add(toolTip);
 
         return menuBar;
     }
@@ -192,7 +191,7 @@ public class SnakeGui implements ActionListener, KeyListener {
             case 6:
                 return hardWall;
             case 0:
-            case 5: 
+            case 5:
             case 7:
                 return blankSpace;
             case 8:
@@ -255,7 +254,7 @@ public class SnakeGui implements ActionListener, KeyListener {
                 try {
                     snakeFrame = snakeGui.createContentPane();
                     frame.setContentPane(snakeFrame);
-                    //frame.setLocationRelativeTo(null);
+                    // frame.setLocationRelativeTo(null);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -269,11 +268,10 @@ public class SnakeGui implements ActionListener, KeyListener {
         });
     }
 
-    
     public static void centreWindow() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2 - (windowDimentionsX/2));
-        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2 - (windowDimentionsY/2));
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2 - (windowDimentionsX / 2));
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2 - (windowDimentionsY / 2));
         frame.setLocation(x, y);
     }
 
@@ -282,12 +280,12 @@ public class SnakeGui implements ActionListener, KeyListener {
     // events
 
     private static void deathScreen() {
-		infoBox("You have died! Sorry to hear that...", "Death Screen");
-	}
+        infoBox("You have died! Sorry to hear that...", "Death Screen");
+    }
 
     public static void infoBox(String infoMessage, String titleBar) {
-		JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.ERROR_MESSAGE);
-	}
+        JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.ERROR_MESSAGE);
+    }
 
     /**
      * This method is called from the Menu event: New Game.
@@ -307,10 +305,10 @@ public class SnakeGui implements ActionListener, KeyListener {
      */
     public void pauseGame() {
         System.out.println("Pause game selected");
-        if(timer.isRunning()){
+        if (timer.isRunning()) {
             timer.stop();
             System.out.println("Timer stopped");
-        }else {
+        } else {
             timer.start();
             System.out.println("Timer started");
         }
@@ -323,19 +321,20 @@ public class SnakeGui implements ActionListener, KeyListener {
     public void endGame() {
         System.out.println("End game selected");
         if (exitWarning()) {
-			System.exit(0);
-		}
+            System.exit(0);
+        }
     }
 
     private static boolean exitWarning() {
-		String[] options = { "EXIT", "PLAY" };
-		int end = JOptionPane.showOptionDialog(null, "Do you want to exit the game?", "Warning", JOptionPane.DEFAULT_OPTION,
-				JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-		if (end == 0)
-			return true;// the function gives 0 when ok is clicked
-		else
-			return false;
-	}
+        String[] options = { "EXIT", "PLAY" };
+        int end = JOptionPane.showOptionDialog(null, "Do you want to exit the game?", "Warning",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        if (end == 0)
+            return true;// the function gives 0 when ok is clicked
+        else
+            return false;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -354,5 +353,3 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     }
 }
-
-

@@ -22,11 +22,14 @@ public class Snake4 {
     private Pair foodPair;
 
     /**
-    * @param boardPath String location in resources folder of the board to use
-    * @param useDefaultStart use default snake start location from board (noted with '5')
-    * @param useDefaultPortals use default ports locations from board (noted with '3')
-    * @param setFoodDown boolean whether the board should have food
-    **/
+     * @param boardPath         String location in resources folder of the board to
+     *                          use
+     * @param useDefaultStart   use default snake start location from board (noted
+     *                          with '5')
+     * @param useDefaultPortals use default ports locations from board (noted with
+     *                          '3')
+     * @param setFoodDown       boolean whether the board should have food
+     **/
     public Snake4(String boardPath, boolean useDefaultStart, boolean useDefaultPortals, boolean setFoodDown) {
         mapClass = new Map();
         map = mapClass.initialiseBoard(boardPath, useDefaultStart, useDefaultPortals);
@@ -38,7 +41,7 @@ public class Snake4 {
             Pair portal = portalList.get(i);
             portal_location[i] = new Pair(portal.row, portal.column);
         }
-        if(setFoodDown){
+        if (setFoodDown) {
             foodPair = mapClass.getNewFoodLocation(map);
             map[foodPair.row][foodPair.column] = 4;
         }
@@ -50,8 +53,8 @@ public class Snake4 {
 
     }
 
-    public List<Pair> move(){
-        //System.out.println("location: " + snake.get(0));
+    public List<Pair> move() {
+        // System.out.println("location: " + snake.get(0));
         switch (direction) {
             case 'd':
                 moveHere(new Pair(snake.get(head).row + 1, snake.get(head).column));
@@ -111,11 +114,11 @@ public class Snake4 {
         switch (type) {
             case Map.SOFTWALL:
                 newLocation = throughWall(originalLocation);
-                if (map[newLocation.row][newLocation.column] == Map.FOOD) { //fix bug on not eating after softwall
+                if (map[newLocation.row][newLocation.column] == Map.FOOD) { // fix bug on not eating after softwall
                     grow1(newLocation, originalLocation);
                 }
-                //TODO what happens if you go through a softwall straight into a portal?
-                if(validPortal(originalLocation)){
+                // TODO what happens if you go through a softwall straight into a portal?
+                if (validPortal(originalLocation)) {
                     newLocation = portal(originalLocation);
                 }
                 move1(newLocation);
@@ -125,7 +128,7 @@ public class Snake4 {
                 if (map[newLocation.row][newLocation.column] == Map.SOFTWALL) {
                     newLocation = throughWall(newLocation);
                 }
-                if (map[newLocation.row][newLocation.column] == Map.FOOD) { //fix bug on not eating after portal
+                if (map[newLocation.row][newLocation.column] == Map.FOOD) { // fix bug on not eating after portal
                     grow1(newLocation, originalLocation);
                 }
                 move1(newLocation);
@@ -214,9 +217,9 @@ public class Snake4 {
         Pair loci = new Pair();
         for (int i = 0; i < portal_location.length; i++) {
             if (!portal_location[i].equals(originalLocation)) { // get the portal which does not have the snake on it.
-                try{
+                try {
                     loci = (Pair) portal_location[i].clone();
-                } catch (CloneNotSupportedException e){
+                } catch (CloneNotSupportedException e) {
                     System.out.println(e);
                 }
                 switch (direction) {
@@ -232,16 +235,16 @@ public class Snake4 {
                     case 'd':
                         loci.row = loci.row + 1;
                 }
-                if (map[loci.row][loci.column] == Map.SNAKE || map[loci.row][loci.column] == Map.HARDWALL) { 
+                if (map[loci.row][loci.column] == Map.SNAKE || map[loci.row][loci.column] == Map.HARDWALL) {
                     dead = true;
                 }
                 if (map[loci.row][loci.column] == Map.SOFTWALL) {
-                    try{
-                        loci = (Pair) portal_location[i-1].clone();
-                    } catch (CloneNotSupportedException e){
+                    try {
+                        loci = (Pair) portal_location[i - 1].clone();
+                    } catch (CloneNotSupportedException e) {
                         System.out.println(e);
                     }
-                    //Go opposite direction
+                    // Go opposite direction
                     switch (direction) {
                         case 'l':
                             loci.column = loci.column + 2;
@@ -259,7 +262,7 @@ public class Snake4 {
                             loci.row = loci.row - 2;
                             direction = 'u';
                             break;
-                    }           
+                    }
                 }
             }
         }
@@ -286,7 +289,7 @@ public class Snake4 {
         }
     }
 
-    public int getHead(){
+    public int getHead() {
         return head;
     }
 
@@ -298,11 +301,11 @@ public class Snake4 {
         this.map = map;
     }
 
-    public char getDirection(){
+    public char getDirection() {
         return this.direction;
     }
 
-    public void setDirection(char direction){
+    public void setDirection(char direction) {
         this.direction = direction;
     }
 

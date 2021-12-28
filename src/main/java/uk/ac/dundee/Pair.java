@@ -2,11 +2,11 @@ package uk.ac.dundee;
 
 import java.util.Objects;
 
-public class Pair implements Cloneable{
+public class Pair implements Cloneable {
     public int row;
     public int column;
 
-    public Pair (int row, int column){
+    public Pair(int row, int column) {
         this.row = row;
         this.column = column;
     }
@@ -17,7 +17,8 @@ public class Pair implements Cloneable{
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) return true;
+        if (obj == this)
+            return true;
         if (!(obj instanceof Pair)) {
             return false;
         }
@@ -26,18 +27,18 @@ public class Pair implements Cloneable{
                 this.column == other.column;
     }
 
-    protected Object clone() throws CloneNotSupportedException{
+    protected Object clone() throws CloneNotSupportedException {
         Pair dolly = (Pair) super.clone();
         return dolly;
-     }
+    }
 
     @Override
     public int hashCode() {
         return Objects.hash(this.row, this.column);
-     }
+    }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.row + ":" + this.column;
     }
 
