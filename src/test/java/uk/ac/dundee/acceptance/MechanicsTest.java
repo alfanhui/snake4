@@ -14,7 +14,7 @@ public class MechanicsTest {
 
     @Test
     public void move1UpTest(){
-        game = new Snake4("boards/spaces4x4.txt", true, false, false);
+        game = new Snake4("boards/spaces4x4.txt", true, true, false);
         gameSnake = game.getSnake();
         assertEquals(new Pair(1,1), gameSnake.get(0));
         // game.setDirection('u'); default start direction is up
@@ -24,7 +24,7 @@ public class MechanicsTest {
 
     @Test
     public void move1LeftTest(){
-        game = new Snake4("boards/spaces4x4.txt", true, false, false);
+        game = new Snake4("boards/spaces4x4.txt", true, true, false);
         gameSnake = game.getSnake();
         assertEquals(new Pair(1,1), gameSnake.get(0));
         game.setDirection('l');
@@ -34,7 +34,7 @@ public class MechanicsTest {
 
     @Test
     public void move1RightTest(){
-        game = new Snake4("boards/spaces4x4.txt", true, false, false);
+        game = new Snake4("boards/spaces4x4.txt", true, true, false);
         gameSnake = game.getSnake();
         assertEquals(new Pair(1,1), gameSnake.get(0));
         game.setDirection('r');
@@ -44,7 +44,7 @@ public class MechanicsTest {
 
     @Test
     public void move1DownTest(){
-        game = new Snake4("boards/spaces4x4.txt", true, false, false);
+        game = new Snake4("boards/spaces4x4.txt", true, true, false);
         gameSnake = game.getSnake();
         assertEquals(new Pair(1,1), gameSnake.get(0));
         game.setDirection('d');
@@ -94,7 +94,7 @@ public class MechanicsTest {
     
     @Test
     public void moveUpEatFoodTest(){
-        game = new Snake4("boards/spaces4x4WithFood.txt", true, false, false);
+        game = new Snake4("boards/spaces4x4WithFood.txt", true, true, false);
         gameSnake = game.getSnake();
         assertEquals(2, gameSnake.size());
         assertEquals(new Pair(3,1), gameSnake.get(0));
