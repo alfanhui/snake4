@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 public class FileIO {
     public int[][] readArrayFromFile(String boardResourcePath) {
         ArrayList<ArrayList<Integer>> outterArrayList = new ArrayList<ArrayList<Integer>>();
@@ -38,8 +36,7 @@ public class FileIO {
 
         int[][] array = new int[outterArrayList.size()][outterArrayList.get(0).size()];
         for (int i = 0; i < outterArrayList.size(); i++) {
-            array[i] = ArrayUtils.toPrimitive(
-                    (Integer[]) outterArrayList.get(i).toArray(new Integer[outterArrayList.get(i).size()]));
+            array[i] = outterArrayList.get(i).stream().mapToInt(j -> j).toArray();
         }
         return array;
     }
