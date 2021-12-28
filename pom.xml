@@ -155,12 +155,12 @@
                             <classPath>
                                 <mainClass>${mainClass}</mainClass>
                             </classPath>
-                            <icon>icon.ico</icon>
+                            <icon>images/icon.ico</icon>
                             <jre>
                                 <minVersion>1.11.0</minVersion>
                             </jre>
                             <splash>
-                                <file>splash.bmp</file>
+                                <file>images/splash.bmp</file>
                                 <waitForWindow>true</waitForWindow>
                                 <timeout>4</timeout>
                                 <!-- <timeoutErr>false</timeoutErr> -->
