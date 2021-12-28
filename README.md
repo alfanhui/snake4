@@ -7,6 +7,10 @@ You can see our last version on the day of the hackathon here: [3879b84 on 6 Jan
 
 Feeling partially to blame for the lack of a working prototype due to missunderstand the way location were stored (multi-dimentional array over single array for grid locations), I have taken up this project post-hackathon to complete it as we had envisioned.
 
+<img title="Screenshot 1" alt="Screenshot 1" src="images/screenshot1.png" width="300" >
+<img title="Screenshot 2" alt="Screenshot 2" src="images/screenshot2.png" width="300" >
+<img title="Screenshot 3" alt="Screenshot 3" src="images/screenshot3.png" width="300" >
+
 ## How to Run
 
 Download the .exe from [releases](https://github.com/alfanhui/snake4/releases/tag/v1.0.0)
@@ -33,4 +37,10 @@ Or
 ```bash
 ./mwnw package
 ./target/snake*.exe
+```
+
+## How to Run the Tests
+
+```bash
+./mvnw test
 ```
