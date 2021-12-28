@@ -136,9 +136,10 @@ public class Snake4 {
                 move1(newLocation);
                 grow1(newLocation, originalLocation);
                 break;
-            case Map.SPACE:
+            case Map.PORTAL_1_SPACE:
             case Map.SNAKE_START:
-            case Map.SPACE_2:
+            case Map.PORTAL_2_SPACE:
+            case Map.BLANK:
                 move1(newLocation);
                 break;
             case Map.HARDWALL:
@@ -165,6 +166,7 @@ public class Snake4 {
         }
         if(!isSnakeValidToMove(newLocation)){
             dead = true;
+            return;
         }
         snake.set(head, newLocation);
     }
@@ -178,7 +180,7 @@ public class Snake4 {
         switch (direction) {
             case 'l':
                 for (int i = (location.column + 1); i < width; i++) {
-                    if (map[location.row][i] == 1) {
+                    if (map[location.row][i] == Map.SOFTWALL) {
                         location.column = --i;
                         return location;
                     }
@@ -186,7 +188,7 @@ public class Snake4 {
                 break;
             case 'r':
                 for (int i = (location.column - 1); i >= 0; i--) {
-                    if (map[location.row][i] == 1) {
+                    if (map[location.row][i] == Map.SOFTWALL) {
                         location.column = ++i;
                         return location;
                     }
@@ -194,7 +196,7 @@ public class Snake4 {
                 break;
             case 'u':
                 for (int i = (location.row + 1); i < height; i++) {
-                    if (map[i][location.column] == 1) {
+                    if (map[i][location.column] == Map.SOFTWALL) {
                         location.row = --i;
                         return location;
                     }
@@ -202,7 +204,7 @@ public class Snake4 {
                 break;
             case 'd':
                 for (int i = (location.row - 1); i >= 0; i--) {
-                    if (map[i][location.column] == 1) {
+                    if (map[i][location.column] == Map.SOFTWALL) {
                         location.row = ++i;
                         return location;
                     }

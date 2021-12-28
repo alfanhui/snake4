@@ -159,6 +159,12 @@
                             <jre>
                                 <minVersion>1.11.0</minVersion>
                             </jre>
+                            <!-- <splash>
+                                <file>splash.bmp</file>
+                                <waitForWindow>true</waitForWindow>
+                                <timeout>5</timeout>
+                                <timeoutErr>false</timeoutErr>
+                            </splash> -->
                             <versionInfo>
                                 <fileVersion>${project.version}.0</fileVersion>
                                 <txtFileVersion>${project.version}.0</txtFileVersion>

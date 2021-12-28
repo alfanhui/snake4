@@ -31,7 +31,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     private JLabel[][] labels;
     private JToolTip levelToolTip = new JToolTip();
     private JToolTip snakizeToolTip = new JToolTip();
-    private static JFrame frame = new JFrame("SnakeGui");
+    private static JFrame frame = new JFrame("Snake4");
 
     private final int DELAY_IN_MILISEC = 125; // 200
     private int[][] array;
@@ -45,13 +45,15 @@ public class SnakeGui implements ActionListener, KeyListener {
     private static final int windowDimentionsY = 500;
 
     private int level = 1;
+    private final int numOfLevels = 5;
+    private int winTarget = 20;
 
     public SnakeGui() {
         startNewGame();
     }
 
     private void startNewGame(){
-        game = new Snake4("boards/board" + level + ".txt", false, false, true);
+        game = new Snake4("boards/board" + level + ".txt", true, false, true);
         array = game.getMap();
         gameSnake = game.getSnake();
         portalArray = game.getPortals();
@@ -107,10 +109,32 @@ public class SnakeGui implements ActionListener, KeyListener {
                 labels[parts.row][parts.column].setIcon(getPortalColour());
             }
 
-            //Update tooltip
-            snakizeToolTip.setTipText("Snakize " + game.getSnake().size());
+            //Update tooltips
+            levelToolTip.setTipText("Level " + level + "/" + numOfLevels);
+            snakizeToolTip.setTipText("Snakize " + game.getSnake().size() + "/" + winTarget);
+            
+            if(hasWonLevel()){
+                level++;
+                timer.stop();
+                if(hasWonGame()){
+                    wonGameScreen();
+                    level = 1; //return to starting level
+                }else{
+                    wonLevelScreen();
+                    startNewGame();
+                    timer.start();
+                }
+            }
         }
     });
+
+    private boolean hasWonGame(){
+        return (level) > numOfLevels;
+    }
+
+    private boolean hasWonLevel(){
+        return game.getSnake().size() > winTarget;
+    }
 
     /**
      * a method that resizes the pictures
@@ -150,11 +174,11 @@ public class SnakeGui implements ActionListener, KeyListener {
 
         menuBar.add(menu);
 
-        menuItem = new JMenuItem("New Game");
+        menuItem = new JMenuItem("Start");
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Pause Game");
+        menuItem = new JMenuItem("Pause");
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
@@ -162,8 +186,8 @@ public class SnakeGui implements ActionListener, KeyListener {
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        levelToolTip.setTipText("Level " + level);
-        snakizeToolTip.setTipText("Snakize " + game.getSnake().size());
+        levelToolTip.setTipText("Level " + level + "/" + numOfLevels);
+        snakizeToolTip.setTipText("Snakize " + game.getSnake().size() + "/" + winTarget);
         menuBar.add(levelToolTip);
         menuBar.add(snakizeToolTip);
 
@@ -203,6 +227,7 @@ public class SnakeGui implements ActionListener, KeyListener {
             case 0:
             case 5:
             case 7:
+            case 9:
                 return blankSpace;
             case 8:
                 return snakeHead;
@@ -223,13 +248,13 @@ public class SnakeGui implements ActionListener, KeyListener {
             String menutext = menusource.getText();
 
             // Determine which menu option was chosen
-            if (menutext.equals("Pause Game")) {
+            if (menutext.equals("Pause")) {
                 /* ConnectGUI Add your code here to handle Load Game **********/
                 pauseGame();
             } else if (menutext.equals("End Game")) {
                 /* ConnectGUI Add your code here to handle Save Game **********/
                 endGame();
-            } else if (menutext.equals("New Game")) {
+            } else if (menutext.equals("Start")) {
                 /* ConnectGUI Add your code here to handle Save Game **********/
                 NewGame();
             }
@@ -293,6 +318,15 @@ public class SnakeGui implements ActionListener, KeyListener {
         infoBox("You have died! Sorry to hear that...", "Death Screen");
     }
 
+    private static void wonLevelScreen() {
+        infoBox("Success!", "Level complete");
+    }
+
+    private static void wonGameScreen() {
+        infoBox("Congratuations! You have completed this Game.", "Game complete");
+    }
+
+
     public static void infoBox(String infoMessage, String titleBar) {
         JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.ERROR_MESSAGE);
     }
@@ -355,6 +389,10 @@ public class SnakeGui implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if(!timer.isRunning() && e.getKeyCode() == 10){
+            startNewGame();
+            timer.start();
+        }
         game.changeDirection(e.getKeyCode());
     }
 

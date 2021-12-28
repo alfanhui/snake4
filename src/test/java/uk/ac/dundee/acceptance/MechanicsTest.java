@@ -104,9 +104,9 @@ public class MechanicsTest {
         // Food is consummed from location and extends from location, so we have to surpass the location by the size before seeing the effects
         gameSnake = game.move();  
         gameSnake = game.move();
-        assertEquals(new Pair(0,1), gameSnake.get(0));
-        assertEquals(new Pair(1,1), gameSnake.get(1));
-        assertEquals(new Pair(2,1), gameSnake.get(2));
+        assertEquals(new Pair(1,1), gameSnake.get(0));
+        assertEquals(new Pair(2,1), gameSnake.get(1));
+        assertEquals(new Pair(0,1), gameSnake.get(2));
     }
 
     @Test

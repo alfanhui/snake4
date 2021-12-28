@@ -13,15 +13,16 @@ public class Map {
 	public final int GAME_VERSION = 4;
 
 	/* constant fields for defining map contents */
-	public static final int SPACE = 0;
+	public static final int PORTAL_1_SPACE = 0;
 	public static final int SOFTWALL = 1;
 	public static final int SNAKE = 2;
 	public static final int PORTAL = 3;
 	public static final int FOOD = 4;
 	public static final int SNAKE_START = 5;
 	public static final int HARDWALL = 6;
-	public static final int SPACE_2 = 7;
+	public static final int PORTAL_2_SPACE = 7;
 	public static final int SNAKE_HEAD = 8;
+	public static final int BLANK = 9;
 
 	public List<Pair> freeIndexes = new ArrayList<Pair>();
 	public List<Pair> startingWallSide = new ArrayList<Pair>();
@@ -156,7 +157,7 @@ public class Map {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
 		for (int i = 0; i < snakeBoard.length; ++i) {
 			for (int j = 0; j < snakeBoard[0].length; ++j) {
-				if (snakeBoard[i][j] == SPACE || snakeBoard[i][j] == SPACE_2) {
+				if (snakeBoard[i][j] == PORTAL_1_SPACE || snakeBoard[i][j] == PORTAL_2_SPACE) {
 					// add position to list
 					freeIndexes.add(new Pair(i, j));
 				}
@@ -170,7 +171,7 @@ public class Map {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
 		for (int i = 0; i < snakeBoard.length; ++i) {
 			for (int j = 0; j < snakeBoard[0].length; ++j) {
-				if (snakeBoard[i][j] == SPACE) {
+				if (snakeBoard[i][j] == PORTAL_1_SPACE) {
 					// add position to list
 					freeIndexes.add(new Pair(i, j));
 				}
@@ -184,7 +185,7 @@ public class Map {
 		List<Pair> freeIndexes = new ArrayList<Pair>();
 		for (int i = 0; i < snakeBoard.length; ++i) {
 			for (int j = 0; j < snakeBoard[0].length; ++j) {
-				if (snakeBoard[i][j] == SPACE_2) {
+				if (snakeBoard[i][j] == PORTAL_2_SPACE) {
 					// add position to list
 					freeIndexes.add(new Pair(i, j));
 				}
@@ -241,7 +242,7 @@ public class Map {
 		freeIndexes.add(oldFoodLocation);
 		freeIndexes.remove(foodPosition);
 		snakeBoard[foodPosition.row][foodPosition.column] = FOOD;
-		snakeBoard[oldFoodLocation.row][oldFoodLocation.column] = SPACE;
+		snakeBoard[oldFoodLocation.row][oldFoodLocation.column] = PORTAL_1_SPACE;
 		return snakeBoard;
 	}
 
@@ -362,7 +363,7 @@ public class Map {
 	public void getStartingSidePositions4(int[][] snakeBoard) {
 		for (int i = 0; i < snakeBoard.length; ++i) {
 			for (int j = 0; j < snakeBoard[0].length; ++j) {
-				if (snakeBoard[i][j] == SPACE) {
+				if (snakeBoard[i][j] == PORTAL_1_SPACE) {
 					Pair newCoord = new Pair(i, j);
 					startingWallSide.add(newCoord);
 				}
@@ -373,7 +374,7 @@ public class Map {
 	public void getEndingSidePositions4(int[][] snakeBoard) {
 		for (int i = 0; i < snakeBoard.length; ++i) {
 			for (int j = 0; j < snakeBoard[0].length; ++j) {
-				if (snakeBoard[i][j] == SPACE) {
+				if (snakeBoard[i][j] == PORTAL_1_SPACE) {
 					Pair newCoord = new Pair(i, j);
 					endingWallSide.add(newCoord);
 				}
