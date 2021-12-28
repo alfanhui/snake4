@@ -29,7 +29,8 @@ public class SnakeGui implements ActionListener, KeyListener {
     private ImageIcon softWall = convertPicutres("tiles/softWall.jpg");
 
     private JLabel[][] labels;
-    private JToolTip toolTip = new JToolTip();
+    private JToolTip levelToolTip = new JToolTip();
+    private JToolTip snakizeToolTip = new JToolTip();
     private static JFrame frame = new JFrame("SnakeGui");
 
     private final int DELAY_IN_MILISEC = 125; // 200
@@ -46,6 +47,10 @@ public class SnakeGui implements ActionListener, KeyListener {
     private int level = 1;
 
     public SnakeGui() {
+        startNewGame();
+    }
+
+    private void startNewGame(){
         game = new Snake4("boards/board" + level + ".txt", false, false, true);
         array = game.getMap();
         gameSnake = game.getSnake();
@@ -101,6 +106,9 @@ public class SnakeGui implements ActionListener, KeyListener {
                 Pair parts = portalArray[i];
                 labels[parts.row][parts.column].setIcon(getPortalColour());
             }
+
+            //Update tooltip
+            snakizeToolTip.setTipText("Snakize " + game.getSnake().size());
         }
     });
 
@@ -154,8 +162,10 @@ public class SnakeGui implements ActionListener, KeyListener {
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        toolTip.setTipText("Level " + level);
-        menuBar.add(toolTip);
+        levelToolTip.setTipText("Level " + level);
+        snakizeToolTip.setTipText("Snakize " + game.getSnake().size());
+        menuBar.add(levelToolTip);
+        menuBar.add(snakizeToolTip);
 
         return menuBar;
     }
@@ -294,6 +304,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     public void NewGame() {
         System.out.println("New game selected");
         // Initialise your game
+        startNewGame();
         timer.start();
         System.out.println("Timer started");
 

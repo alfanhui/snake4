@@ -54,7 +54,6 @@ public class Snake4 {
     }
 
     public List<Pair> move() {
-        // System.out.println("location: " + snake.get(0));
         switch (direction) {
             case 'd':
                 moveHere(new Pair(snake.get(head).row + 1, snake.get(head).column));
@@ -171,7 +170,6 @@ public class Snake4 {
     }
 
     public void grow1(Pair newLocation, Pair originalLocation) {
-        System.out.println("Were in the food place");
         snake.add(head, newLocation);
         mapClass.setNewFoodLocation(map, originalLocation);
     }
@@ -277,8 +275,8 @@ public class Snake4 {
     }
 
     public void print() {
-        for (int row = 0; row < 60; row++) {
-            for (int col = 0; col < 60; row++) {
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[0].length; row++) {
                 System.out.print(printChars[map[row][col]]);
             }
             System.out.println();
