@@ -240,7 +240,7 @@ public class Snake4 {
                 }
                 if (map[loci.row][loci.column] == Map.SOFTWALL) {
                     try {
-                        loci = (Pair) portal_location[i - 1].clone();
+                        loci = (Pair) portal_location[i == 0 ? 1 : 0].clone(); //Not good for more than 2 portals, but oh well.
                     } catch (CloneNotSupportedException e) {
                         System.out.println(e);
                     }

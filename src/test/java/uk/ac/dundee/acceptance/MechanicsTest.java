@@ -167,6 +167,17 @@ public class MechanicsTest {
     }
 
     @Test
+    public void moveIntoPortalLeftIntoSoftWallTest(){
+        game = new Snake4("boards/portalsSoftWallLeft.txt", true, true, false);
+        gameSnake = game.getSnake();
+        assertEquals(new Pair(1,5), gameSnake.get(0));
+        game.setDirection('l');
+        gameSnake = game.move();
+        gameSnake = game.move();
+        assertEquals(new Pair(1,1), gameSnake.get(game.getSnake().size()-1));
+    }
+
+    @Test
     public void moveIntoPortalAboveEatFoodAfterTest(){
         game = new Snake4("boards/foodAfterPortalAbove.txt", true, true, false);
         gameSnake = game.getSnake();
