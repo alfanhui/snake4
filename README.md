@@ -12,3 +12,21 @@ Feeling partially to blame for the lack of a working prototype due to missunders
 ```bash
 ./mvnw compile exec:exec
 ```
+
+Or
+
+```bash
+./mvnw package
+java -jar ./target/snake*-shaded.jar
+```
+
+Or
+
+Use VSCode's Run and Debug (Press F5)
+
+Or
+
+```bash
+./mwnw package
+./target/snake*.exe
+```
