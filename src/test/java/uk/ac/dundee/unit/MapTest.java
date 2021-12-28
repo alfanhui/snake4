@@ -21,7 +21,6 @@ public class MapTest {
 				}
 			}
 		}
-		System.out.println("Wall:" + wallCount);
 		assertTrue("Not sufficent soft wall values", wallCount == 334);
 	}
 	@Test

@@ -44,7 +44,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     private static final int windowDimentionsX = 460;
     private static final int windowDimentionsY = 500;
 
-    private int level = 1;
+    private int level = 4;
     private final int numOfLevels = 5;
     private int winTarget = 20;
 
