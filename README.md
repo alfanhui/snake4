@@ -11,6 +11,8 @@ Feeling partially to blame for the lack of a working prototype due to missunders
 
 Download the .exe from [releases](https://github.com/alfanhui/snake4/releases/tag/v1.0.0)
 
+Or
+
 ```bash
 ./mvnw compile exec:exec
 ```
