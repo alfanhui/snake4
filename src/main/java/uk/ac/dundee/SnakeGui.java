@@ -6,23 +6,14 @@ package uk.ac.dundee;
  * @author Dancho Atanasov
  * @version 1.0
  *
- *
- * Notes:
- *  Event handlers have been set up for Menu Options
- *  NewGame, Pause game, End game
- *
- *  To add functionality to this GUI add you code to these functions
- *  which are at the end of this file.
- *
  */
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.io.*;
 import java.net.URISyntaxException;
+import java.net.URL;
 
-import java.util.Random;
 
 public class SnakeGui implements ActionListener, KeyListener {
 
@@ -53,7 +44,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     private static final int windowDimentionsX= 460;
     private static final int windowDimentionsY= 500;
     
-    private int level = 2;
+    private int level = 1;
 
     public SnakeGui() {
         game = new Snake4("boards/board" + level + ".txt", false, false, true);
@@ -122,11 +113,9 @@ public class SnakeGui implements ActionListener, KeyListener {
      * @throws URISyntaxException
      */
     private ImageIcon convertPicutres(String name) {
-        File imageFile = new File(getClass().getClassLoader().getResource(name).getFile());
-        ImageIcon imageTemporary = new ImageIcon(imageFile.getPath());
-        Image image2 = imageTemporary.getImage(); // transform it
-        Image newimg = image2.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);// scale it the smooth way
-        return new ImageIcon(newimg);// transform it back
+        URL url = getClass().getClassLoader().getResource(name);
+        Image image = new ImageIcon(url).getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(image);
     }
 
     private void printArrayArg(int[][] arr) {
