@@ -259,7 +259,6 @@ public class Map {
 			for (int j = 0; j < snakeBoard[0].length; ++j) {
 				if (snakeBoard[i][j] == PORTAL) {
 					// add portal to list
-					//System.out.println("PORTAL=" + i + ":" + j);
 					Pair newPortal = new Pair(i, j);
 					portals.add(newPortal);
 				}

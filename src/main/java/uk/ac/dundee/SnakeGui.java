@@ -133,7 +133,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     }
 
     private boolean hasWonLevel(){
-        return game.getSnake().size() > winTarget;
+        return game.getSnake().size() == winTarget;
     }
 
     /**
@@ -323,7 +323,7 @@ public class SnakeGui implements ActionListener, KeyListener {
     }
 
     private static void wonGameScreen() {
-        infoBox("Congratuations! You have completed this Game.", "Game complete");
+        infoBox("Congratulations! You have completed this Game.", "Game complete");
     }
 
 
