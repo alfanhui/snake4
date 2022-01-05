@@ -149,8 +149,8 @@
                         </goals>
                         <configuration>
                             <headerType>gui</headerType>
-                            <jar>${project.build.directory}/${artifactId}-${version}-shaded.jar</jar>
-                            <outfile>${project.build.directory}/${artifactId}-${version}.exe</outfile>
+                            <jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
+                            <outfile>${project.build.directory}/${project.artifactId}-${project.version}.exe</outfile>
                             <downloadUrl>http://java.com/download</downloadUrl>
                             <classPath>
                                 <mainClass>${mainClass}</mainClass>
